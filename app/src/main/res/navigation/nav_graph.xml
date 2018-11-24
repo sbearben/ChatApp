@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFlowGraph" />
+        <action
+            android:id="@+id/action_mainFragment_to_friendsFragment"
+            app:destination="@id/chatFlowGraph" />
+    </fragment>
+
+
+    <!-- Login/Register Flow (nested graph) -->
+    <navigation android:id="@+id/loginFlowGraph"
+        app:startDestination="@id/loginFragment">
+
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment"
+            android:label="fragment_login"
+            tools:layout="@layout/fragment_login">
+            <action
+                android:id="@+id/action_loginFragment_to_signupFragment"
+                app:destination="@id/signupFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/signupFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment"
+            android:label="fragment_signup"
+            tools:layout="@layout/fragment_signup" />
+    </navigation>
+
+
+    <!-- Chat Flow (nested graph) -->
+    <navigation android:id="@+id/chatFlowGraph"
+        app:startDestination="@id/friendsFragment">
+
+        <fragment
+            android:id="@+id/friendsFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment"
+            android:label="fragment_friends"
+            tools:layout="@layout/fragment_friend_requests_toolbar">
+            <action
+                android:id="@+id/action_friendsFragment_to_messagingFragment"
+                app:destination="@id/messagingFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/messagingFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.MessagingFragment"
+            android:label="fragment_messaging"
+            tools:layout="@layout/fragment_messaging" />
+    </navigation>
+
+</navigation>

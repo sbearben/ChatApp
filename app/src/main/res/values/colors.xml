@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryLight">#C5CAE9</color>
+    <color name="colorAccent">#FFC107</color>
+
+    <color name="colorTextIcons">#212121</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
+
+    <!-- Pastels - Light -->
+    <color name="redPastel">#ffd8db</color>
+    <color name="orangePastel">#ffdfba</color>
+    <color name="yellowPastel">#FFFFBA</color>
+    <color name="greenPastel">#cff7d7</color>
+    <color name="bluePastel">#BAE1FF</color>
+    <color name="purplePastel">#ebd6ff</color>
+
+    <!-- Pastels - Dark -->
+    <color name="redDarkPastel">#8b7779</color>
+    <color name="orangeDarkPastel">#8c7b68</color>
+    <color name="yellowDarkPastel">#80805e</color>
+    <color name="greenDarkPastel">#6d8171</color>
+    <color name="blueDarkPastel">#6b8191</color>
+    <color name="purpleDarkPastel">#877b91</color>
+
+    <color name="gray">#ffdfdfdf</color>
+    <color name="dirtyWhite">#E0E0E0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="whiteOpacity54">#8AFFFFFF</color>
+    <color name="whiteOpacity5">#0DFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="dimFilter">#4f000000</color>
+    <color name="dimmerFilter">#A8000000</color>
+
+    <color name="lightLightGray">#F5F5F5</color>
+    <color name="lightGray">#F1F1F1</color>
+    <color name="mediumLightGray">#E7E7E7</color>
+    <color name="darkLightGray">#D1D1D1</color>
+    <color name="lightMediumGray">#C1C1C1</color>
+    <color name="mediumGray">#B1B1B1</color>
+    <color name="mediumMediumGray">#A1A1A1</color>
+    <color name="darkMediumGray">#888888</color>
+    <color name="mediumDarkGray">#4c4c4c</color>
+    <color name="darkGray">#2b2b2b</color>
+    <color name="black">#000000</color>
+</resources>

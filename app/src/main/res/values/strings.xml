@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+
+    <!-- Errors and Actions after errors -->
+    <string name="error_no_items_to_display">No items to display</string>
+    <string name="error_generic_error">There was an error, %1$s</string>
+    <string name="action_try_again">Try Again</string>
+    <string name="action_check_again">Check Again</string>
+
+    <!-- LoginFragment -->
+    <string name="fragment_login_username">Username</string>
+    <string name="fragment_login_password">Password</string>
+    <string name="fragment_login_email">Email</string>
+
+    <string name="fragment_login_login">Login</string>
+    <string name="fragment_login_signup_link">No account yet? Create one</string>
+
+    <!-- SignupFragment -->
+    <string name="fragment_signup_username">Username</string>
+    <string name="fragment_signup_password1">Password 1</string>
+    <string name="fragment_signup_password2">Password 2</string>
+    <string name="fragment_signup_create_account">Create Account</string>
+    <string name="fragment_signup_login_link">Already a member? Login</string>
+
+    <!-- ChatFragment -->
+    <string name="fragment_chat_add_friend">Add Friend</string>
+    <string name="fragment_chat_friend_requests">Friend Requests</string>
+
+    <!-- MessagingFragment -->
+    <string name="fragment_messaging_message_box_hint">Write a message</string>
+    <string name="fragment_messaging_send_button_description">Message send button</string>
+
+</resources>

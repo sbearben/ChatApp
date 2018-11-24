@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_friend_requests"
+        android:icon="@drawable/ic_person_add_black_30dp"
+        android:title="@string/fragment_chat_friend_requests"
+        app:actionLayout="@layout/action_item_friend_requests_layout"
+        app:showAsAction="always" />
+
+</menu>
