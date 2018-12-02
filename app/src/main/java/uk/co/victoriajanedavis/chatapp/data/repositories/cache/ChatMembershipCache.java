@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
 import uk.co.victoriajanedavis.chatapp.data.room.daos.ChatMembershipDao;
 import uk.co.victoriajanedavis.chatapp.domain.Cache.DiskCache;
 
 @ApplicationScope
-public class ChatMembershipCache implements DiskCache<UUID, ChatMembershipDbModel> {
+public class ChatMembershipCache implements DiskCache<UUID, ChatDbModel> {
 
     private final ChatMembershipDao dao;
 
@@ -26,24 +26,24 @@ public class ChatMembershipCache implements DiskCache<UUID, ChatMembershipDbMode
     }
 
     @Override
-    public void putSingular(@NonNull ChatMembershipDbModel chatMembershipDbModel) {
-        dao.insertChatMembership(chatMembershipDbModel);
+    public void putSingular(@NonNull ChatDbModel chatDbModel) {
+        dao.insertChatMembership(chatDbModel);
     }
 
     @Override
-    public void putAll(@NonNull List<ChatMembershipDbModel> chatMembershipDbModels) {
-        dao.insertChatMemberships(chatMembershipDbModels);
+    public void putAll(@NonNull List<ChatDbModel> chatDbModels) {
+        dao.insertChatMemberships(chatDbModels);
     }
 
     @Override
     public void replaceAll(@Nullable UUID uuid,
-                           @NonNull List<ChatMembershipDbModel> chatMembershipDbModels) {
-        dao.replaceAll(chatMembershipDbModels);
+                           @NonNull List<ChatDbModel> chatDbModels) {
+        dao.replaceAll(chatDbModels);
     }
 
     @Override
-    public void delete(@NonNull ChatMembershipDbModel chatMembershipDbModel) {
-        dao.deleteChatMembership(chatMembershipDbModel);
+    public void delete(@NonNull ChatDbModel chatDbModel) {
+        dao.deleteChatMembership(chatDbModel);
     }
 
     @Override
@@ -53,13 +53,13 @@ public class ChatMembershipCache implements DiskCache<UUID, ChatMembershipDbMode
 
     @NonNull
     @Override
-    public Observable<ChatMembershipDbModel> getSingular(@NonNull UUID uuid) {
+    public Observable<ChatDbModel> getSingular(@NonNull UUID uuid) {
         return dao.get(uuid).toObservable();
     }
 
     @NonNull
     @Override
-    public Observable<List<ChatMembershipDbModel>> getAll(@Nullable UUID uuid) {
+    public Observable<List<ChatDbModel>> getAll(@Nullable UUID uuid) {
         return dao.getAll().toObservable();
     }
 }

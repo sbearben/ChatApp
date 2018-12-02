@@ -7,6 +7,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.FragmentKey
 import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.component.*
+import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
@@ -17,7 +18,8 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainFragment
     LoginFragmentSubcomponent::class,
     SignupFragmentSubcomponent::class,
     FriendRequestsToolbarFragmentSubcomponent::class,
-    FriendsFragmentSubcomponent::class
+    FriendsFragmentSubcomponent::class,
+    ChatFragmentSubcomponent::class
 ])
 abstract class FragmentsModule {
     @Binds
@@ -42,5 +44,11 @@ abstract class FragmentsModule {
     @IntoMap
     @FragmentKey(FriendRequestsToolbarFragment::class)
     abstract fun bindFriendRequestsToolbarFragmentInjectFactory(builder: FriendRequestsToolbarFragmentSubcomponent.Builder):
+            AndroidInjector.Factory<out Fragment>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(ChatFragment::class)
+    abstract fun bindChatFragmentInjectorFactory(builder: ChatFragmentSubcomponent.Builder):
             AndroidInjector.Factory<out Fragment>
 }

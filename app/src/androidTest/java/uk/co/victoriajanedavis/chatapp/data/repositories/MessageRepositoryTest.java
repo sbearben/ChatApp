@@ -4,7 +4,6 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,10 +20,9 @@ import java.util.UUID;
 
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.MessageDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.MessageNwModel;
-import uk.co.victoriajanedavis.chatapp.data.repositories.MessageRepository;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.ChatMembershipCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.MessageCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
@@ -40,7 +38,7 @@ import uk.co.victoriajanedavis.chatapp.test_common.ModelGenerationUtil;
 public class MessageRepositoryTest extends BaseTest {
 
     private ChatAppDatabase database;
-    private BaseReactiveStore<ChatMembershipDbModel> chatStore;
+    private BaseReactiveStore<ChatDbModel> chatStore;
 
     private MessageReactiveStore messageStore;
     private MessageRepository repository;
@@ -58,7 +56,7 @@ public class MessageRepositoryTest extends BaseTest {
                 .allowMainThreadQueries()
                 .build();
 
-        Cache.DiskCache<UUID, ChatMembershipDbModel> chatCache = new ChatMembershipCache(database);
+        Cache.DiskCache<UUID, ChatDbModel> chatCache = new ChatMembershipCache(database);
         chatStore = new BaseReactiveStore<>(chatCache);
 
         MessageCache messagesCache = new MessageCache(database);
@@ -84,7 +82,7 @@ public class MessageRepositoryTest extends BaseTest {
 
     @Test
     public void lastStoredObjectIsEmittedAfterSubscription() {
-        ChatMembershipDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
+        ChatDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
         List<MessageDbModel> messageDbModels = createAndStoreMessageDbModels(chatDbModel,3);
 
         TestObserver<List<MessageEntity>> getObserver = repository.getAllMessagesInChat(chatDbModel.getUuid()).test();
@@ -96,7 +94,7 @@ public class MessageRepositoryTest extends BaseTest {
 
     @Test
     public void fetchedListIsEmittedAfterSubscription() {
-        ChatMembershipDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
+        ChatDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
         chatStore.storeSingular(chatDbModel).subscribe();
         new ArrangeBuilder().withMessagesFromService(chatDbModel.getUuid(), ModelGenerationUtil.createMessageNwList(chatDbModel.getUuid(), 3));
 
@@ -111,7 +109,7 @@ public class MessageRepositoryTest extends BaseTest {
 
     @Test
     public void emptyListAndFetchedListIsEmittedWhenSubscribedBeforeFetch() {
-        ChatMembershipDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
+        ChatDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
         chatStore.storeSingular(chatDbModel).subscribe();
         new ArrangeBuilder().withMessagesFromService(chatDbModel.getUuid(), ModelGenerationUtil.createMessageNwList(chatDbModel.getUuid(), 3));
 
@@ -127,7 +125,7 @@ public class MessageRepositoryTest extends BaseTest {
 
     @Test
     public void emptyListReturnedFromNetworkReplacesCurrentlyStoredItems() {
-        ChatMembershipDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
+        ChatDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
         chatStore.storeSingular(chatDbModel).subscribe();
 
         new ArrangeBuilder().withMessagesFromService(chatDbModel.getUuid(), new ArrayList<>());
@@ -145,7 +143,7 @@ public class MessageRepositoryTest extends BaseTest {
 
     @Test
     public void fetchMoreItemsAreStoredAndAppendedToStream() {
-        ChatMembershipDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
+        ChatDbModel chatDbModel = ModelGenerationUtil.createChatMembershipDbModel();
 
         new ArrangeBuilder().withMoreMessagesFromService(ModelGenerationUtil.createMessageNwList(chatDbModel.getUuid(), 3));
         createAndStoreMessageDbModels(chatDbModel,3);
@@ -161,7 +159,7 @@ public class MessageRepositoryTest extends BaseTest {
     }
 
 
-    private List<MessageDbModel> createAndStoreMessageDbModels(ChatMembershipDbModel chatDbModel, int number) {
+    private List<MessageDbModel> createAndStoreMessageDbModels(ChatDbModel chatDbModel, int number) {
         chatStore.storeSingular(chatDbModel).subscribe();
 
         List<MessageDbModel> messageDbModels = new ArrayList<>(number);

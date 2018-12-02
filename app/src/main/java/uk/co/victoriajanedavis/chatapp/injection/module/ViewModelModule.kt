@@ -7,7 +7,9 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.ViewModelKey
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
+import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainViewModel
 
@@ -31,4 +33,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FriendRequestsToolbarViewModel::class)
     abstract fun friendRequestsToolbarViewModel(viewModel: FriendRequestsToolbarViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendsViewModel::class)
+    abstract fun friendsViewModel(viewModel: FriendsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatViewModel::class)
+    abstract fun chatViewModel(viewModel: ChatViewModel): ViewModel
 }

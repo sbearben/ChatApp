@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="uk.co.victoriajanedavis.chatapp" >
+    package="uk.co.victoriajanedavis.chatapp" >
 
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-<!-- Needed for JobIntentService: https://developer.android.com/reference/android/support/v4/app/JobIntentService -->
-<uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Needed for JobIntentService: https://developer.android.com/reference/android/support/v4/app/JobIntentService -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-<application
+    <application
         android:name="uk.co.victoriajanedavis.chatapp.ChatApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
-    <activity android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainActivity"
+        <activity android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:label="@string/app_name">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
 
-    <service android:name=".presentation.MyFirebaseService"
-             android:exported="false">
-        <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-    </service>
-    <!-- Set default color used with incoming Firebase notification messages. -->
-    <meta-data
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".presentation.MyFirebaseService"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- Set default color used with incoming Firebase notification messages. -->
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-    <!-- Set custom default icon used for incoming Firebase notification messages.
-    <meta-data
-        android:name="com.google.firebase.messaging.default_notification_icon"
-        android:resource="@drawable/SOME_RECOURCE" /> -->
+        <!-- Set custom default icon used for incoming Firebase notification messages.
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/SOME_RECOURCE" /> -->
 
-    <service android:name=".presentation.SimpleJobIntentService"
-             android:exported="false">
-    </service>
+        <service
+            android:name=".presentation.SimpleJobIntentService"
+            android:exported="false">
+        </service>
 
-</application>
+    </application>
 
 </manifest>

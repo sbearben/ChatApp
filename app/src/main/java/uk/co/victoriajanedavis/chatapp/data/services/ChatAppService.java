@@ -88,7 +88,7 @@ public interface ChatAppService {
 
     @GET("chat/me/chats/{chat_uuid}/")
     Single<List<MessageNwModel>> getChatMessagesOlderThanGivenDate(@Path("chat_uuid") String chatUuid,
-                                                                   @Query("created") Date createdBefore,
+                                                                   @Query("created_before") Date createdBefore,
                                                                    @Query("per_page") Integer perPage);
 
     @POST("chat/me/chats/{chat_uuid}/")

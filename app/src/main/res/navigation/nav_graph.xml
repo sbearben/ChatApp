@@ -52,15 +52,15 @@
             android:label="fragment_friends"
             tools:layout="@layout/fragment_friend_requests_toolbar">
             <action
-                android:id="@+id/action_friendsFragment_to_messagingFragment"
-                app:destination="@id/messagingFragment" />
+                android:id="@+id/action_friendsFragment_to_chatFragment"
+                app:destination="@id/chatFragment" />
         </fragment>
 
         <fragment
-            android:id="@+id/messagingFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.MessagingFragment"
-            android:label="fragment_messaging"
-            tools:layout="@layout/fragment_messaging" />
+            android:id="@+id/chatFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment"
+            android:label="fragment_chat"
+            tools:layout="@layout/fragment_chat" />
     </navigation>
 
 </navigation>

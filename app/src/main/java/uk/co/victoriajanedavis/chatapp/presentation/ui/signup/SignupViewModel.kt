@@ -29,7 +29,7 @@ class SignupViewModel @Inject constructor(
     fun getRegisterUserLiveData(): LiveData<State<TokenEntity>> = registerUserLiveData
 
     fun registerUser(username: String, email: String, password1: String, password2: String) {
-        registerUserLiveData.postValue(ShowLoading)
+        registerUserLiveData.value = ShowLoading
         compositeDisposable.add(bindToUseCase(RegisterParams(username, email, password1, password2)))
     }
 
@@ -37,7 +37,7 @@ class SignupViewModel @Inject constructor(
         return registerUser.getSingle(loginParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ tokenEntity -> registerUserLiveData.postValue(ShowContent(tokenEntity)) },
-                        { e -> registerUserLiveData.postValue(ShowError(e.toString())) })
+                .subscribe({ tokenEntity -> registerUserLiveData.value = ShowContent(tokenEntity) },
+                        { e -> registerUserLiveData.value = ShowError(e.toString()) })
     }
 }

@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.signup
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ext.invisible
 import uk.co.victoriajanedavis.chatapp.presentation.ext.observe
 import uk.co.victoriajanedavis.chatapp.presentation.ext.visible
@@ -19,7 +21,14 @@ import javax.inject.Inject
 
 class SignupFragment : DaggerFragment() {
 
-    @Inject lateinit var viewModel: SignupViewModel
+    @Inject lateinit var viewModelFactory: ViewModelFactory
+    lateinit var viewModel: SignupViewModel
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignupViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_signup, container, false)

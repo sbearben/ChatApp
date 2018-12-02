@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,12 +13,13 @@
 
     <TextView
         android:id="@+id/item_friend_icon_textview"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/friend_image_placeholder"
         android:gravity="center"
         android:textColor="@color/blueDarkPastel"
-        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +43,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:text="Armon Khosravi" />
 
         <TextView
@@ -50,7 +52,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="12sp"
+            android:textSize="13sp"
             tools:text="Hey what's going on man? So what's the plan for Saturday or do you not know yet?" />
     </LinearLayout>
 
@@ -65,8 +67,10 @@
         android:id="@+id/item_friend_date_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:gravity="end"
-        android:textSize="11.5sp"
+        android:textSize="12.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="@id/item_friend_details_layout"

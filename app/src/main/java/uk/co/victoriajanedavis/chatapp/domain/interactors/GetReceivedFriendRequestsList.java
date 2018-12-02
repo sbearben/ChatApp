@@ -4,14 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import android.util.Log;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
-import uk.co.victoriajanedavis.chatapp.data.repositories.ChatRepository;
 import uk.co.victoriajanedavis.chatapp.data.repositories.ReceivedFriendRequestRepository;
-import uk.co.victoriajanedavis.chatapp.domain.entities.ChatMembershipEntity;
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity;
 import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.RetrieveInteractor;
 

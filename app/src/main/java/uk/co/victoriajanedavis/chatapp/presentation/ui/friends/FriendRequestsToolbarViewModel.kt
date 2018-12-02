@@ -33,7 +33,7 @@ class FriendRequestsToolbarViewModel @Inject constructor(
         return receivedRequestsCount.getBehaviorStream(null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(friendRequestsCountLiveData::postValue,
+                .subscribe({ count -> friendRequestsCountLiveData.value = count },
                     { e -> Log.e("RequestsTBarViewModel", (e.toString())) })
     }
 }

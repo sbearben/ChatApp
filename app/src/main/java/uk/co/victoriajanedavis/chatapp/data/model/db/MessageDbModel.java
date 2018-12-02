@@ -14,7 +14,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "messages",
         foreignKeys = @ForeignKey(
-                entity = ChatMembershipDbModel.class,
+                entity = ChatDbModel.class,
                 parentColumns = "chat_uuid",
                 childColumns = "chat_uuid",
                 onDelete = CASCADE),
@@ -22,10 +22,12 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class MessageDbModel {
 
     @PrimaryKey @NonNull private UUID uuid;
-    @ColumnInfo(name = "user_uuid") private UUID userUuid;
     private String text;
     private Date created;
     @ColumnInfo(name = "chat_uuid") private UUID chatUuid;
+    @ColumnInfo(name = "user_uuid") private UUID userUuid;
+    @ColumnInfo(name = "user_username") private String userUsername;
+    @ColumnInfo(name = "from_current_user") private boolean fromCurrentUser;
 
 
     public MessageDbModel() {};
@@ -37,14 +39,6 @@ public class MessageDbModel {
 
     public void setUuid(@NonNull UUID uuid) {
         this.uuid = uuid;
-    }
-
-    public UUID getUserUuid() {
-        return userUuid;
-    }
-
-    public void setUserUuid(UUID userUuid) {
-        this.userUuid = userUuid;
     }
 
     public String getText() {
@@ -69,6 +63,30 @@ public class MessageDbModel {
 
     public void setChatUuid(UUID chatUuid) {
         this.chatUuid = chatUuid;
+    }
+
+    public UUID getUserUuid() {
+        return userUuid;
+    }
+
+    public void setUserUuid(UUID userUuid) {
+        this.userUuid = userUuid;
+    }
+
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
+    }
+
+    public boolean isFromCurrentUser() {
+        return fromCurrentUser;
+    }
+
+    public void setFromCurrentUser(boolean fromCurrentUser) {
+        this.fromCurrentUser = fromCurrentUser;
     }
 
     @Override

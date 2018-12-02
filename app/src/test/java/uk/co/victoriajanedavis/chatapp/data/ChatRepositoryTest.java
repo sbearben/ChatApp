@@ -14,14 +14,14 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.ChatMembershipNwModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.UserNwModel;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.repositories.ChatRepository;
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService;
-import uk.co.victoriajanedavis.chatapp.domain.entities.ChatMembershipEntity;
+import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity;
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity;
 import uk.co.victoriajanedavis.chatapp.test_common.BaseTest;
 
@@ -30,7 +30,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class ChatRepositoryTest extends BaseTest {
 
     @Mock
-    private BaseReactiveStore<ChatMembershipEntity, ChatMembershipDbModel> chatStore;
+    private BaseReactiveStore<ChatEntity, ChatDbModel> chatStore;
 
     @Mock
     private BaseReactiveStore<FriendshipEntity, FriendshipDbModel> friendStore;
@@ -48,11 +48,11 @@ public class ChatRepositoryTest extends BaseTest {
 
     @Test
     public void getAllChatMembershipsReturnsStoreObservable() {
-        List<ChatMembershipEntity> list = createChatMembershipEntityList();
+        List<ChatEntity> list = createChatMembershipEntityList();
         new ArrangeBuilder().withListFromChatMembershipsStore(list)
                             .withFriendshipEntityFromFriendStore(Mockito.mock(FriendshipEntity.class));
 
-        TestObserver<List<ChatMembershipEntity>> to = repository.getAllChatMemberships().test();
+        TestObserver<List<ChatEntity>> to = repository.getAllChatMemberships().test();
         to.assertValueAt(0, testObjectList -> testObjectList.equals(list));
         to.assertValueAt(0, testObjectList -> testObjectList.size() == 3);
 
@@ -61,7 +61,7 @@ public class ChatRepositoryTest extends BaseTest {
 
     @Test
     public void friendStoreReturnsEachChatMembershipsAssociatedFriendship() {
-        List<ChatMembershipEntity> list = createChatMembershipEntityList();
+        List<ChatEntity> list = createChatMembershipEntityList();
         new ArrangeBuilder().withListFromChatMembershipsStore(list)
                 .withFriendshipEntityFromFriendStore(Mockito.mock(FriendshipEntity.class));
 
@@ -98,7 +98,7 @@ public class ChatRepositoryTest extends BaseTest {
 
     @Test
     public void creditDraftsAreStoredInStoreViaReplaceAll() throws Exception {
-        ChatMembershipEntity entity = Mockito.mock(ChatMembershipEntity.class);
+        ChatEntity entity = Mockito.mock(ChatEntity.class);
         new ArrangeBuilder().withChatMembershipsFromService(
                 Collections.singletonList(Mockito.mock(ChatMembershipNwModel.class)));
 
@@ -129,17 +129,17 @@ public class ChatRepositoryTest extends BaseTest {
         return new UserNwModel(UUID.randomUUID());
     }
 
-    private static List<ChatMembershipEntity> createChatMembershipEntityList() {
-        return new ArrayList<ChatMembershipEntity>() {{
-            add(new ChatMembershipEntity(UUID.randomUUID()));
-            add(new ChatMembershipEntity(UUID.randomUUID()));
-            add(new ChatMembershipEntity(UUID.randomUUID()));
+    private static List<ChatEntity> createChatMembershipEntityList() {
+        return new ArrayList<ChatEntity>() {{
+            add(new ChatEntity(UUID.randomUUID()));
+            add(new ChatEntity(UUID.randomUUID()));
+            add(new ChatEntity(UUID.randomUUID()));
         }};
     }
 
     private class ArrangeBuilder {
 
-        private ArrangeBuilder withListFromChatMembershipsStore(List<ChatMembershipEntity> chatEntities) {
+        private ArrangeBuilder withListFromChatMembershipsStore(List<ChatEntity> chatEntities) {
             Mockito.when(chatStore.getAll(null)).thenReturn(Observable.just(chatEntities));
             return this;
         }

@@ -13,7 +13,9 @@ public class MessageNwModel {
     @SerializedName("text") @Expose private String text;
     @SerializedName("created") @Expose private Date created;
     @SerializedName("chat_uuid") @Expose private UUID chatUuid;
-    @SerializedName("user") @Expose private UserNwModel user;
+    @SerializedName("user_uuid") @Expose private UUID userUuid;
+    @SerializedName("user_username") @Expose private String userUsername;
+    @SerializedName("from_current_user") @Expose private boolean fromCurrentUser;
 
 
     public MessageNwModel(UUID uuid) {
@@ -52,12 +54,28 @@ public class MessageNwModel {
         this.chatUuid = chatUuid;
     }
 
-    public UserNwModel getUser() {
-        return user;
+    public UUID getUserUuid() {
+        return userUuid;
     }
 
-    public void setUser(UserNwModel user) {
-        this.user = user;
+    public void setUserUuid(UUID userUuid) {
+        this.userUuid = userUuid;
+    }
+
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
+    }
+
+    public boolean isFromCurrentUser() {
+        return fromCurrentUser;
+    }
+
+    public void setFromCurrentUser(boolean fromCurrentUser) {
+        this.fromCurrentUser = fromCurrentUser;
     }
 
     @Override

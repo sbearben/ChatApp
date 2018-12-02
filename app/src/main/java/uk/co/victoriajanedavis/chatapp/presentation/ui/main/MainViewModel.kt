@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
         return isUserLoggedIn.getBehaviorStream(null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(isUserLoggedInLiveData::postValue,
+                .subscribe({ isUserLoggedIn -> isUserLoggedInLiveData.value = isUserLoggedIn },
                     { e -> Log.e("MainViewModel", "Error getting isUserLoggedIn boolean", e)})
     }
 }

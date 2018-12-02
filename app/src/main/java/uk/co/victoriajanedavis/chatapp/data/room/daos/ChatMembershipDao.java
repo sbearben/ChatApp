@@ -11,31 +11,31 @@ import java.util.List;
 import java.util.UUID;
 
 import io.reactivex.Flowable;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 
 @Dao
 public abstract class ChatMembershipDao {
 
     @Query("SELECT * FROM chat_memberships")
-    public abstract Flowable<List<ChatMembershipDbModel>> getAll();
+    public abstract Flowable<List<ChatDbModel>> getAll();
 
     @Query("SELECT * FROM chat_memberships WHERE chat_uuid=:chat_uuid")
-    public abstract Flowable<ChatMembershipDbModel> get(UUID chat_uuid);
+    public abstract Flowable<ChatDbModel> get(UUID chat_uuid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insertChatMembership(ChatMembershipDbModel chatMembership);
+    public abstract void insertChatMembership(ChatDbModel chatMembership);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void insertChatMemberships(List<ChatMembershipDbModel> chatMemberships);
+    public abstract void insertChatMemberships(List<ChatDbModel> chatMemberships);
 
     @Delete
-    public abstract void deleteChatMembership(ChatMembershipDbModel chatMembership);
+    public abstract void deleteChatMembership(ChatDbModel chatMembership);
 
     @Query("DELETE FROM chat_memberships")
     public abstract void clear();
 
     @Transaction
-    public void replaceAll(List<ChatMembershipDbModel> chatMemberships) {
+    public void replaceAll(List<ChatDbModel> chatMemberships) {
         clear();
         insertChatMemberships(chatMemberships);
     }

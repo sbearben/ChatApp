@@ -42,6 +42,7 @@ dependencies {
     final ROOM_VERSION = '1.1.1'
     final LIFECYCLE_VERSION = '1.1.1'
     final NAVIGATION_VERSION = '1.0.0-alpha07'
+    final ANDROID_KTX_VERSION = '1.0.1'
 
     def jUnit = "junit:junit:4.12"
     def mockito = "org.mockito:mockito-core:$MOCKITO_VERSION"
@@ -63,6 +64,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+    // Android KTX - Kotlin extensions that are part of Android Jetpack
+    //implementation "androidx.core:core-ktx:$ANDROID_KTX_VERSION"
 
     // Room
     implementation "android.arch.persistence.room:runtime:$ROOM_VERSION"

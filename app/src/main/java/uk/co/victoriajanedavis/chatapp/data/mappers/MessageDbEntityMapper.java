@@ -12,10 +12,13 @@ public class MessageDbEntityMapper extends Mapper<MessageDbModel, MessageEntity>
         MessageEntity entity = new MessageEntity();
 
         entity.setUuid(from.getUuid());
+        entity.setChatUuid(from.getChatUuid());
         entity.setUserUuid(from.getUserUuid());
+        entity.setUserUsername(from.getUserUsername());
         entity.setText(from.getText());
         entity.setCreated(from.getCreated());
-        entity.setChatUuid(from.getChatUuid());
+        entity.setFromCurrentUser(from.isFromCurrentUser());
+
         return entity;
     }
 }

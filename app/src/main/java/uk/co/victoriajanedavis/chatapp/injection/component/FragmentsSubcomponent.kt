@@ -5,6 +5,7 @@ import dagger.android.AndroidInjector
 import uk.co.victoriajanedavis.chatapp.injection.module.ChildFragmentsModule
 import uk.co.victoriajanedavis.chatapp.injection.module.FriendClickedModule
 import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
@@ -32,4 +33,10 @@ interface SignupFragmentSubcomponent : AndroidInjector<SignupFragment> {
 ])
 interface FriendRequestsToolbarFragmentSubcomponent : AndroidInjector<FriendRequestsToolbarFragment> {
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<FriendRequestsToolbarFragment>()
+}
+
+@PerFragment
+@Subcomponent()
+interface ChatFragmentSubcomponent : AndroidInjector<ChatFragment> {
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<ChatFragment>()
 }

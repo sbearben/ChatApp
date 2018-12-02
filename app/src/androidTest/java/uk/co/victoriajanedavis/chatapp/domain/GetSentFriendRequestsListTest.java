@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.UserNwModel;
 import uk.co.victoriajanedavis.chatapp.data.repositories.SentFriendRequestRepository;
@@ -27,7 +27,6 @@ import uk.co.victoriajanedavis.chatapp.data.repositories.cache.SentFriendRequest
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService;
-import uk.co.victoriajanedavis.chatapp.domain.Cache;
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity;
 import uk.co.victoriajanedavis.chatapp.domain.interactors.GetSentFriendRequestsList;
 import uk.co.victoriajanedavis.chatapp.test_common.BaseTest;
@@ -37,7 +36,7 @@ import uk.co.victoriajanedavis.chatapp.test_common.ModelGenerationUtil;
 public class GetSentFriendRequestsListTest extends BaseTest {
 
     private ChatAppDatabase database;
-    private BaseReactiveStore<ChatMembershipDbModel> chatStore;
+    private BaseReactiveStore<ChatDbModel> chatStore;
     private BaseReactiveStore<FriendshipDbModel> friendshipStore;
     private SentFriendRequestRepository repository;
     private GetSentFriendRequestsList interactor;
@@ -55,7 +54,7 @@ public class GetSentFriendRequestsListTest extends BaseTest {
                 .allowMainThreadQueries()
                 .build();
 
-        Cache.DiskCache<UUID, ChatMembershipDbModel> chatCache = new ChatMembershipCache(database);
+        Cache.DiskCache<UUID, ChatDbModel> chatCache = new ChatMembershipCache(database);
         chatStore = new BaseReactiveStore<>(chatCache);
 
         Cache.DiskCache<UUID, FriendshipDbModel> friendshipCache = new SentFriendRequestCache(database);

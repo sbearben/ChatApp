@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
     fun getLoginUserLiveData(): LiveData<State<TokenEntity>> = loginUserLiveData
 
     fun loginUser(username: String, password: String) {
-        loginUserLiveData.postValue(ShowLoading)
+        loginUserLiveData.value = ShowLoading
         compositeDisposable.add(bindToUseCase(LoginParams(username, password)))
     }
 
@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
         return loginUser.getSingle(loginParams)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ tokenEntity -> loginUserLiveData.postValue(ShowContent(tokenEntity)) },
-                        { e -> loginUserLiveData.postValue(ShowError(e.toString())) })
+                .subscribe({ tokenEntity -> loginUserLiveData.value = ShowContent(tokenEntity) },
+                        { e -> loginUserLiveData.value = ShowError(e.toString()) })
     }
 }

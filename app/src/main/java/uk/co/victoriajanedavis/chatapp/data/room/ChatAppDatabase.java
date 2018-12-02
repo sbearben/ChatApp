@@ -3,7 +3,7 @@ package uk.co.victoriajanedavis.chatapp.data.room;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.MessageDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.converter.BooleanConverter;
@@ -15,7 +15,7 @@ import uk.co.victoriajanedavis.chatapp.data.room.daos.MessageDao;
 
 
 @Database(entities = {
-        ChatMembershipDbModel.class,
+        ChatDbModel.class,
         FriendshipDbModel.class,
         MessageDbModel.class},
     version = 1,

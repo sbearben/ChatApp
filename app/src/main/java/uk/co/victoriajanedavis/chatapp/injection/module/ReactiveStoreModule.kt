@@ -2,7 +2,7 @@ package uk.co.victoriajanedavis.chatapp.injection.module
 
 import dagger.Module
 import dagger.Provides
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.db.MessageDbModel
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.*
@@ -20,7 +20,7 @@ class ReactiveStoreModule {
     @Provides
     @ApplicationScope
     fun chatMembershipReactiveStore(cache: ChatMembershipCache)
-            : BaseReactiveStore<ChatMembershipDbModel> {
+            : BaseReactiveStore<ChatDbModel> {
         return BaseReactiveStore(cache)
     }
 

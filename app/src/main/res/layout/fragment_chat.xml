@@ -39,6 +39,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:importantForAutofill="no"
+            android:imeOptions="actionSend"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/send_button"/>

@@ -39,7 +39,8 @@ public class MessageCache implements DiskCache<UUID, MessageDbModel> {
 
     @Override
     public void replaceAll(@Nullable UUID chatUuid, @NonNull List<MessageDbModel> messageDbModels) {
-        dao.replaceAllByChat(chatUuid, messageDbModels);
+        if (chatUuid == null) dao.replaceAll(messageDbModels);
+        else dao.replaceAllByChat(chatUuid, messageDbModels);
     }
 
     @Override

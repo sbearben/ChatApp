@@ -8,16 +8,13 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.UUID;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "friendships",
         foreignKeys = @ForeignKey(
-                entity = ChatMembershipDbModel.class,
+                entity = ChatDbModel.class,
                 parentColumns = "chat_uuid",
                 childColumns = "chat_uuid",
                 onDelete = CASCADE),

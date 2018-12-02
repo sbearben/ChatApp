@@ -27,7 +27,6 @@ public class SendChatMessage implements SendInteractor<SendChatMessage.MessagePa
         return repository.pushNewMessageToChat(messageParams.chatUuid, messageParams.message);
     }
 
-
     public static final class MessageParams {
         @NonNull private final UUID chatUuid;
         @NonNull private final String message;

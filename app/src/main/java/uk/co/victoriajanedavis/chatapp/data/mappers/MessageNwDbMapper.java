@@ -12,10 +12,13 @@ public class MessageNwDbMapper extends Mapper<MessageNwModel, MessageDbModel> {
         MessageDbModel dbModel = new MessageDbModel();
 
         dbModel.setUuid(from.getUuid());
-        dbModel.setUserUuid(from.getUser().getUuid());
+        dbModel.setChatUuid(from.getChatUuid());
         dbModel.setText(from.getText());
         dbModel.setCreated(from.getCreated());
-        dbModel.setChatUuid(from.getChatUuid());
+        dbModel.setUserUuid(from.getUserUuid());
+        dbModel.setUserUsername(from.getUserUsername());
+        dbModel.setFromCurrentUser(from.isFromCurrentUser());
+
         return dbModel;
     }
 }

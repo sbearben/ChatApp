@@ -20,16 +20,19 @@ import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.MessageDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.ChatMembershipNwModel;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.ChatMembershipCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.FriendshipCache;
+import uk.co.victoriajanedavis.chatapp.data.repositories.cache.MessageCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
+import uk.co.victoriajanedavis.chatapp.data.repositories.store.MessageReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService;
 import uk.co.victoriajanedavis.chatapp.domain.Cache;
-import uk.co.victoriajanedavis.chatapp.domain.entities.ChatMembershipEntity;
+import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity;
 import uk.co.victoriajanedavis.chatapp.test_common.BaseTest;
 import uk.co.victoriajanedavis.chatapp.test_common.ModelGenerationUtil;
 
@@ -37,7 +40,7 @@ import uk.co.victoriajanedavis.chatapp.test_common.ModelGenerationUtil;
 public class ChatRepositoryTest extends BaseTest {
 
     private ChatAppDatabase database;
-    private BaseReactiveStore<ChatMembershipDbModel> chatStore;
+    private BaseReactiveStore<ChatDbModel> chatStore;
     private BaseReactiveStore<FriendshipDbModel> friendshipStore;
     private ChatRepository chatRepository;
 
@@ -54,13 +57,16 @@ public class ChatRepositoryTest extends BaseTest {
                 .allowMainThreadQueries()
                 .build();
 
-        Cache.DiskCache<UUID, ChatMembershipDbModel> chatCache = new ChatMembershipCache(database);
+        Cache.DiskCache<UUID, ChatDbModel> chatCache = new ChatMembershipCache(database);
         chatStore = new BaseReactiveStore<>(chatCache);
 
         Cache.DiskCache<UUID, FriendshipDbModel> friendshipCache = new FriendshipCache(database);
         friendshipStore = new BaseReactiveStore<>(friendshipCache);
 
-        chatRepository = new ChatRepository(chatStore, friendshipStore, service);
+        MessageCache messageCache = new MessageCache(database);
+        MessageReactiveStore messageStore = new MessageReactiveStore(messageCache);
+
+        chatRepository = new ChatRepository(chatStore, friendshipStore, messageStore, service);
     }
 
     @After
@@ -80,9 +86,9 @@ public class ChatRepositoryTest extends BaseTest {
 
     @Test
     public void lastStoredObjectIsEmittedAfterSubscription() {
-        List<ChatMembershipDbModel> dbModels = createAndStoreChatMembershipDbModelsWithFriendShips(1);
+        List<ChatDbModel> dbModels = createAndStoreChatMembershipDbModelsWithFriendShips(1);
 
-        TestObserver<List<ChatMembershipEntity>> getObserver = chatRepository.getAllChatMemberships().test();
+        TestObserver<List<ChatEntity>> getObserver = chatRepository.getAllChatMemberships().test();
 
         getObserver.assertValueAt(0, list -> list.size() == 1);
         getObserver.assertValueAt(0, list -> list.get(0).getUuid().equals(dbModels.get(0).getUuid()));
@@ -106,7 +112,7 @@ public class ChatRepositoryTest extends BaseTest {
         new ArrangeBuilder().withChatMembershipsFromService(ModelGenerationUtil.createChatMembershipNwList(3));
 
         TestObserver fetchObserver = chatRepository.fetchChatMemberships().test();
-        TestObserver<List<ChatMembershipEntity>> getObserver = chatRepository.getAllChatMemberships().test();
+        TestObserver<List<ChatEntity>> getObserver = chatRepository.getAllChatMemberships().test();
 
         fetchObserver.assertComplete();
 
@@ -118,7 +124,7 @@ public class ChatRepositoryTest extends BaseTest {
     public void emptyListAndFetchedListIsEmittedWhenSubscribedBeforeFetch() {
         new ArrangeBuilder().withChatMembershipsFromService(ModelGenerationUtil.createChatMembershipNwList(3));
 
-        TestObserver<List<ChatMembershipEntity>> getObserver = chatRepository.getAllChatMemberships().test();
+        TestObserver<List<ChatEntity>> getObserver = chatRepository.getAllChatMemberships().test();
         TestObserver fetchObserver = chatRepository.fetchChatMemberships().test();
 
         getObserver.assertValueAt(0, List::isEmpty);
@@ -133,7 +139,7 @@ public class ChatRepositoryTest extends BaseTest {
         new ArrangeBuilder().withChatMembershipsFromService(new ArrayList<>());
         createAndStoreChatMembershipDbModelsWithFriendShips(3);
 
-        TestObserver<List<ChatMembershipEntity>> getObserver = chatRepository.getAllChatMemberships().test();
+        TestObserver<List<ChatEntity>> getObserver = chatRepository.getAllChatMemberships().test();
         TestObserver fetchObserver = chatRepository.fetchChatMemberships().test();
 
         getObserver.assertValueAt(0, list -> list.size() == 3);
@@ -148,10 +154,10 @@ public class ChatRepositoryTest extends BaseTest {
     /****************** Helper methods ******************/
     /****************************************************/
 
-    private List<ChatMembershipDbModel> createAndStoreChatMembershipDbModelsWithFriendShips(int number) {
-        List<ChatMembershipDbModel> chatDbModels = new ArrayList<>(number);
+    private List<ChatDbModel> createAndStoreChatMembershipDbModelsWithFriendShips(int number) {
+        List<ChatDbModel> chatDbModels = new ArrayList<>(number);
         for (int i=0; i<number; i++) {
-            ChatMembershipDbModel dbModel = ModelGenerationUtil.createChatMembershipDbModelWithFriendshipDbModel();
+            ChatDbModel dbModel = ModelGenerationUtil.createChatMembershipDbModelWithFriendshipDbModel();
             chatDbModels.add(dbModel);
 
             chatStore.storeSingular(dbModel).subscribe();

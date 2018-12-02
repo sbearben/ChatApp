@@ -1,6 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.ActionBar
 import android.util.Log
@@ -10,22 +11,43 @@ import kotlinx.android.synthetic.main.toolbar.*
 import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
+import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction.Clicked
 
 
 class FriendRequestsToolbarFragment : DaggerFragment() {
 
-    @Inject lateinit var viewModel: FriendRequestsToolbarViewModel
-    @Inject lateinit var testLiveData: MutableLiveData<Int>
+    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var friendActionLiveData: MutableLiveData<FriendAction>
+    lateinit var viewModel: FriendRequestsToolbarViewModel
+
 
     lateinit var friendRequestsBadge: TextView
     private var friendRequestsCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendRequestsToolbarViewModel::class.java)
+
         setHasOptionsMenu(true)
         attachChildFragment()
+
+        /**
+         *  We are calling setupFriendActionObserver() in onCreate() and using 'this' as the lifecycle owner in
+         *  friendActionLiveData.observe since if we don't, the 'Up' button won't work in ChatFragment, and pressing
+         *  the back button will crash the app since if we setup this observer in onViewCreated, the last action will
+         *  be immediately emitted after we press back in ChatFragment, causing another call to
+         *  findNavController().navigate(R.id.action_friendsFragment_to_chatFragment, bundle) which will be invalid
+         *  since I believe the immediate emission doesn't allow the NavGraph to recognize this fragment as the "current"
+         *  fragment (meaning that call to navigate(R.id.action_friendsFragment_to_chatFragment) will be made when the
+         *  NavGraph still thinks ChatFragment is the "current" fragment - ie it's invalid causing the crash.
+         */
+        setupFriendActionObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +57,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModelObserver()
-        Log.d("FriendRequestsFragment", "liveData: ${testLiveData.toString()}")
+        Log.d("FriendRequestsFragment", "liveData: $friendActionLiveData")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -56,7 +78,10 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
-            R.id.menu_friend_requests -> { return true }
+            R.id.menu_friend_requests -> {
+                // Navigate to "FriendRequestsFragment"
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -78,10 +103,27 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     private fun setupViewModelObserver() {
         viewModel.getFriendRequestsCountLiveData().observe(viewLifecycleOwner) {
-            it?.let { friendRequestsCount = it
-                Log.d("FriendRequestsFragment", "friendRequestsCount: $friendRequestsCount")
-            }
-            activity?.invalidateOptionsMenu()
+            it?.let(::onFriendRequestsCountReceived)
+        }
+    }
+
+    private fun onFriendRequestsCountReceived(count: Int) {
+        friendRequestsCount = count
+        Log.d("FriendRequestsFragment", "friendRequestsCount: $friendRequestsCount")
+        activity?.invalidateOptionsMenu()
+    }
+
+    private fun setupFriendActionObserver() {
+        friendActionLiveData.observe(this) {
+            it?.let(::onFriendActionReceived)
+        }
+    }
+
+    private fun onFriendActionReceived(action: FriendAction) = when(action) {
+        is Clicked -> {
+            val bundle = ChatFragment.createBundle(action.chatEntity.uuid.toString(),
+                action.chatEntity.friendship!!.username)
+            findNavController().navigate(R.id.action_friendsFragment_to_chatFragment, bundle)
         }
     }
 

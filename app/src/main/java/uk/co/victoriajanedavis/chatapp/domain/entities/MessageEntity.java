@@ -9,9 +9,11 @@ public class MessageEntity {
 
     @NonNull private UUID uuid;
     private UUID userUuid;
+    private String userUsername;
     private String text;
     private Date created;
     private UUID chatUuid;
+    private boolean fromCurrentUser;
 
 
     public MessageEntity() {};
@@ -37,6 +39,14 @@ public class MessageEntity {
         this.userUuid = userUuid;
     }
 
+    public String getUserUsername() {
+        return userUsername;
+    }
+
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
+    }
+
     public String getText() {
         return text;
     }
@@ -59,6 +69,14 @@ public class MessageEntity {
 
     public void setChatUuid(UUID chatUuid) {
         this.chatUuid = chatUuid;
+    }
+
+    public boolean isFromCurrentUser() {
+        return fromCurrentUser;
+    }
+
+    public void setFromCurrentUser(boolean fromCurrentUser) {
+        this.fromCurrentUser = fromCurrentUser;
     }
 
     @Override

@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
+import uk.co.victoriajanedavis.chatapp.data.services.QueryConverterFactory
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntityHolder
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 
@@ -21,21 +22,25 @@ class ChatAppServiceModule {
 
     @Provides
     @ApplicationScope
-    fun retrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
+    fun retrofit(okHttpClient: OkHttpClient,
+                 gson: Gson,
+                 queryConverterFactory: QueryConverterFactory
+    ): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
-                .build()
+            .baseUrl("http://10.0.2.2:8000/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(queryConverterFactory)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 
     @Provides
     @ApplicationScope
     fun gson(): Gson {
         return GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                .create()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .create()
     }
 
     @Provides

@@ -19,12 +19,17 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="chatFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="friendsFragment">
                               <value>
                                 <LayoutPositions>
                                   <option name="myPositions">
                                     <map>
-                                      <entry key="action_friendsFragment_to_messagingFragment">
+                                      <entry key="action_friendsFragment_to_chatFragment">
                                         <value>
                                           <LayoutPositions />
                                         </value>
@@ -32,11 +37,6 @@
                                     </map>
                                   </option>
                                 </LayoutPositions>
-                              </value>
-                            </entry>
-                            <entry key="messagingFragment">
-                              <value>
-                                <LayoutPositions />
                               </value>
                             </entry>
                           </map>

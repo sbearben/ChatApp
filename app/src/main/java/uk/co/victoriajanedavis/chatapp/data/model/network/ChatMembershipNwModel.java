@@ -3,30 +3,28 @@ package uk.co.victoriajanedavis.chatapp.data.model.network;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.UUID;
-
 
 public class ChatMembershipNwModel {
 
-    @SerializedName("chat_uuid") @Expose private UUID chatUuid;
+    @SerializedName("chat") @Expose private ChatNwModel chat;
     @SerializedName("other_user") @Expose private UserNwModel otherUser;
 
 
-    public ChatMembershipNwModel(UUID chatUuid) {
-        this(chatUuid, null);
+    public ChatMembershipNwModel(ChatNwModel chat) {
+        this(chat, null);
     }
 
-    public ChatMembershipNwModel(UUID chatUuid, UserNwModel otherUser) {
-        this.chatUuid = chatUuid;
+    public ChatMembershipNwModel(ChatNwModel chat, UserNwModel otherUser) {
+        this.chat = chat;
         this.otherUser = otherUser;
     }
 
-    public UUID getChatUuid() {
-        return chatUuid;
+    public ChatNwModel getChat() {
+        return chat;
     }
 
-    public void setChatUuid(UUID chatUuid) {
-        this.chatUuid = chatUuid;
+    public void setChat(ChatNwModel chat) {
+        this.chat = chat;
     }
 
     public UserNwModel getOtherUser() {
@@ -42,6 +40,6 @@ public class ChatMembershipNwModel {
         if (other == null) return false;
         if (other == this) return true;
         if (!(other instanceof ChatMembershipNwModel))return false;
-        return this.getChatUuid().equals(((ChatMembershipNwModel) other).getChatUuid());
+        return this.getChat().getUuid().equals(((ChatMembershipNwModel) other).getChat().getUuid());
     }
 }

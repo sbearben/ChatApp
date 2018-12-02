@@ -5,22 +5,23 @@ import java.util.List;
 import java.util.UUID;
 
 import io.reactivex.annotations.Nullable;
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatMembershipDbModel;
+import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
-import uk.co.victoriajanedavis.chatapp.data.model.network.ChatMembershipNwModel;
-import uk.co.victoriajanedavis.chatapp.data.model.network.MessageNwModel;
-import uk.co.victoriajanedavis.chatapp.data.model.network.TokenNwModel;
-import uk.co.victoriajanedavis.chatapp.data.model.network.UserNwModel;
+import uk.co.victoriajanedavis.chatapp.data.model.network.*;
 
 public class ModelGenerationUtil {
 
     public static List<ChatMembershipNwModel> createChatMembershipNwList(int number) {
         List<ChatMembershipNwModel> chatNwModels = new ArrayList<>(number);
         for (int i=0; i<number; i++) {
-            chatNwModels.add(new ChatMembershipNwModel(UUID.randomUUID(), createUserNwModel(null)));
+            chatNwModels.add(new ChatMembershipNwModel(createChatNwModel(), createUserNwModel(null)));
         }
 
         return chatNwModels;
+    }
+
+    public static ChatNwModel createChatNwModel() {
+        return new ChatNwModel(UUID.randomUUID());
     }
 
     public static UserNwModel createUserNwModel(@Nullable String username) {
@@ -38,8 +39,8 @@ public class ModelGenerationUtil {
         return userNwModels;
     }
 
-    public static List<ChatMembershipDbModel> createChatMembershipDbModelList(int number) {
-        List<ChatMembershipDbModel> chatDbModelList = new ArrayList<>(number);
+    public static List<ChatDbModel> createChatMembershipDbModelList(int number) {
+        List<ChatDbModel> chatDbModelList = new ArrayList<>(number);
         for (int i=0; i<number; i++) {
             chatDbModelList.add(createChatMembershipDbModelWithFriendshipDbModel());
         }
@@ -47,21 +48,21 @@ public class ModelGenerationUtil {
         return chatDbModelList;
     }
 
-    public static ChatMembershipDbModel createChatMembershipDbModelWithFriendshipDbModel() {
-        ChatMembershipDbModel dbModel = createChatMembershipDbModel();
+    public static ChatDbModel createChatMembershipDbModelWithFriendshipDbModel() {
+        ChatDbModel dbModel = createChatMembershipDbModel();
 
         dbModel.setFriendship(createFriendshipDbModel(dbModel));
         return dbModel;
     }
 
-    public static ChatMembershipDbModel createChatMembershipDbModel() {
-        ChatMembershipDbModel dbModel = new ChatMembershipDbModel();
+    public static ChatDbModel createChatMembershipDbModel() {
+        ChatDbModel dbModel = new ChatDbModel();
         dbModel.setUuid(UUID.randomUUID());
 
         return dbModel;
     }
 
-    public static FriendshipDbModel createFriendshipDbModel(ChatMembershipDbModel chatDbModel) {
+    public static FriendshipDbModel createFriendshipDbModel(ChatDbModel chatDbModel) {
         FriendshipDbModel friendshipDbModel = new FriendshipDbModel();
         friendshipDbModel.setUuid(UUID.randomUUID());
 
@@ -81,7 +82,7 @@ public class ModelGenerationUtil {
     public static MessageNwModel createMessageNwModel(@Nullable UUID chatUuid) {
         MessageNwModel model = new MessageNwModel(UUID.randomUUID());
         model.setChatUuid(chatUuid);
-        model.setUser(createUserNwModel(null));
+        //model.setUser(createUserNwModel(null));
         return model;
     }
 

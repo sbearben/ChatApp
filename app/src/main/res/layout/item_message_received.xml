@@ -18,6 +18,7 @@
         android:layout_height="35dp"
         android:gravity="center"
         android:textColor="@color/blueDarkPastel"
+        android:textAllCaps="true"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/message_received_textview"
@@ -33,7 +34,7 @@
         android:paddingEnd="10dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:textSize="13sp"
+        android:textSize="@dimen/text_message"
         app:layout_constraintStart_toEndOf="@+id/friend_icon_textview"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="How are you doing? This is a long message that should probably wrap." />
