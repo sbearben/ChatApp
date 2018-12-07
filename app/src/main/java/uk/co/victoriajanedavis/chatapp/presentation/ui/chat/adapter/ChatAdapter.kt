@@ -1,10 +1,10 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import android.os.Handler
 
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup

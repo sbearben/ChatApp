@@ -1,10 +1,10 @@
 package uk.co.victoriajanedavis.chatapp.domain;
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,18 +13,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.util.List;
-
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import uk.co.victoriajanedavis.chatapp.data.model.network.TokenNwModel;
-import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.TokenSpModel;
 import uk.co.victoriajanedavis.chatapp.data.repositories.TokenRepository;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.TokenCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.TokenReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService;
-import uk.co.victoriajanedavis.chatapp.domain.Cache;
-import uk.co.victoriajanedavis.chatapp.domain.ReactiveStore;
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity;
 import uk.co.victoriajanedavis.chatapp.domain.interactors.LoginUser;
 import uk.co.victoriajanedavis.chatapp.domain.interactors.LoginUser.LoginParams;

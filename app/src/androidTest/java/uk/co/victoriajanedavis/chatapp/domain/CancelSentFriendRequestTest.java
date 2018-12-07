@@ -1,9 +1,9 @@
 package uk.co.victoriajanedavis.chatapp.domain;
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.persistence.room.Room;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.room.Room;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +26,6 @@ import uk.co.victoriajanedavis.chatapp.data.repositories.cache.SentFriendRequest
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService;
-import uk.co.victoriajanedavis.chatapp.domain.Cache;
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity;
 import uk.co.victoriajanedavis.chatapp.domain.interactors.CancelSentFriendRequest;
 import uk.co.victoriajanedavis.chatapp.test_common.BaseTest;

@@ -4,8 +4,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntityHolder
+import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import javax.inject.Inject
 
+@ApplicationScope
 class WebSocketHolder @Inject constructor(
     private val okHttpClient: OkHttpClient,
     private val tokenHolder: TokenEntityHolder

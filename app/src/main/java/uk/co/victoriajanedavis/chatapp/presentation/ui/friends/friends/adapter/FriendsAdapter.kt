@@ -1,8 +1,8 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter
 
-import android.arch.lifecycle.MutableLiveData
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup

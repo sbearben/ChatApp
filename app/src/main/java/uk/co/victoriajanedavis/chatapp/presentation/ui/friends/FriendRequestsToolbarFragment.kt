@@ -1,9 +1,9 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.ActionBar
+import androidx.appcompat.app.ActionBar
 import android.util.Log
 import android.view.*
 import dagger.android.support.DaggerFragment
@@ -65,10 +65,10 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         setupToolbar()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.fragment_friend_requests_toolbar, menu)
-        val menuItem = menu?.findItem(R.id.menu_friend_requests)
+        inflater.inflate(R.menu.fragment_friend_requests_toolbar, menu)
+        val menuItem = menu.findItem(R.id.menu_friend_requests)
 
         friendRequestsBadge = menuItem?.actionView?.findViewById(R.id.friendRequestsBadge) as TextView
         friendRequestsBadge.setOnClickListener { onOptionsItemSelected(menuItem) }
@@ -76,8 +76,8 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         setupBadge()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
             R.id.menu_friend_requests -> {
                 // Navigate to "FriendRequestsFragment"
                 return true

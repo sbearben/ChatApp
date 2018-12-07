@@ -1,10 +1,10 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.OnLifecycleEvent
-import android.support.v7.widget.LinearLayoutManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_friends.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.viewslice.BaseViewSlice
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendsAdapter

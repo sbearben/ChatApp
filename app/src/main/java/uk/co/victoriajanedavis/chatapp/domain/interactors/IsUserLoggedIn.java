@@ -9,7 +9,9 @@ import io.reactivex.annotations.Nullable;
 import uk.co.victoriajanedavis.chatapp.data.repositories.TokenRepository;
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity;
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntityHolder;
+import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope;
 
+@ApplicationScope
 public class IsUserLoggedIn implements ReactiveInteractor.RetrieveInteractor<Void, Boolean> {
 
     @NonNull private final TokenRepository repository;

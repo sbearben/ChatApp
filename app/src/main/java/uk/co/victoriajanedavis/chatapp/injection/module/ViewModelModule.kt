@@ -1,7 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -11,6 +11,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainActivityViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainViewModel
 
 @Module
@@ -18,6 +19,11 @@ abstract class ViewModelModule {
 
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory : ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainActivityViewModel::class)
+    abstract fun mainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
 
     @Binds
     @IntoMap

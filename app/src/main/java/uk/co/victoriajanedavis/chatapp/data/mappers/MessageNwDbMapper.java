@@ -9,8 +9,17 @@ public class MessageNwDbMapper extends Mapper<MessageNwModel, MessageDbModel> {
 
     @Override
     public MessageDbModel mapFrom(@NonNull MessageNwModel from) {
-        MessageDbModel dbModel = new MessageDbModel();
+        return new MessageDbModel(
+                from.getUuid(),
+                from.getText(),
+                from.getCreated(),
+                from.getChatUuid(),
+                from.getUserUuid(),
+                from.getUserUsername(),
+                from.isFromCurrentUser()
+        );
 
+        /*
         dbModel.setUuid(from.getUuid());
         dbModel.setChatUuid(from.getChatUuid());
         dbModel.setText(from.getText());
@@ -20,5 +29,6 @@ public class MessageNwDbMapper extends Mapper<MessageNwModel, MessageDbModel> {
         dbModel.setFromCurrentUser(from.isFromCurrentUser());
 
         return dbModel;
+        */
     }
 }

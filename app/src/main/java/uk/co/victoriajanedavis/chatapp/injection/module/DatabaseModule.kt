@@ -1,6 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import uk.co.victoriajanedavis.chatapp.ChatApp

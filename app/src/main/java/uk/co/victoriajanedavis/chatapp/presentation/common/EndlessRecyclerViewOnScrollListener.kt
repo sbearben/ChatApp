@@ -1,7 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.presentation.common
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class EndlessRecyclerViewOnScrollListener constructor(
     private val layoutManager: LinearLayoutManager,

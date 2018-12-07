@@ -1,14 +1,15 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.chat
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.ActionBar
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.ActionBar
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -66,11 +67,16 @@ class ChatFragment : DaggerFragment() {
     }
 
     private fun setupRecyclerView() {
-        recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        recyclerview.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.VERTICAL,
+            true
+        )
         //recyclerview.setHasFixedSize(true)
         recyclerview.adapter = adapter
         recyclerview.addOnScrollListener(EndlessRecyclerViewOnScrollListener(
-            recyclerview.layoutManager as LinearLayoutManager) {
+            recyclerview.layoutManager as LinearLayoutManager
+        ) {
             Log.d("ChatFragment", "scrollListener triggered")
             if (!(adapter.isEmpty()) && !adapter.isLoadingViewAdded()) {
                 viewModel.loadMore(chatUuid)

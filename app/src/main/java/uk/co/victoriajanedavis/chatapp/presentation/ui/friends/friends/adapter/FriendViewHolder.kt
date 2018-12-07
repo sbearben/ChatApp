@@ -1,6 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

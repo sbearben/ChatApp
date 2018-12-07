@@ -1,6 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.common.viewslice
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import android.content.Context
 import android.content.res.Resources
 import android.view.View

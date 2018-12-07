@@ -1,18 +1,18 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ext
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.view.View
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 

@@ -1,6 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.login
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

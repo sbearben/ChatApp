@@ -7,7 +7,6 @@ import okio.ByteString
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import javax.inject.Inject
 
-@ApplicationScope
 class ChatWebSocketListener @Inject constructor() : WebSocketListener() {
 
     override fun onOpen(webSocket: WebSocket, response: Response) {

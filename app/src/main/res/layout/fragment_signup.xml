@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:paddingEnd="24dp">
 
     <!-- Username Label -->
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,10 +23,10 @@
             android:hint="@string/fragment_signup_username"
             android:inputType="text"
             android:importantForAutofill="no"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Email Label -->
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,10 +41,10 @@
             android:hint="@string/fragment_login_email"
             android:inputType="textEmailAddress"
             android:importantForAutofill="no"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Password1 Label -->
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordOneInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,10 +59,10 @@
             android:hint="@string/fragment_signup_password1"
             android:inputType="textPassword"
             android:importantForAutofill="no"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Password2 Label -->
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordTwoInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,10 +77,10 @@
                 android:hint="@string/fragment_signup_password2"
                 android:inputType="textPassword"
                 android:importantForAutofill="no"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Signup Button -->
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/createAccountButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,4 +111,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

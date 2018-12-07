@@ -12,6 +12,7 @@ import uk.co.victoriajanedavis.chatapp.injection.module.*
     AndroidSupportInjectionModule::class,
     ApplicationModule::class,
     ChatAppServiceModule::class,
+    ChatAppWebSocketModule::class,
     DatabaseModule::class,
     MainActivityModule::class,
     NetworkModule::class,

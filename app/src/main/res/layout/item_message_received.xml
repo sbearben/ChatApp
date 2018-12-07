@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
     android:paddingStart="8dp"
@@ -36,7 +36,6 @@
         android:paddingBottom="8dp"
         android:textSize="@dimen/text_message"
         app:layout_constraintStart_toEndOf="@+id/friend_icon_textview"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="How are you doing? This is a long message that should probably wrap." />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

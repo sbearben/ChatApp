@@ -1,7 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.presentation.common
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import javax.inject.Inject
 import javax.inject.Provider
