@@ -27,7 +27,8 @@ public class ChatMembershipCache implements DiskCache<UUID, ChatDbModel> {
 
     @Override
     public void putSingular(@NonNull ChatDbModel chatDbModel) {
-        dao.insertChatMembership(chatDbModel);
+        //dao.insertChatMembership(chatDbModel);
+        dao.upsertChatMembership(chatDbModel);
     }
 
     @Override

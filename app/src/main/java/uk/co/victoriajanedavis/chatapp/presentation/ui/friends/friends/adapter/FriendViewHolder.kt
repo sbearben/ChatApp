@@ -19,7 +19,7 @@ class FriendViewHolder(
     private lateinit var chatEntity: ChatEntity
 
     init {
-        itemView.setOnClickListener({ friendActionLiveData.value = FriendAction.Clicked(chatEntity) })
+        itemView.setOnClickListener { friendActionLiveData.value = FriendAction.Clicked(chatEntity) }
     }
 
     override fun bind(item: ChatEntity) {

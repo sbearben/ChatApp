@@ -35,13 +35,6 @@ interface ChatAppService {
     @get:GET("chat/me/chats/")
     val chatMemberships: Single<List<ChatMembershipNwModel>>
 
-    @POST("chat/api-token-auth/")
-    @FormUrlEncoded
-    fun getAuthenticatedToken(
-        @Field("username") username: String,
-        @Field("password") password: String
-    ): Single<TokenNwModel>
-
     @GET("chat/users/{user_uuid}/")
     fun getUser(@Path("user_uuid") uuid: String): Single<UserNwModel>
 

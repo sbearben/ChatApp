@@ -57,7 +57,6 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModelObserver()
-        Log.d("FriendRequestsFragment", "liveData: $friendActionLiveData")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -70,8 +69,10 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         inflater.inflate(R.menu.fragment_friend_requests_toolbar, menu)
         val menuItem = menu.findItem(R.id.menu_friend_requests)
 
-        friendRequestsBadge = menuItem?.actionView?.findViewById(R.id.friendRequestsBadge) as TextView
-        friendRequestsBadge.setOnClickListener { onOptionsItemSelected(menuItem) }
+        friendRequestsBadge = menuItem.actionView.findViewById(R.id.friend_requests_badge) as TextView
+
+        val badgeLayout =  menuItem.actionView.findViewById(R.id.friend_requests_badge_layout) as View
+        badgeLayout.setOnClickListener { onOptionsItemSelected(menuItem) }
 
         setupBadge()
     }
@@ -79,7 +80,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu_friend_requests -> {
-                // Navigate to "FriendRequestsFragment"
+                findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

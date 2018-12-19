@@ -10,6 +10,9 @@ import java.util.UUID
 
 import io.reactivex.Flowable
 import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel
+import androidx.room.Update
+
+
 
 @Dao
 abstract class ChatMembershipDao {
@@ -17,11 +20,14 @@ abstract class ChatMembershipDao {
     @get:Query("SELECT * FROM chat_memberships")
     abstract val all: Flowable<List<ChatDbModel>>
 
-    @Query("SELECT * FROM chat_memberships WHERE chat_uuid=:chat_uuid")
-    abstract operator fun get(chat_uuid: UUID): Flowable<ChatDbModel>
+    @Query("SELECT * FROM chat_memberships WHERE uuid=:uuid")
+    abstract operator fun get(uuid: UUID): Flowable<ChatDbModel>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertChatMembership(chatMembership: ChatDbModel)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun insertChatMembership(chatMembership: ChatDbModel): Long
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun updateChatMembership(chatMembership: ChatDbModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertChatMemberships(chatMemberships: List<ChatDbModel>)
@@ -31,6 +37,13 @@ abstract class ChatMembershipDao {
 
     @Query("DELETE FROM chat_memberships")
     abstract fun clear()
+
+    fun upsertChatMembership(chatMembership: ChatDbModel) {
+        val id = insertChatMembership(chatMembership)
+        if (id == -1L) {
+            updateChatMembership(chatMembership)
+        }
+    }
 
     @Transaction
     open fun replaceAll(chatMemberships: List<ChatDbModel>) {

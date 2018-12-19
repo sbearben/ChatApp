@@ -54,6 +54,9 @@
             <action
                 android:id="@+id/action_friendsFragment_to_chatFragment"
                 app:destination="@id/chatFragment" />
+            <action
+                android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
+                app:destination="@id/friendRequestsFragment" />
         </fragment>
 
         <fragment
@@ -62,5 +65,12 @@
             android:label="fragment_chat"
             tools:layout="@layout/fragment_chat" />
     </navigation>
+
+    <!-- FriendRequestsFragment -->
+    <fragment
+        android:id="@+id/friendRequestsFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment"
+        android:label="fragment_friend_requests"
+        tools:layout="@layout/fragment_friend_requests"/>
 
 </navigation>

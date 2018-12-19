@@ -26,6 +26,10 @@
     <color name="blueDarkPastel">#6b8191</color>
     <color name="purpleDarkPastel">#877b91</color>
 
+    <!-- Friend Request - Accept Button -->
+    <color name="colorSaphire">#0F52BA</color>
+    <color name="colorPigeon">#7285A5</color>
+
     <color name="gray">#ffdfdfdf</color>
     <color name="dirtyWhite">#E0E0E0</color>
     <color name="white">#FFFFFF</color>

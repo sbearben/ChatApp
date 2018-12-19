@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/friend_requests_badge_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +11,7 @@
     android:focusable="true">
 
     <ImageView
-        android:id="@+id/friendRequestsImageView"
+        android:id="@+id/friend_requests_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_person_add_black_30dp"
@@ -20,14 +21,14 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/friendRequestsBadge"
+        android:id="@+id/friend_requests_badge"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:background="@drawable/badge_background"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="8sp"
-        app:layout_constraintCircle="@id/friendRequestsImageView"
+        app:layout_constraintCircle="@id/friend_requests_imageview"
         app:layout_constraintCircleRadius="16dp"
         app:layout_constraintCircleAngle="45"
         tools:text="10"/>

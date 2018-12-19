@@ -72,11 +72,9 @@ class ChatFragment : DaggerFragment() {
             RecyclerView.VERTICAL,
             true
         )
-        //recyclerview.setHasFixedSize(true)
         recyclerview.adapter = adapter
         recyclerview.addOnScrollListener(EndlessRecyclerViewOnScrollListener(
-            recyclerview.layoutManager as LinearLayoutManager
-        ) {
+            recyclerview.layoutManager as LinearLayoutManager) {
             Log.d("ChatFragment", "scrollListener triggered")
             if (!(adapter.isEmpty()) && !adapter.isLoadingViewAdded()) {
                 viewModel.loadMore(chatUuid)
@@ -114,7 +112,11 @@ class ChatFragment : DaggerFragment() {
     }
 
     private fun onStateChanged(state: PaginatedState<List<MessageEntity>>) = when(state) {
-        is ShowContent -> adapter.submitList(state.content)
+        is ShowContent -> {
+            adapter.submitList(state.content) {
+                recyclerview.scrollToPosition(0)
+            }
+        }
         is ShowLoading -> showLoading()
         is ShowLoadingMore -> adapter.addLoadingView()
         is LoadingMoreComplete -> adapter.removeLoadingView()

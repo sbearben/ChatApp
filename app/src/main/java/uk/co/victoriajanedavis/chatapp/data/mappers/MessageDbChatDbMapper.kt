@@ -8,11 +8,11 @@ import uk.co.victoriajanedavis.chatapp.domain.common.Mapper
 class MessageDbChatDbMapper : Mapper<MessageDbModel, ChatDbModel>() {
 
     override fun mapFrom(from: MessageDbModel): ChatDbModel {
-        return ChatDbModel().apply {
-            uuid = from.chatUuid
-            lastMessageText = from.text
-            lastMessageDate = from.created
+        return ChatDbModel(
+            uuid = from.chatUuid,
+            lastMessageText = from.text,
+            lastMessageDate = from.created,
             isLastMessageFromCurrentUser = false
-        }
+        )
     }
 }

@@ -4,11 +4,8 @@ import android.util.Log
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.WebSocket
 import okhttp3.logging.HttpLoggingInterceptor
 import uk.co.victoriajanedavis.chatapp.data.services.AuthenticationInterceptor
-import uk.co.victoriajanedavis.chatapp.data.websocket.ChatWebSocketListener
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import java.util.concurrent.TimeUnit
 

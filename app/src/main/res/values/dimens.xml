@@ -43,4 +43,7 @@
     <!-- MarginDividerItemDecoration -->
     <dimen name="recycler_view_divider_margin">16dp</dimen>
 
+    <!-- Friend Request Buttons - Corner Radiuses -->
+    <dimen name="button_friend_request_radius">8dp</dimen>
+
 </resources>

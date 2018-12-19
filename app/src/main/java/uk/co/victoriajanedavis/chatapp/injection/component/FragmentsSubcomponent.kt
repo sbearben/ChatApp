@@ -2,10 +2,13 @@ package uk.co.victoriajanedavis.chatapp.injection.component
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
-import uk.co.victoriajanedavis.chatapp.injection.module.ChildFragmentsModule
-import uk.co.victoriajanedavis.chatapp.injection.module.FriendClickedModule
+import uk.co.victoriajanedavis.chatapp.injection.module.FriendRequestsChildFragmentsModule
+import uk.co.victoriajanedavis.chatapp.injection.module.FriendRequestsModule
+import uk.co.victoriajanedavis.chatapp.injection.module.FriendRequestsToolbarChildFragmentsModule
+import uk.co.victoriajanedavis.chatapp.injection.module.FriendRequestsToolbarModule
 import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
@@ -28,8 +31,8 @@ interface SignupFragmentSubcomponent : AndroidInjector<SignupFragment> {
 
 @PerFragment
 @Subcomponent(modules = [
-    FriendClickedModule::class,
-    ChildFragmentsModule::class
+    FriendRequestsToolbarModule::class,
+    FriendRequestsToolbarChildFragmentsModule::class
 ])
 interface FriendRequestsToolbarFragmentSubcomponent : AndroidInjector<FriendRequestsToolbarFragment> {
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<FriendRequestsToolbarFragment>()
@@ -39,4 +42,13 @@ interface FriendRequestsToolbarFragmentSubcomponent : AndroidInjector<FriendRequ
 @Subcomponent()
 interface ChatFragmentSubcomponent : AndroidInjector<ChatFragment> {
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<ChatFragment>()
+}
+
+@PerFragment
+@Subcomponent(modules = [
+    FriendRequestsModule::class,
+    FriendRequestsChildFragmentsModule::class
+])
+interface FriendRequestsFragmentSubcomponent : AndroidInjector<FriendRequestsFragment> {
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<FriendRequestsFragment>()
 }

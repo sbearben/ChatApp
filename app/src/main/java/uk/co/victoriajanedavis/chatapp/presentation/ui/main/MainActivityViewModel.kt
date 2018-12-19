@@ -1,18 +1,18 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.main
 
 import androidx.lifecycle.ViewModel
-import uk.co.victoriajanedavis.chatapp.data.repositories.WebSocketRepository
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketEventStreamsLifeManager
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(
-        private val webSocketRepository: WebSocketRepository
+        private val webSocketEventStreamsLifeManager: WebSocketEventStreamsLifeManager
 ) : ViewModel() {
 
     init {
-        webSocketRepository.initializeStreams()
+        webSocketEventStreamsLifeManager.initializeStreams()
     }
 
     override fun onCleared() {
-        webSocketRepository.initializeStreams()
+        webSocketEventStreamsLifeManager.clearStreams()
     }
 }

@@ -21,10 +21,15 @@
         android:layout_margin="@dimen/text_margin"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/message_tryagain_button"
-        style="?attr/buttonStyle"
-        android:layout_width="170dp"
-        android:layout_height="55dp"
-        android:layout_margin="@dimen/button_margin"/>
+        android:id="@+id/message_button"
+        style="?attr/imageButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:layout_margin="@dimen/button_margin"
+        android:text="@string/action_try_again" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
+import com.google.gson.Gson
 import com.tinder.scarlet.Lifecycle
 import com.tinder.scarlet.Protocol
 import com.tinder.scarlet.Scarlet
@@ -28,7 +29,8 @@ class ChatAppWebSocketModule {
         protocol: Protocol,
         configuration: Scarlet.Configuration
     ): ChatAppWebSocketService {
-        return Scarlet(protocol, configuration).create<ChatAppWebSocketService>()
+        return Scarlet(protocol, configuration)
+            .create()
     }
 
     @Provides
@@ -46,10 +48,10 @@ class ChatAppWebSocketModule {
 
     @Provides
     @ApplicationScope
-    fun scarletConfiguration(lifecycle: Lifecycle): Scarlet.Configuration {
+    fun scarletConfiguration(lifecycle: Lifecycle, gson: Gson): Scarlet.Configuration {
         return Scarlet.Configuration(
             lifecycle = lifecycle,
-            messageAdapterFactories = listOf(GsonMessageAdapter.Factory()),
+            messageAdapterFactories = listOf(GsonMessageAdapter.Factory(gson)),
             streamAdapterFactories = listOf(RxJava2StreamAdapterFactory())
         )
     }

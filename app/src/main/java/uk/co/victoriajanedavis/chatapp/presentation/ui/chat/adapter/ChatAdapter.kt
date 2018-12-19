@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter
 
-import androidx.lifecycle.LiveData
 import android.os.Handler
 
 import androidx.recyclerview.widget.ListAdapter
@@ -12,11 +11,10 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.common.LoadingViewHolder
-import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import javax.inject.Inject
 
 @PerFragment
-class ChatAdapter @Inject constructor()
+class ChatAdapter @Inject  constructor()
     : ListAdapter<MessageEntity, BaseViewHolder<MessageEntity>>(MessageDiffCallback()) {
 
     private val handler: Handler = Handler()

@@ -30,4 +30,16 @@
     <string name="fragment_messaging_message_box_hint">Write a message</string>
     <string name="fragment_messaging_send_button_description">Message send button</string>
 
+    <!-- FriendRequestsFragment -->
+    <string name="fragment_friend_requests_title">Friend Requests</string>
+    <string name="friend_requests_pager_adapter_received">Received</string>
+    <string name="friend_requests_pager_adapter_sent">Sent</string>
+
+    <!-- ReceivedFriendRequestsFragment -->
+    <string name="received_friend_request_accept">Accept</string>
+    <string name="received_friend_request_reject">Reject</string>
+
+    <!-- SentFriendRequestsFragment -->
+    <string name="sent_friend_request_cancel">Cancel</string>
+
 </resources>

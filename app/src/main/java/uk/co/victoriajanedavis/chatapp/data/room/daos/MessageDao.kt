@@ -21,10 +21,18 @@ abstract class MessageDao {
     abstract val all: Flowable<List<MessageDbModel>>
 
     @Query("SELECT * FROM messages WHERE uuid=:uuid")
-    abstract operator fun get(uuid: UUID): Flowable<MessageDbModel>
+    abstract fun get(uuid: UUID): Flowable<MessageDbModel>
 
     @Query("SELECT * FROM messages WHERE chat_uuid=:chatUuid ORDER BY created DESC")
     abstract fun getMessagesByChatUuid(chatUuid: UUID): Flowable<List<MessageDbModel>>
+
+    @Query("SELECT m.* " +
+            "FROM messages m " +
+            "   LEFT JOIN messages b " +
+            "       ON m.chat_uuid = b.chat_uuid " +
+            "       AND m.created < b.created " +
+            "WHERE b.created IS NULL")
+    abstract fun getNewestMessagePerUniqueChat(): Flowable<List<MessageDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertMessage(message: MessageDbModel)

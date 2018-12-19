@@ -7,6 +7,7 @@ import java.util.Date
 import java.util.UUID
 
 data class MessageWsModel (
+    @SerializedName("type") @Expose val type: String = "chat_message",
     @SerializedName("uuid") @Expose var uuid: UUID,
     @SerializedName("chat_uuid") @Expose var chatUuid: UUID,
     @SerializedName("sender_uuid") @Expose var senderUuid: UUID,

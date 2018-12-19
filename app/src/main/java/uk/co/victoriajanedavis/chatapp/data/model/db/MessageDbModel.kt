@@ -16,7 +16,7 @@ import androidx.room.ForeignKey.CASCADE
     tableName = "messages",
     foreignKeys = arrayOf(ForeignKey(
         entity = ChatDbModel::class,
-        parentColumns = arrayOf("chat_uuid"),
+        parentColumns = arrayOf("uuid"),
         childColumns = arrayOf("chat_uuid"),
         onDelete = CASCADE
     )),

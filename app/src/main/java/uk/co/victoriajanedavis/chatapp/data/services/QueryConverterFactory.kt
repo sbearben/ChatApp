@@ -21,10 +21,8 @@ class QueryConverterFactory @Inject constructor() : Converter.Factory() {
     }
 
     private fun createDateConverter(): Converter<Date, String> {
-        return object : Converter<Date, String> {
-            override fun convert(date: Date): String {
-                return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(date)
-            }
+        return Converter { date ->
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(date)
         }
     }
 }

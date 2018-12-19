@@ -60,16 +60,16 @@ public class ReceivedFriendRequestRepository {
     public Single<FriendshipEntity> acceptReceivedFriendRequest(String username) {
         return chatService.acceptFriendRequest(username)
                 .map(nwAcceptedDbMapper::mapFrom)
-                .flatMap(friendEntity -> friendStore.storeSingular(friendEntity)
-                        .andThen(Single.just(friendEntity).map(dbEntityMapper::mapFrom)));
+                .flatMap(friendDbModel -> friendStore.storeSingular(friendDbModel)
+                        .andThen(Single.just(friendDbModel).map(dbEntityMapper::mapFrom)));
     }
 
     @NonNull
     public Single<FriendshipEntity> rejectReceivedFriendRequest(String username) {
         return chatService.rejectFriendRequest(username)
                 .map(nwReceivedDbMapper::mapFrom)
-                .flatMap(friendEntity -> friendStore.delete(friendEntity)
-                        .andThen(Single.just(friendEntity).map(dbEntityMapper::mapFrom)));
+                .flatMap(friendDbModel -> friendStore.delete(friendDbModel)
+                        .andThen(Single.just(friendDbModel).map(dbEntityMapper::mapFrom)));
     }
 
 

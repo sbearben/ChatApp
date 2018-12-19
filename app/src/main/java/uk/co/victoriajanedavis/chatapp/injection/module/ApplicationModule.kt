@@ -6,11 +6,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import uk.co.victoriajanedavis.chatapp.ChatApp
+import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ApplicationContext
 
 @Module
 abstract class ApplicationModule {
 
     @Binds
+    @ApplicationContext
     abstract fun provideContext(app: ChatApp) : Context
 
     @Module
@@ -18,7 +20,7 @@ abstract class ApplicationModule {
 
         @JvmStatic
         @Provides
-        fun provideSharedPreferences(context: Context): SharedPreferences =
+        fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
                 context.getSharedPreferences("chat_app_shared_pref", Context.MODE_PRIVATE)
     }
 

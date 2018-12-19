@@ -7,9 +7,9 @@ import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction
 
 @Module
-class FriendClickedModule {
+class FriendRequestsToolbarModule {
 
     @Provides
     @PerFragment
-    fun provideFriendClickedLiveData(): MutableLiveData<FriendAction> = MutableLiveData()
+    fun provideFriendActionLiveData(): MutableLiveData<FriendAction> = MutableLiveData()
 }
