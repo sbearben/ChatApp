@@ -17,25 +17,25 @@ import uk.co.victoriajanedavis.chatapp.data.model.network.*
 interface ChatAppService {
 
     /*************** RECEIVED Friend Request Endpoints  */
-    @get:GET("chat/me/receivedfriendrequests/")
+    @get:GET("me/receivedfriendrequests/")
     val receivedFriendRequests: Single<List<UserNwModel>>
 
 
     /*************** SENT Friend Request Endpoints  */
-    @get:GET("chat/me/sentfriendrequests/")
+    @get:GET("me/sentfriendrequests/")
     val sentFriendRequests: Single<List<UserNwModel>>
 
 
     /*************** Friends List  */
-    @get:GET("chat/me/friends/")
+    @get:GET("me/friends/")
     val friends: Single<List<UserNwModel>>
 
 
     /*************** Chat Membership List  */
-    @get:GET("chat/me/chats/")
+    @get:GET("me/chats/")
     val chatMemberships: Single<List<ChatMembershipNwModel>>
 
-    @GET("chat/users/{user_uuid}/")
+    @GET("users/{user_uuid}/")
     fun getUser(@Path("user_uuid") uuid: String): Single<UserNwModel>
 
     /*************** Login/Logout/Register Endpoints  */
@@ -60,24 +60,24 @@ interface ChatAppService {
         @Field("password2") password2: String
     ): Single<TokenNwModel>
 
-    @POST("chat/me/receivedfriendrequests/")
+    @POST("me/receivedfriendrequests/")
     fun acceptFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
-    @DELETE("chat/me/receivedfriendrequests/")
+    @DELETE("me/receivedfriendrequests/")
     fun rejectFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
-    @POST("chat/me/sentfriendrequests/")
+    @POST("me/sentfriendrequests/")
     fun sendFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
-    @DELETE("chat/me/sentfriendrequests/")
+    @DELETE("me/sentfriendrequests/")
     fun cancelSentFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
 
     /*************** Chat Details  */
-    @GET("chat/me/chats/{chat_uuid}/")
+    @GET("me/chats/{chat_uuid}/")
     fun getChatMessages(@Path("chat_uuid") chatUuid: String): Single<CollectionNwModel<MessageNwModel>>
 
-    @GET("chat/me/chats/{chat_uuid}/")
+    @GET("me/chats/{chat_uuid}/")
     fun getNewestChatMessages(
         @Path("chat_uuid") chatUuid: String,
         @Query("per_page") perPage: Int?
@@ -86,14 +86,14 @@ interface ChatAppService {
     @GET
     fun getChatMessagesByUrl(@Url url: String): Single<CollectionNwModel<MessageNwModel>>
 
-    @GET("chat/me/chats/{chat_uuid}/")
+    @GET("me/chats/{chat_uuid}/")
     fun getChatMessagesOlderThanGivenDate(
         @Path("chat_uuid") chatUuid: String,
         @Query("created_before") createdBefore: Date,
         @Query("per_page") perPage: Int?
     ): Single<List<MessageNwModel>>
 
-    @POST("chat/me/chats/{chat_uuid}/")
+    @POST("me/chats/{chat_uuid}/")
     @FormUrlEncoded
     fun postMessageToChat(
         @Path("chat_uuid") chatUuid: String,
@@ -102,12 +102,10 @@ interface ChatAppService {
 
 
     /*************** Firebase Stuff  */
-    @POST("chat/me/firebasetoken/")
+    @POST("fcm/token/")
     @FormUrlEncoded
     fun postFirebaseToken(@Field("token") token: String): Completable
 
-    @DELETE("chat/me/firebasetoken/")
-    fun invalidateFirebaseToken(): Completable
-
-
+    @DELETE("fcm/token/")
+    fun deleteFirebaseToken(): Completable
 }

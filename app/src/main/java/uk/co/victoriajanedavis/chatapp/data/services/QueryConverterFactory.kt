@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.chatapp.data.services
 
-import android.util.Log
 import retrofit2.Converter
 import retrofit2.Retrofit
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.google.android.material.snackbar.Snackbar
 
 
 /**
@@ -78,4 +79,14 @@ fun Activity.isNetworkAvailable(): Boolean {
 fun Activity.hideKeyboard() {
     val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(this.window.decorView.windowToken, 0)
+}
+
+fun Fragment.hideKeyboard() {
+    this.activity?.hideKeyboard()
+}
+
+fun Fragment.showSnackbar(text: String, duration: Int) : Snackbar {
+    this.view?.let { view ->
+        return Snackbar.make(view, text, duration)
+    }
 }

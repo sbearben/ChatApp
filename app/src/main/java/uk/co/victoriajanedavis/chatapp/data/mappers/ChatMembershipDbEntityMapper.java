@@ -11,10 +11,6 @@ import java.util.List;
 
 public class ChatMembershipDbEntityMapper extends Mapper<ChatDbModel, ChatEntity> {
 
-    private FriendshipDbEntityMapper friendshipMapper = new FriendshipDbEntityMapper();
-    private MessageDbEntityMapper messageMapper = new MessageDbEntityMapper();
-
-
     @Override
     public ChatEntity mapFrom(ChatDbModel from) {
         ChatEntity entity = new ChatEntity();

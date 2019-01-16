@@ -16,6 +16,7 @@
     <string name="fragment_login_signup_link">No account yet? Create one</string>
 
     <!-- SignupFragment -->
+    <string name="fragment_signup_signup">Sign Up</string>
     <string name="fragment_signup_username">Username</string>
     <string name="fragment_signup_password1">Password 1</string>
     <string name="fragment_signup_password2">Password 2</string>

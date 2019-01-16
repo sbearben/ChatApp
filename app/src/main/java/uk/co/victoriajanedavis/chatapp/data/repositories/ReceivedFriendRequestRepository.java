@@ -42,17 +42,18 @@ public class ReceivedFriendRequestRepository {
     @NonNull
     public Observable<List<FriendshipEntity>> getAllReceivedFriendRequests() {
         return friendStore.getAll(null)
+                .doOnNext(dbModels -> Log.d("ReceivedRepo", "getAllReceived emmited: " + dbModels.size()))
                 .switchMapSingle(dbModels -> Observable.fromIterable(dbModels)
-                    .map(dbEntityMapper::mapFrom)
-                    .toList());
+                        .map(dbEntityMapper::mapFrom)
+                        .toList());
     }
 
     @NonNull
     public Completable fetchReceivedFriendRequests() {
         return chatService.getReceivedFriendRequests()
                 .flatMap(nwModels -> Observable.fromIterable(nwModels)
-                    .map(nwReceivedDbMapper::mapFrom)
-                    .toList())
+                        .map(nwReceivedDbMapper::mapFrom)
+                        .toList())
                 .flatMapCompletable(friendRequests -> friendStore.replaceAll(null, friendRequests));
     }
 

@@ -53,7 +53,7 @@ public class FriendshipCache implements DiskCache<UUID, FriendshipDbModel> {
 
     @NonNull
     @Override
-    public Observable<FriendshipDbModel> getSingular(@NonNull UUID chat_uuid) {
+    public Observable<FriendshipDbModel> getSingular(@Nullable UUID chat_uuid) {
         return dao.getFriendshipByChatUuid(chat_uuid).toObservable();
     }
 

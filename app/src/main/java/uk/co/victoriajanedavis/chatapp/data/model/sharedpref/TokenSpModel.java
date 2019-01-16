@@ -5,10 +5,10 @@ import java.util.UUID;
 
 public class TokenSpModel {
 
-    public static final String PREF_TOKEN_KEY = "tokeyKey";
-    public static final String PREF_USER_UUID = "userUuid";
-    public static final String PREF_USER_USERNAME = "userUsername";
-    public static final String PREF_USER_EMAIL = "userEmail";
+    public static final String PREF_TOKEN_KEY = "tokenKey";
+    public static final String PREF_USER_UUID_KEY = "userUuidKey";
+    public static final String PREF_USER_USERNAME_KEY = "userUsernameKey";
+    public static final String PREF_USER_EMAIL_KEY = "userEmailKey";
 
     private String token;
     private UUID userUuid;

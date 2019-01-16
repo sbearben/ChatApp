@@ -12,6 +12,8 @@ import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ext.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
@@ -45,7 +47,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
          *  findNavController().navigate(R.id.action_friendsFragment_to_chatFragment, bundle) which will be invalid
          *  since I believe the immediate emission doesn't allow the NavGraph to recognize this fragment as the "current"
          *  fragment (meaning that call to navigate(R.id.action_friendsFragment_to_chatFragment) will be made when the
-         *  NavGraph still thinks ChatFragment is the "current" fragment - ie it's invalid causing the crash.
+         *  NavGraph still thinks ChatFragment is the "current" fragment - i.e. it's invalid causing the crash.
          */
         setupFriendActionObserver()
     }
@@ -57,6 +59,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewModelObserver()
+        viewModel.requestItems()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -104,8 +107,18 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     private fun setupViewModelObserver() {
         viewModel.getFriendRequestsCountLiveData().observe(viewLifecycleOwner) {
-            it?.let(::onFriendRequestsCountReceived)
+            it?.let { state ->
+                when(state) {
+                    is ShowContent -> onFriendRequestsCountReceived(state.content)
+                    is ShowLoading -> {}
+                    is ShowError -> showError(state.message)
+                }
+            }
         }
+    }
+
+    private fun showError(message: String) {
+        showSnackbar(message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun onFriendRequestsCountReceived(count: Int) {

@@ -55,7 +55,7 @@ public class MessageCache implements DiskCache<UUID, MessageDbModel> {
 
     @NonNull
     @Override
-    public Observable<MessageDbModel> getSingular(@NonNull UUID uuid) {
+    public Observable<MessageDbModel> getSingular(@Nullable UUID uuid) {
         return dao.get(uuid).toObservable();
     }
 

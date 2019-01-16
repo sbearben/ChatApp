@@ -65,10 +65,10 @@ public interface ReactiveInteractor {
     }
 
     /**
-     The refresh interactor is used to refresh the reactive store with new data. Typically calling this interactor will trigger events in its
-     get interactor counterpart. The returned observable will complete when the refresh is finished or error if there was any problem in the process.
+     The refreshItems interactor is used to refreshItems the reactive store with new data. Typically calling this interactor will trigger events in its
+     get interactor counterpart. The returned observable will complete when the refreshItems is finished or error if there was any problem in the process.
 
-     @param <Params> required parameters for the refresh.
+     @param <Params> required parameters for the refreshItems.
      */
     interface RefreshInteractor<Params> extends ReactiveInteractor {
 
@@ -81,6 +81,5 @@ public interface ReactiveInteractor {
         @NonNull
         Completable fetchMoreItems(@Nullable final Params params);
     }
-
 }
 

@@ -15,6 +15,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsVi
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainActivityViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -36,6 +37,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
     abstract fun loginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SignupViewModel::class)
+    abstract fun signupViewModel(viewModel: SignupViewModel): ViewModel
 
     @Binds
     @IntoMap

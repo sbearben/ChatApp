@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_signup.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -14,9 +15,7 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.invisible
-import uk.co.victoriajanedavis.chatapp.presentation.ext.observe
-import uk.co.victoriajanedavis.chatapp.presentation.ext.visible
+import uk.co.victoriajanedavis.chatapp.presentation.ext.*
 import javax.inject.Inject
 
 class SignupFragment : DaggerFragment() {
@@ -39,7 +38,6 @@ class SignupFragment : DaggerFragment() {
         setupViewModelStateObserver()
         setupCreateAccountButtonClickListener()
         setupSwitchToLoginPageClickListener()
-
     }
 
     private fun setupViewModelStateObserver() {
@@ -50,6 +48,7 @@ class SignupFragment : DaggerFragment() {
 
     private fun setupCreateAccountButtonClickListener() {
         createAccountButton.setOnClickListener {
+            hideKeyboard()
             viewModel.registerUser(usernameEditText.text.toString(), emailEditText.text.toString(),
                 passwordOneEditText.text.toString(), passwordTwoEditText.text.toString())
         }
@@ -57,6 +56,7 @@ class SignupFragment : DaggerFragment() {
 
     private fun setupSwitchToLoginPageClickListener() {
         loginLinkTextview.setOnClickListener {
+            hideKeyboard()
             findNavController().popBackStack()
         }
     }
@@ -79,7 +79,8 @@ class SignupFragment : DaggerFragment() {
     private fun showError(message: String) {
         enableViews()
         progressBar.invisible()
-        Log.e("SignupFragment", message)
+
+        showSnackbar(message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun disableViews() {

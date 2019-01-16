@@ -9,31 +9,38 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.domain.interactors.GetReceivedFriendRequestsCount
+import uk.co.victoriajanedavis.chatapp.presentation.common.State
+import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
 import javax.inject.Inject
 
 class FriendRequestsToolbarViewModel @Inject constructor(
-        private val receivedRequestsCount: GetReceivedFriendRequestsCount
+    private val receivedRequestsCount: GetReceivedFriendRequestsCount
 ) : ViewModel() {
 
-    private val friendRequestsCountLiveData = MutableLiveData<Int>()
+    private val friendRequestsCountLiveData = MutableLiveData<State<Int>>()
     private val compositeDisposable = CompositeDisposable()
 
-    init {
-        compositeDisposable.add(bindToUseCase())
-    }
-
     override fun onCleared() {
-        super.onCleared()
         compositeDisposable.dispose()
     }
 
-    fun getFriendRequestsCountLiveData(): LiveData<Int> = friendRequestsCountLiveData
+    fun requestItems() {
+        compositeDisposable.clear()
+        compositeDisposable.add(bindToUseCase())
+    }
+
+    fun getFriendRequestsCountLiveData(): LiveData<State<Int>> = friendRequestsCountLiveData
 
     private fun bindToUseCase() : Disposable {
         return receivedRequestsCount.getBehaviorStream(null)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ count -> friendRequestsCountLiveData.value = count },
-                    { e -> Log.e("RequestsTBarViewModel", (e.toString())) })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { streamState ->
+                when (streamState) {
+                    is OnNext -> friendRequestsCountLiveData.value = ShowContent(streamState.content)
+                    is OnError -> friendRequestsCountLiveData.value = ShowError("Error fetching friend requests from network")
+                }
+            }
     }
 }

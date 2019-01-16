@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/default_gray_clickable_selector"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
     android:paddingEnd="16dp"
@@ -67,12 +66,8 @@
 
     <TextView
         android:id="@+id/accept_button"
-        style="@style/ReceivedFriendRequestBaseButton"
+        style="@style/AcceptFriendRequestButton"
         android:layout_marginEnd="4dp"
-        android:textColor="@color/lightLightGray"
-        android:textStyle="bold"
-        android:background="@drawable/button_accept_ripple"
-        android:text="@string/received_friend_request_accept"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/details_layout"
@@ -80,11 +75,8 @@
 
     <TextView
         android:id="@+id/reject_button"
-        style="@style/ReceivedFriendRequestBaseButton"
+        style="@style/RejectFriendRequestButton"
         android:layout_marginStart="4dp"
-        android:textColor="@color/darkGray"
-        android:background="@drawable/button_reject_ripple"
-        android:text="@string/received_friend_request_reject"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/accept_button"

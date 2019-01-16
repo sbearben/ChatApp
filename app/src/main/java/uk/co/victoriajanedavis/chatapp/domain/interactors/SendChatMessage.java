@@ -24,7 +24,7 @@ public class SendChatMessage implements SendInteractor<SendChatMessage.MessagePa
     @NonNull
     @Override
     public Single<MessageEntity> getSingle(@NonNull MessageParams messageParams) {
-        return repository.pushNewMessageToChat(messageParams.chatUuid, messageParams.message);
+        return repository.postMessageToChat(messageParams.chatUuid, messageParams.message);
     }
 
     public static final class MessageParams {

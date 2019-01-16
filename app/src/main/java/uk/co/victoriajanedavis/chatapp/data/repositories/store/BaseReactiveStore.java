@@ -42,7 +42,7 @@ public class BaseReactiveStore<Value> implements ReactiveStore<UUID, Value> {
     }
 
     @Override
-    public Observable<Value> getSingular(@NonNull UUID uuid) {
+    public Observable<Value> getSingular(@Nullable UUID uuid) {
         return cache.getSingular(uuid);
     }
 

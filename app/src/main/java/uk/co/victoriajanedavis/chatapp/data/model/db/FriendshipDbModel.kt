@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 import androidx.room.ForeignKey.CASCADE
-
+import uk.co.victoriajanedavis.chatapp.data.common.TimestampProvider
 
 @Entity(
     tableName = "friendships",
@@ -22,19 +22,11 @@ import androidx.room.ForeignKey.CASCADE
     indices = arrayOf(Index(value = ["chat_uuid"]))
 )
 data class FriendshipDbModel (
-
     @PrimaryKey var uuid: UUID,
     var username: String,
     var email: String,
     @ColumnInfo(name = "friendship_accepted") var isFriendshipAccepted: Boolean = false,
     @ColumnInfo(name = "sent_from_current_user") var isSentFromCurrentUser: Boolean? = null,  // TODO: potential bug with TypeConverter here
-    @ColumnInfo(name = "chat_uuid") var chatUuid: UUID? = null
+    @ColumnInfo(name = "chat_uuid") var chatUuid: UUID? = null,
+    @ColumnInfo(name = "timestamp") var timestamp: Long = TimestampProvider.currentTimeMillis()
 )
-
-    /*
-    override fun equals(other: Any?): Boolean {
-        if (other == null) return false
-        if (other === this) return true
-        return if (other !is FriendshipDbModel) false else this.uuid == other.uuid
-    }
-    */

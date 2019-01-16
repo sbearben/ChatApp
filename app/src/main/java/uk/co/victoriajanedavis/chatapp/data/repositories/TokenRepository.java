@@ -6,6 +6,8 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
+import uk.co.victoriajanedavis.chatapp.data.repositories.store.BasePublishSubjectSingularStore;
+import uk.co.victoriajanedavis.chatapp.domain.ReactiveSingularStore;
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope;
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenNwSpMapper;
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenSpEntityMapper;
@@ -18,7 +20,7 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity;
 @ApplicationScope
 public class TokenRepository {
 
-    private final ReactiveStore<Void, TokenSpModel> tokenStore;
+    private final ReactiveSingularStore<TokenSpModel> tokenStore;
     private final ChatAppService chatService;
 
     private final TokenSpEntityMapper spEntityMapper;
@@ -26,7 +28,7 @@ public class TokenRepository {
 
 
     @Inject
-    public TokenRepository(@NonNull final TokenReactiveStore tokenStore,
+    public TokenRepository(@NonNull final BasePublishSubjectSingularStore<TokenSpModel> tokenStore,
                            @NonNull final ChatAppService service) {
         this.tokenStore = tokenStore;
         this.chatService = service;
@@ -36,14 +38,14 @@ public class TokenRepository {
 
     @NonNull
     public Single<TokenEntity> requestTokenSingle() {
-        return tokenStore.getSingular(null)
+        return tokenStore.getSingular()
                 .map(spEntityMapper::mapFrom)
                 .firstOrError();
     }
 
     @NonNull
     public Observable<TokenEntity> getTokenStream() {
-        return tokenStore.getSingular(null)
+        return tokenStore.getSingular()
                 .map(spEntityMapper::mapFrom);
     }
 
@@ -70,6 +72,6 @@ public class TokenRepository {
 
     @NonNull
     private Completable deleteTokenFromStorage() {
-        return tokenStore.delete(null);
+        return tokenStore.clear();
     }
 }

@@ -8,15 +8,32 @@
     </style>
 
 
-    <!-- Received Friend Request - Accept/Reject Buttons -->
-    <style name="ReceivedFriendRequestBaseButton">
+    <!-- Received/Sent Friend Request - Base Button -->
+    <style name="FriendRequestBaseButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:stateListAnimator">@animator/button_zaxis_animator</item>
+    </style>
+
+
+    <style name="AcceptFriendRequestButton" parent="FriendRequestBaseButton">
+        <item name="android:background">@drawable/button_accept_ripple</item>
+        <item name="android:textColor">@color/lightLightGray</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">@string/received_friend_request_accept</item>
+    </style>
+
+
+    <style name="RejectFriendRequestButton" parent="FriendRequestBaseButton">
+        <item name="android:background">@drawable/button_reject_ripple</item>
+        <item name="android:textColor">@color/darkGray</item>
+        <item name="android:text">@string/received_friend_request_reject</item>
     </style>
 
 </resources>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -14,9 +15,7 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.invisible
-import uk.co.victoriajanedavis.chatapp.presentation.ext.observe
-import uk.co.victoriajanedavis.chatapp.presentation.ext.visible
+import uk.co.victoriajanedavis.chatapp.presentation.ext.*
 import javax.inject.Inject
 
 class LoginFragment : DaggerFragment() {
@@ -39,7 +38,6 @@ class LoginFragment : DaggerFragment() {
         setupViewModelStateObserver()
         setupLoginButtonClickListener()
         setupSwitchToSignupPageClickListener()
-
     }
 
     private fun setupViewModelStateObserver() {
@@ -50,12 +48,14 @@ class LoginFragment : DaggerFragment() {
 
     private fun setupLoginButtonClickListener() {
         loginButton.setOnClickListener {
+            hideKeyboard()
             viewModel.loginUser(usernameEditText.text.toString(), passwordEditText.text.toString())
         }
     }
 
     private fun setupSwitchToSignupPageClickListener() {
         signupLinkTextView.setOnClickListener {
+            hideKeyboard()
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
     }
@@ -78,7 +78,8 @@ class LoginFragment : DaggerFragment() {
     private fun showError(message: String) {
         enableViews()
         progressBar.invisible()
-        Log.e("LoginFragment", message)
+
+        showSnackbar(message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun disableViews() {

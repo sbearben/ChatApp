@@ -21,7 +21,7 @@ public interface ReactiveStore<Key, Value> {
 
     Completable delete(@NonNull final Value model);
 
-    Observable<Value> getSingular(@NonNull final Key key);
+    Observable<Value> getSingular(@Nullable final Key key);
 
     Observable<List<Value>> getAll(@Nullable final Key key);
 }

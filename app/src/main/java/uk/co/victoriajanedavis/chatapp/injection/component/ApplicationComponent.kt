@@ -15,6 +15,7 @@ import uk.co.victoriajanedavis.chatapp.injection.module.*
     ChatAppWebSocketModule::class,
     DatabaseModule::class,
     MainActivityModule::class,
+    MyFirebaseServiceModule::class,
     NetworkModule::class,
     ReactiveStoreModule::class,
     ViewModelModule::class

@@ -41,16 +41,16 @@ public class MessageRepository {
     public Observable<List<MessageEntity>> getAllMessagesInChat(UUID chatUuid) {
         return messageStore.getAll(chatUuid)
                 .switchMapSingle(dbModels -> Observable.fromIterable(dbModels)
-                    .map(dbEntityMapper::mapFrom)
-                    .toList());
+                        .map(dbEntityMapper::mapFrom)
+                        .toList());
     }
 
     @NonNull
     public Completable fetchInitialMessagesInChat(UUID chatUuid) {
         return chatService.getNewestChatMessages(chatUuid.toString(), PAGE_SIZE)
                 .flatMap(nwList -> Observable.fromIterable(nwList)
-                    .map(nwDbMapper::mapFrom)
-                    .toList())
+                        .map(nwDbMapper::mapFrom)
+                        .toList())
                 .flatMapCompletable(messages -> messageStore.replaceAll(chatUuid, messages));
     }
 
@@ -79,7 +79,7 @@ public class MessageRepository {
     }
 
     @NonNull
-    public Single<MessageEntity> pushNewMessageToChat(UUID chatUuid, String message) {
+    public Single<MessageEntity> postMessageToChat(UUID chatUuid, String message) {
         return chatService.postMessageToChat(chatUuid.toString(), message)
                 .map(nwDbMapper::mapFrom)
                 .flatMap(messageDbModel -> messageStore.storeSingular(messageDbModel)

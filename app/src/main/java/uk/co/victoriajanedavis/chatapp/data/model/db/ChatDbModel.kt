@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import uk.co.victoriajanedavis.chatapp.data.common.TimestampProvider
 
 import java.util.Date
 import java.util.UUID
@@ -15,6 +16,7 @@ data class ChatDbModel(
     @ColumnInfo(name = "last_message_text") var lastMessageText: String = "",
     @ColumnInfo(name = "last_message_from_current_user") var isLastMessageFromCurrentUser: Boolean? = null,
     @ColumnInfo(name = "last_message_date") var lastMessageDate: Date? = null,
+    @ColumnInfo(name = "timestamp") var timestamp: Long = TimestampProvider.currentTimeMillis(),
     @Ignore var friendship: FriendshipDbModel? = null,
     @Ignore var messages: MutableList<MessageDbModel>? = null
 ) {
@@ -36,10 +38,10 @@ data class ChatDbModel(
     }
 }
 
-    /*
-    override fun equals(other: Any?): Boolean {
-        if (other == null) return false
-        if (other === this) return true
-        return if (other !is ChatDbModel) false else this.uuid == other.uuid
-    }
-     */
+/*
+override fun equals(other: Any?): Boolean {
+    if (other == null) return false
+    if (other === this) return true
+    return if (other !is ChatDbModel) false else this.uuid == other.uuid
+}
+ */

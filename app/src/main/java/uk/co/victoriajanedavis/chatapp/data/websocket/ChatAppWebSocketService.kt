@@ -10,8 +10,8 @@ interface ChatAppWebSocketService {
     @Receive
     fun observeWebSocketEvent(): Flowable<WebSocketEvent>
 
-    @Receive
-    fun observeStateTransition(): Flowable<StateTransition>
+    //@Receive
+    //fun observeStateTransition(): Flowable<StateTransition>
 
     @Receive
     fun observeMessages(): Flowable<MessageWsModel>

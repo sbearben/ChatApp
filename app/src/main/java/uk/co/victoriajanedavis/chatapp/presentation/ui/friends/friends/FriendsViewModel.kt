@@ -15,15 +15,14 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import javax.inject.Inject
 
 class FriendsViewModel @Inject constructor(
-        private val getChatList: GetChatList
+    private val getChatList: GetChatList
 ) : ViewModel() {
 
     private val chatLiveData = MutableLiveData<State<List<ChatEntity>>>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        chatLiveData.value = ShowLoading
-        compositeDisposable.add(bindToUseCase())
+        retry()
     }
 
     override fun onCleared() {
@@ -33,13 +32,19 @@ class FriendsViewModel @Inject constructor(
 
     fun getChatLiveData(): LiveData<State<List<ChatEntity>>> = chatLiveData
 
+    fun retry() {
+        chatLiveData.value = ShowLoading
+        compositeDisposable.clear()
+        compositeDisposable.add(bindToUseCase())
+    }
+
     private fun bindToUseCase() : Disposable {
         return getChatList.getBehaviorStream(null)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ entityList -> chatLiveData.value = ShowContent(entityList)
-                    Log.d("FriendsViewModel", "entityList size: ${entityList.size}")
-                },
-                    { e -> chatLiveData.value = ShowError(e.toString()) })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ entityList -> chatLiveData.value = ShowContent(entityList)
+                Log.d("FriendsViewModel", "entityList size: ${entityList.size}")
+            },
+                { e -> chatLiveData.value = ShowError(e.toString()) })
     }
 }

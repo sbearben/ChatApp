@@ -7,6 +7,18 @@
     android:paddingStart="24dp"
     android:paddingEnd="24dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textAllCaps="true"
+        android:text="@string/fragment_signup_signup"
+        android:textColor="@color/darkLightGray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/usernameInputLayout"/>
+
     <!-- Username Label -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameInputLayout"
@@ -63,20 +75,20 @@
 
     <!-- Password2 Label -->
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTwoInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/passwordOneInputLayout"
-            app:layout_constraintBottom_toTopOf="@id/createAccountButton">
+        android:id="@+id/passwordTwoInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/passwordOneInputLayout"
+        app:layout_constraintBottom_toTopOf="@id/createAccountButton">
 
         <EditText
-                android:id="@+id/passwordTwoEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/fragment_signup_password2"
-                android:inputType="textPassword"
-                android:importantForAutofill="no"/>
+            android:id="@+id/passwordTwoEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fragment_signup_password2"
+            android:inputType="textPassword"
+            android:importantForAutofill="no"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Signup Button -->
@@ -94,6 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/createAccountButton"
         app:layout_constraintBottom_toTopOf="@id/progressBar"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,14 +114,14 @@
         android:text="@string/fragment_signup_login_link"/>
 
     <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/loginLinkTextview"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"/>
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/loginLinkTextview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

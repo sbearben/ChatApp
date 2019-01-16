@@ -54,7 +54,7 @@ public class ChatMembershipCache implements DiskCache<UUID, ChatDbModel> {
 
     @NonNull
     @Override
-    public Observable<ChatDbModel> getSingular(@NonNull UUID uuid) {
+    public Observable<ChatDbModel> getSingular(@Nullable UUID uuid) {
         return dao.get(uuid).toObservable();
     }
 

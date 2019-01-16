@@ -7,7 +7,9 @@ import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import javax.inject.Inject
 
 @ApplicationScope
-class AuthenticationInterceptor @Inject constructor(val tokenHolder : TokenEntityHolder) : Interceptor {
+class AuthenticationInterceptor @Inject constructor(
+    private val tokenHolder : TokenEntityHolder
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (tokenHolder.tokenEntity == null) {

@@ -25,7 +25,7 @@ public interface Cache<Key, Value> {
     void clear();
 
     @NonNull
-    Observable<Value> getSingular(@NonNull final Key key);
+    Observable<Value> getSingular(@Nullable final Key key);
 
     @NonNull
     Observable<List<Value>> getAll(@Nullable final Key key);

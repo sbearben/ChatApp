@@ -10,39 +10,20 @@ import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.Sen
 
 public class LoginUser implements SendInteractor<LoginUser.LoginParams, TokenEntity> {
 
-    @NonNull
-    private final TokenRepository repository;
+    @NonNull private final TokenRepository backendTokenRepo;
 
 
     @Inject
-    public LoginUser(@NonNull final TokenRepository repository) {
-        this.repository = repository;
+    public LoginUser(@NonNull final TokenRepository backendTokenRepo) {
+        this.backendTokenRepo = backendTokenRepo;
     }
 
     @NonNull
     @Override
     public Single<TokenEntity> getSingle(@NonNull LoginParams loginParams) {
-        //return repository.requestTokenSingle()
-                //.flatMap(tokenEntity -> fetchWhenEmptyAndThenToken(loginParams, tokenEntity));
-        return repository.fetchTokenViaLogin(loginParams.username, loginParams.password)
-                .andThen(repository.requestTokenSingle());
+        return backendTokenRepo.fetchTokenViaLogin(loginParams.username, loginParams.password)
+                .andThen(backendTokenRepo.requestTokenSingle());
     }
-
-    /*
-    @NonNull
-    private Single<TokenEntity> fetchWhenEmptyAndThenToken(@NonNull LoginParams loginParams,
-                                                           @NonNull final TokenEntity tokenEntity) {
-        return fetchWhenEmpty(loginParams, tokenEntity).andThen(Single.just(tokenEntity));
-    }
-
-    @NonNull
-    private Completable fetchWhenEmpty(@NonNull LoginParams loginParams,
-                                       @NonNull final TokenEntity tokenEntity) {
-        return tokenEntity.isEmpty()
-                ? repository.fetchTokenViaLogin(loginParams.username, loginParams.email, loginParams.password)
-                : Completable.complete();
-    }
-    */
 
     public static final class LoginParams {
         @NonNull private final String username;

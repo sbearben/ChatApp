@@ -15,14 +15,13 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import javax.inject.Inject
 
 class SignupViewModel @Inject constructor(
-        private val registerUser: RegisterUser
+    private val registerUser: RegisterUser
 ) : ViewModel() {
 
     private val registerUserLiveData = MutableLiveData<State<TokenEntity>>()
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
-        super.onCleared()
         compositeDisposable.dispose()
     }
 
@@ -35,9 +34,11 @@ class SignupViewModel @Inject constructor(
 
     private fun bindToUseCase(loginParams: RegisterParams) : Disposable {
         return registerUser.getSingle(loginParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ tokenEntity -> registerUserLiveData.value = ShowContent(tokenEntity) },
-                        { e -> registerUserLiveData.value = ShowError(e.toString()) })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { tokenEntity -> registerUserLiveData.value = ShowContent(tokenEntity) },
+                { e -> registerUserLiveData.value = ShowError( e.message ?: e.toString()) }
+            )
     }
 }
