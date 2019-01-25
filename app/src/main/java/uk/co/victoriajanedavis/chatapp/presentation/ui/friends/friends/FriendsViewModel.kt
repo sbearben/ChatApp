@@ -3,22 +3,22 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.GetChatList
-import uk.co.victoriajanedavis.chatapp.presentation.common.State
-import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
+import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
 import javax.inject.Inject
 
 class FriendsViewModel @Inject constructor(
     private val getChatList: GetChatList
 ) : ViewModel() {
 
-    private val chatLiveData = MutableLiveData<State<List<ChatEntity>>>()
+    private val chatLiveData = MutableLiveData<ListState<List<ChatEntity>>>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
@@ -30,7 +30,7 @@ class FriendsViewModel @Inject constructor(
         compositeDisposable.dispose()
     }
 
-    fun getChatLiveData(): LiveData<State<List<ChatEntity>>> = chatLiveData
+    fun getChatLiveData(): LiveData<ListState<List<ChatEntity>>> = chatLiveData
 
     fun retry() {
         chatLiveData.value = ShowLoading
@@ -42,9 +42,20 @@ class FriendsViewModel @Inject constructor(
         return getChatList.getBehaviorStream(null)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ entityList -> chatLiveData.value = ShowContent(entityList)
-                Log.d("FriendsViewModel", "entityList size: ${entityList.size}")
-            },
-                { e -> chatLiveData.value = ShowError(e.toString()) })
+            .subscribe { streamState ->
+                when (streamState) {
+                    is OnNext -> onNext(streamState.content)
+                    is OnError -> onError(streamState.throwable)
+                }
+            }
+    }
+
+    private fun onNext(chatEntities: List<ChatEntity>) {
+        if (!chatEntities.isEmpty()) chatLiveData.value = ShowContent(chatEntities)
+        else chatLiveData.value = ShowEmpty
+    }
+
+    private fun onError(e: Throwable) {
+        chatLiveData.value = ShowError(e.message ?: e.toString())
     }
 }

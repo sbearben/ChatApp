@@ -2,7 +2,6 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.login
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,7 +78,7 @@ class LoginFragment : DaggerFragment() {
         enableViews()
         progressBar.invisible()
 
-        showSnackbar(message, Snackbar.LENGTH_LONG).show()
+        showSnackbar(message, Snackbar.LENGTH_LONG)
     }
 
     private fun disableViews() {

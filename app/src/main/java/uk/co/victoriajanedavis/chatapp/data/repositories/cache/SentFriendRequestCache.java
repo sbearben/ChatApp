@@ -57,7 +57,7 @@ public class SentFriendRequestCache implements DiskCache<UUID, FriendshipDbModel
     @Override
     public Observable<FriendshipDbModel> getSingular(@Nullable UUID uuid) {
         return dao.get(uuid)
-                .filter(this::notExpired)
+                //.filter(this::notExpired)
                 .toObservable();
     }
 

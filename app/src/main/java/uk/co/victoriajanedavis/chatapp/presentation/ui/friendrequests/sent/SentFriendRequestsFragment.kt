@@ -2,7 +2,6 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,18 +16,16 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.gone
-import uk.co.victoriajanedavis.chatapp.presentation.ext.observe
-import uk.co.victoriajanedavis.chatapp.presentation.ext.showSnackbar
-import uk.co.victoriajanedavis.chatapp.presentation.ext.visible
+import uk.co.victoriajanedavis.chatapp.presentation.ext.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestAction
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestAction.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestsAdapter
 import javax.inject.Inject
 
 class SentFriendRequestsFragment : DaggerFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    //@Inject lateinit var actionLiveData: MutableLiveData<SentFriendRequestAction>
+    @Inject lateinit var actionLiveData: MutableLiveData<SentFriendRequestAction>
     @Inject lateinit var adapter: SentFriendRequestsAdapter
     lateinit var viewModel: SentFriendRequestsViewModel
 
@@ -47,6 +44,7 @@ class SentFriendRequestsFragment : DaggerFragment() {
         setupRecyclerView()
         setupFloatingAction()
         setupViewModelStateObserver()
+        setupViewHolderActionObserver()
     }
 
     private fun setupRecyclerView() {
@@ -78,6 +76,12 @@ class SentFriendRequestsFragment : DaggerFragment() {
         is ShowEmpty -> showEmpty()
     }
 
+    private fun setupViewHolderActionObserver() {
+        actionLiveData.observe(viewLifecycleOwner) { action ->
+            when(action) { is Cancel -> viewModel.cancelFriendRequest(action.receiverUserUuid) }
+        }
+    }
+
     private fun showContent(list: List<FriendshipEntity>) {
         message_layout.gone()
         adapter.submitList(list)
@@ -92,7 +96,7 @@ class SentFriendRequestsFragment : DaggerFragment() {
     }
 
     private fun showError(message: String) {
-        showSnackbar(message, Snackbar.LENGTH_LONG).show()
+        showSnackbar(message, Snackbar.LENGTH_LONG)
         swipeRefreshLayout.isRefreshing = false
     }
 

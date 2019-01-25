@@ -11,7 +11,7 @@
     android:paddingBottom="8dp">
 
     <TextView
-        android:id="@+id/icon_textview"
+        android:id="@+id/iconTextView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/friend_image_placeholder"
@@ -25,18 +25,18 @@
         tools:text="A" />
 
     <LinearLayout
-        android:id="@+id/details_layout"
+        android:id="@+id/detailsLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon_textview"
-        app:layout_constraintEnd_toStartOf="@id/cancel_button"
+        app:layout_constraintStart_toEndOf="@id/iconTextView"
+        app:layout_constraintEnd_toStartOf="@id/cancelButtonLayout"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/name_textview"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -46,7 +46,7 @@
             tools:text="Armon Khosravi" />
 
         <TextView
-            android:id="@+id/username_textview"
+            android:id="@+id/usernameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -55,7 +55,7 @@
             tools:text="Username: armonk" />
 
         <TextView
-            android:id="@+id/email_textview"
+            android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -64,14 +64,28 @@
             tools:text="Email: armonk@gmail.com" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/cancel_button"
-        style="@style/RejectFriendRequestButton"
+    <FrameLayout
+        android:id="@+id/cancelButtonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="@string/sent_friend_request_cancel"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/accept_button"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/cancelButton"
+            style="@style/RejectFriendRequestButton"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:id="@+id/cancelButtonProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyleSmall"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

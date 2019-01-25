@@ -31,7 +31,7 @@ class SentFriendRequestsAdapter @Inject constructor(
             }
 
             override fun areContentsTheSame(oldItem: FriendshipEntity, newItem: FriendshipEntity): Boolean {
-                return oldItem.uuid == newItem.uuid
+                return oldItem.loadingState == newItem.loadingState
             }
         }
     }

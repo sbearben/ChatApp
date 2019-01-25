@@ -23,16 +23,16 @@
 
 
     <style name="AcceptFriendRequestButton" parent="FriendRequestBaseButton">
-        <item name="android:background">@drawable/button_accept_ripple</item>
-        <item name="android:textColor">@color/lightLightGray</item>
+        <item name="android:background">@drawable/button_accept_background_selector</item>
+        <item name="android:textColor">@drawable/button_accept_textcolor_selector</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/received_friend_request_accept</item>
     </style>
 
 
     <style name="RejectFriendRequestButton" parent="FriendRequestBaseButton">
-        <item name="android:background">@drawable/button_reject_ripple</item>
-        <item name="android:textColor">@color/darkGray</item>
+        <item name="android:background">@drawable/button_reject_background_selector</item>
+        <item name="android:textColor">@drawable/button_reject_textcolor_selector</item>
         <item name="android:text">@string/received_friend_request_reject</item>
     </style>
 

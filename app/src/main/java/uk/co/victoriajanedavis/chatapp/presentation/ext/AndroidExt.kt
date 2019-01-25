@@ -85,8 +85,12 @@ fun Fragment.hideKeyboard() {
     this.activity?.hideKeyboard()
 }
 
-fun Fragment.showSnackbar(text: String, duration: Int) : Snackbar {
+fun Fragment.makeSnackbar(text: String, duration: Int) : Snackbar {
     this.view?.let { view ->
         return Snackbar.make(view, text, duration)
     }
+}
+
+fun Fragment.showSnackbar(text: String, duration: Int) {
+    makeSnackbar(text, duration).show()
 }

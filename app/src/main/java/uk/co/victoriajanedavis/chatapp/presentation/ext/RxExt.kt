@@ -18,3 +18,8 @@ fun <T> Single<T>.toStreamState() : Single<StreamState<T>> {
             Single.just(OnError(throwable) as StreamState<T>)
         }
 }
+
+fun <T> Single<T>.doOnErrorOrDispose(action: () -> Unit) : Single<T> {
+    return this.doOnError { _ -> action.invoke() }
+        .doOnDispose { action.invoke() }
+}

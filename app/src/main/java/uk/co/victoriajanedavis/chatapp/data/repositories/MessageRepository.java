@@ -54,20 +54,6 @@ public class MessageRepository {
                 .flatMapCompletable(messages -> messageStore.replaceAll(chatUuid, messages));
     }
 
-    // Maybe change this so that when we go to "load more messages", we query the backend for the
-    // next X messages before the oldest message currently in the DB. If we copy the way iMessage
-    // does this, we NEVER store messages returned to us through pagination.
-    /*
-    @NonNull
-    public Completable loadMoreMessagesInChat(String nextUrl) {
-        return chatService.getChatMessagesByUrl(nextUrl)
-                .flatMap(messagesNwCollection -> Observable.fromIterable(messagesNwCollection.getData())
-                        .map(nwDbMapper::mapFrom)
-                        .toList())
-                .flatMapCompletable(messageStore::storeAll);
-    }
-    */
-
     @NonNull
     public Completable fetchMoreMessagesInChatOlderThanOldestInDb(UUID chatUuid) {
         return messageStore.getDateOfOldestMessage(chatUuid)

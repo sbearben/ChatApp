@@ -14,6 +14,7 @@ import uk.co.victoriajanedavis.chatapp.domain.interactors.SendChatMessage
 import uk.co.victoriajanedavis.chatapp.domain.interactors.SendChatMessage.MessageParams
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState
 
 import java.util.*
 import javax.inject.Inject
@@ -50,9 +51,12 @@ class ChatViewModel @Inject constructor(
         return getPaginatedMessages.getBehaviorStream(chatUuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ entityList -> messageLiveData.value = ShowContent(entityList)
-                Log.d("ChatViewModel", "entityList size: ${entityList.size}")
-            }, { e -> messageLiveData.value = ShowError(e.toString()) })
+            .subscribe { streamState ->
+                when (streamState) {
+                    is StreamState.OnNext -> messageLiveData.value = ShowContent(streamState.content)
+                    is StreamState.OnError -> onError(streamState.throwable)
+                }
+            }
     }
 
     private fun bindToLoadMore(chatUuid: UUID) : Disposable {
@@ -61,13 +65,17 @@ class ChatViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ messageLiveData.value = LoadingMoreComplete
                 Log.d("ChatViewModel", "Success") },
-                { e -> messageLiveData.value = ShowError(e.toString()) })
+                { e -> onError(e) })
     }
 
     private fun bindToSendMessage(messageParams: MessageParams) : Disposable {
         return sendChatMessage.getSingle(messageParams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, { e -> messageLiveData.value = ShowError(e.toString()) })
+            .subscribe({}, { e -> onError(e) })
+    }
+
+    private fun onError(e: Throwable) {
+        messageLiveData.value = ShowError(e.message ?: e.toString())
     }
 }

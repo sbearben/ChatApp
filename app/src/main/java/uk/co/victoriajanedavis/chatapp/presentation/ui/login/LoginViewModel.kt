@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { tokenEntity -> loginUserLiveData.value = ShowContent(tokenEntity) },
-                { e -> loginUserLiveData.value = ShowError( e.message ?: e.toString()) }
+                { e -> loginUserLiveData.value = ShowError(e.message ?: e.toString()) }
             )
     }
 }

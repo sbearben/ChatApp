@@ -31,7 +31,6 @@ class ChatAdapter @Inject  constructor()
             VIEW_TYPE_MESSAGE_RECEIVED -> ReceivedMessageViewHolder(LayoutInflater.from(parent.context), parent)
             VIEW_TYPE_MESSAGE_SENT -> SentMessageViewHolder(LayoutInflater.from(parent.context), parent)
             else -> LoadingViewHolder(LayoutInflater.from(parent.context), parent)
-
         }
     }
 

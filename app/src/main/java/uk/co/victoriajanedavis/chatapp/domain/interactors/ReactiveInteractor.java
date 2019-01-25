@@ -22,7 +22,19 @@ public interface ReactiveInteractor {
     interface SendInteractor<Params, Result> extends ReactiveInteractor {
 
         @NonNull
-        Single<Result> getSingle(@Nullable final Params params);
+        Single<Result> getSingle(@NonNull final Params params);
+    }
+
+    /**
+     Sends changes to data layer but ignors the result.
+     It returns a {@link Completable} that tells whether the action completed or not.
+
+     @param <Params> required parameters for the action.
+     */
+    interface ActionInteractor<Params> extends ReactiveInteractor {
+
+        @NonNull
+        Completable getActionCompletable(@NonNull final Params params);
     }
 
     /**

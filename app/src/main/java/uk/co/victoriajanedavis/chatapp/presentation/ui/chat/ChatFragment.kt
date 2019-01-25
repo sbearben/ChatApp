@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -38,7 +39,7 @@ class ChatFragment : DaggerFragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ChatViewModel::class.java)
 
-        chatUuid = UUID.fromString(arguments?.getString(ARG_CHAT_UUID))
+        chatUuid = UUID.fromString(arguments?.getString(ARG_CHAT_UUID)!!)
         username = arguments?.getString(ARG_USERNAME) ?: ""
     }
 
@@ -100,7 +101,7 @@ class ChatFragment : DaggerFragment() {
         if (!message_editText.isEmpty()) {
             viewModel.postMessage(chatUuid, message_editText.text.toString())
             message_editText.text.clear()
-            activity?.hideKeyboard()
+            hideKeyboard()
         }
     }
 
@@ -117,17 +118,15 @@ class ChatFragment : DaggerFragment() {
                 recyclerview.scrollToPosition(0)
             }
         }
-        is ShowLoading -> showLoading()
+        is ShowLoading -> {}
         is ShowLoadingMore -> adapter.addLoadingView()
         is LoadingMoreComplete -> adapter.removeLoadingView()
+        is ShowEmpty -> {}
         is ShowError -> showError(state.message)
     }
 
-    private fun showLoading() {
-    }
-
     private fun showError(message: String) {
-        Log.e("LoginFragment", message)
+        showSnackbar(message, Snackbar.LENGTH_LONG)
     }
 
     companion object {

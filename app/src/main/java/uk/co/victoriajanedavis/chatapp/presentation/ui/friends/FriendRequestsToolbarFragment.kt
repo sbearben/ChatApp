@@ -118,7 +118,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     }
 
     private fun showError(message: String) {
-        showSnackbar(message, Snackbar.LENGTH_LONG).show()
+        showSnackbar(message, Snackbar.LENGTH_LONG)
     }
 
     private fun onFriendRequestsCountReceived(count: Int) {

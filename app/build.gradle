@@ -44,12 +44,13 @@ dependencies {
     final DAGGER_VERSION = '2.16'
     final MOCKITO_VERSION = '2.6.2'
     final ESPRESSO_VERSION = '3.1.1-alpha01'
-    final RUNNER_VERSION = '1.1.1-alpha01'
+    //final RUNNER_VERSION = '1.1.1-alpha01'
     final ROOM_VERSION = '2.1.0-alpha03'
     final LIFECYCLE_VERSION = '2.0.0'
-    final NAVIGATION_VERSION = '1.0.0-alpha08'
-    final TINDER_SCARLET_VERSION = '0.2.1-alpha4'
-    final ANDROID_KTX_VERSION = '1.0.1'
+    final NAVIGATION_VERSION = '1.0.0-alpha09'
+    //final TINDER_SCARLET_VERSION = '0.2.1-alpha4'
+    final TINDER_SCARLET_VERSION = '0.2.4-alpha1'
+    //final ANDROID_KTX_VERSION = '1.0.1'
 
     def jUnit = "junit:junit:4.12"
     def mockito = "org.mockito:mockito-core:$MOCKITO_VERSION"
@@ -62,7 +63,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
     implementation 'androidx.annotation:annotation:1.0.1'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
 
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
@@ -109,13 +110,14 @@ dependencies {
     implementation ("com.github.tinder.scarlet:scarlet-lifecycle-android:$TINDER_SCARLET_VERSION") {
         exclude group: 'com.github.tinder', module: 'scarlet'
     }
-    implementation "com.github.tinder.scarlet:scarlet-message-adapter-gson:0.2.1-alpha3"
+    //implementation "com.github.tinder.scarlet:scarlet-message-adapter-gson:0.2.1-alpha3"
+    implementation "com.github.tinder.scarlet:scarlet-message-adapter-gson:$TINDER_SCARLET_VERSION"
     implementation "com.github.tinder.scarlet:scarlet-stream-adapter-rxjava2:$TINDER_SCARLET_VERSION"
 
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
     // Instrumentation test dependencies
-    androidTestImplementation "androidx.test:runner:$RUNNER_VERSION"
+    androidTestImplementation "androidx.test.ext:junit:1.1.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestImplementation mockito
     androidTestImplementation "org.mockito:mockito-android:$MOCKITO_VERSION"
