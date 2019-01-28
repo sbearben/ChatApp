@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*

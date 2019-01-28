@@ -10,6 +10,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.ReceivedFriendRequestsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.SentFriendRequestsViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginViewModel
@@ -67,4 +68,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SentFriendRequestsViewModel::class)
     abstract fun sentFriendRequestsViewModel(viewModel: SentFriendRequestsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SendFriendRequestViewModel::class)
+    abstract fun sendFriendRequestViewModel(viewModel: SendFriendRequestViewModel): ViewModel
 }

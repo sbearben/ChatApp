@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -57,8 +59,9 @@ class SentFriendRequestsFragment : DaggerFragment() {
 
     private fun setupFloatingAction() {
         fab.visible()
-        fab.setOnClickListener { _ ->
+        fab.setOnClickListener { view ->
             // Do something (probably a DialogFragment)
+            view.findNavController().navigate(R.id.action_friendRequestsFragment_to_sendFriendRequestFragment)
         }
     }
 

@@ -43,4 +43,9 @@
     <!-- SentFriendRequestsFragment -->
     <string name="sent_friend_request_cancel">Cancel</string>
 
+    <!-- SendFriendRequestFragment -->
+    <string name="send_friend_request">Send</string>
+    <string name="send_friend_request_username">Username</string>
+    <string name="send_friend_request_message">Include a message (optional)</string>
+
 </resources>

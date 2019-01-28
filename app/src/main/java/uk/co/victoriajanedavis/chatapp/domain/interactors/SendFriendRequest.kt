@@ -1,17 +1,18 @@
 package uk.co.victoriajanedavis.chatapp.domain.interactors
 
+import io.reactivex.Completable
 import javax.inject.Inject
 
-import io.reactivex.Single
 import uk.co.victoriajanedavis.chatapp.data.repositories.SentFriendRequestRepository
-import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
-import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.SendInteractor
+import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.ActionInteractor
 
 class SendFriendRequest @Inject constructor(
     private val repository: SentFriendRequestRepository
-) : SendInteractor<String, FriendshipEntity> {
+) : ActionInteractor<SendFriendRequest.FriendRequestParams> {
 
-    override fun getSingle( username: String): Single<FriendshipEntity> {
-        return repository.sendFriendRequest(username)
+    override fun getActionCompletable(requestParams: FriendRequestParams): Completable {
+        return repository.sendFriendRequest(requestParams.username, requestParams.message)
     }
+
+    class FriendRequestParams(val username: String, val message: String?)
 }

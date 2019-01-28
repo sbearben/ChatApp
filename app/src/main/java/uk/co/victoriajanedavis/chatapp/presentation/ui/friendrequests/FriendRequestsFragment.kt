@@ -42,16 +42,16 @@ class FriendRequestsFragment : DaggerFragment() {
         view_pager.adapter = null
     }
 
+    private fun setupPager() {
+        view_pager.adapter = pagerAdapter
+        tab_layout.setupWithViewPager(view_pager)
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         val actionBar: ActionBar? = getSupportActionBar()
         actionBar?.setDisplayShowTitleEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.title = getString(R.string.fragment_friend_requests_title)
-    }
-
-    private fun setupPager() {
-        view_pager.adapter = pagerAdapter
-        tab_layout.setupWithViewPager(view_pager)
     }
 }

@@ -71,6 +71,17 @@
         android:id="@+id/friendRequestsFragment"
         android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment"
         android:label="fragment_friend_requests"
-        tools:layout="@layout/fragment_friend_requests"/>
+        tools:layout="@layout/fragment_friend_requests">
+        <action
+            android:id="@+id/action_friendRequestsFragment_to_sendFriendRequestFragment"
+            app:destination="@id/sendFriendRequestFragment" />
+    </fragment>
+
+    <!-- SendFriendRequestFragment -->
+    <fragment
+        android:id="@+id/sendFriendRequestFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestFragment"
+        android:label="fragment_send_friend_request"
+        tools:layout="@layout/fragment_send_friend_request" />
 
 </navigation>

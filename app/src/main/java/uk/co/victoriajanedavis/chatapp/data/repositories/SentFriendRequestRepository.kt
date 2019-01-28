@@ -4,7 +4,6 @@ import javax.inject.Inject
 
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.SentFriendRequestStore
 import uk.co.victoriajanedavis.chatapp.data.mappers.FriendshipDbEntityMapper
@@ -42,12 +41,10 @@ class SentFriendRequestRepository @Inject constructor(
             .flatMapCompletable { friendRequests -> friendStore.replaceAll(null, friendRequests) }
     }
 
-    fun sendFriendRequest(username: String): Single<FriendshipEntity> {
+    fun sendFriendRequest(username: String, message: String?): Completable {
         return chatService.sendFriendRequest(username)
             .map(nwSentDbMapper::mapFrom)
-            .flatMap { friendEntity -> friendStore.storeSingular(friendEntity)
-                .andThen(Single.just(friendEntity).map(dbEntityMapper::mapFrom))
-            }
+            .flatMapCompletable(friendStore::storeSingular)
     }
 
     fun cancelSentFriendRequest(receiverUserUuid: UUID): Completable {

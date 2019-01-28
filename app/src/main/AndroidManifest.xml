@@ -36,7 +36,7 @@
         <!-- Set default color used with incoming Firebase notification messages. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
+            android:resource="@color/colorSecondary" />
         <!-- Set custom default icon used for incoming Firebase notification messages.
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

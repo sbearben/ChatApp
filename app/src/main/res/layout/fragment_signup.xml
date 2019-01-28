@@ -22,17 +22,19 @@
     <!-- Username Label -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameInputLayout"
+        style="@style/AppMaterialTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/fragment_signup_username"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/emailInputLayout"
         app:layout_constraintVertical_chainStyle="packed">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameEditText"
+            style="@style/AppMaterialTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_signup_username"
             android:inputType="text"
             android:importantForAutofill="no"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -40,17 +42,19 @@
     <!-- Email Label -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailInputLayout"
+        style="@style/AppMaterialTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:hint="@string/fragment_login_email"
         app:layout_constraintTop_toBottomOf="@id/usernameInputLayout"
         app:layout_constraintBottom_toTopOf="@id/passwordOneInputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
+            style="@style/AppMaterialTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_login_email"
             android:inputType="textEmailAddress"
             android:importantForAutofill="no"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,17 +62,19 @@
     <!-- Password1 Label -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordOneInputLayout"
+        style="@style/AppMaterialTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:hint="@string/fragment_signup_password1"
         app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
         app:layout_constraintBottom_toTopOf="@id/passwordTwoInputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordOneEditText"
+            style="@style/AppMaterialTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_signup_password1"
             android:inputType="textPassword"
             android:importantForAutofill="no"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,23 +82,25 @@
     <!-- Password2 Label -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTwoInputLayout"
+        style="@style/AppMaterialTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:hint="@string/fragment_signup_password2"
         app:layout_constraintTop_toBottomOf="@id/passwordOneInputLayout"
         app:layout_constraintBottom_toTopOf="@id/createAccountButton">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTwoEditText"
+            style="@style/AppMaterialTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_signup_password2"
             android:inputType="textPassword"
             android:importantForAutofill="no"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Signup Button -->
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/createAccountButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

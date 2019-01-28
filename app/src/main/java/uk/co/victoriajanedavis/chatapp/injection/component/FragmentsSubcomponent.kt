@@ -9,6 +9,7 @@ import uk.co.victoriajanedavis.chatapp.injection.module.FriendRequestsToolbarMod
 import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
@@ -51,4 +52,9 @@ interface ChatFragmentSubcomponent : AndroidInjector<ChatFragment> {
 ])
 interface FriendRequestsFragmentSubcomponent : AndroidInjector<FriendRequestsFragment> {
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<FriendRequestsFragment>()
+}
+
+@Subcomponent()
+interface SendFriendRequestFragmentSubcomponent : AndroidInjector<SendFriendRequestFragment> {
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<SendFriendRequestFragment>()
 }
