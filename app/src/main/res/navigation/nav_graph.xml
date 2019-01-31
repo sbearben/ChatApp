@@ -31,7 +31,11 @@
             tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_loginFragment_to_signupFragment"
-                app:destination="@id/signupFragment" />
+                app:destination="@id/signupFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
         </fragment>
 
         <fragment
@@ -56,7 +60,11 @@
                 app:destination="@id/chatFragment" />
             <action
                 android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
-                app:destination="@id/friendRequestsFragment" />
+                app:destination="@id/friendRequestsFragment"
+                app:enterAnim="@anim/grow_in_top_right"
+                app:exitAnim="@anim/fade_out"
+                app:popEnterAnim="@anim/fade_in"
+                app:popExitAnim="@anim/grow_out_top_right"/>
         </fragment>
 
         <fragment
@@ -74,7 +82,11 @@
         tools:layout="@layout/fragment_friend_requests">
         <action
             android:id="@+id/action_friendRequestsFragment_to_sendFriendRequestFragment"
-            app:destination="@id/sendFriendRequestFragment" />
+            app:destination="@id/sendFriendRequestFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_bottom"/>
     </fragment>
 
     <!-- SendFriendRequestFragment -->

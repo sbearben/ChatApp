@@ -1,6 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -28,16 +29,15 @@ class MainActivity : DaggerAppCompatActivity() {
         return navController.navigateUp() ||  super.onSupportNavigateUp()
     }
 
-    /*
     override fun onBackPressed() {
-        val currentDestination=navController.currentDestination
+        val currentDestination = navController.currentDestination
         when(currentDestination?.id) {
-            R.id.loginFragment -> {
-                finish()
+            R.id.loginFragment, R.id.friendsFragment -> {
+                Log.d("MainActivity", "loginFragment: finish()")
+                //finish()
             }
         }
         super.onBackPressed()
     }
-    */
 
 }

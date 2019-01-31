@@ -4,4 +4,4 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:paddingBottom="?attr/actionBarSize"
-    android:visibility="gone"/>
+    android:visibility="visible"/>

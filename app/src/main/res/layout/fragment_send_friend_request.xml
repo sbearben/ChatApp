@@ -2,7 +2,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_reply_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,11 +21,15 @@
                 android:id="@+id/sendTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@drawable/actionbar_send_text_selector"
+                android:clickable="true"
+                android:focusable="true"
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:layout_gravity="end"
+                style="?attr/actionButtonStyle"
+                android:enabled="false"
                 android:text="@string/send_friend_request" />
 
         </androidx.appcompat.widget.Toolbar>
@@ -38,66 +41,92 @@
         android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Password Label -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/usernameIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lock_black_28dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/usernameInputLayout"/>
+
+        <!-- Username Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/usernameInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="top"
             android:hint="@string/send_friend_request_username"
+            app:helperText="@string/required_field"
+            android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/divider1">
+            app:layout_constraintStart_toEndOf="@id/usernameIcon"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameEditText"
-                style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox"
+                style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionSend"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <View
-            android:id="@+id/divider1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/mediumLightGray"
-            android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/usernameInputLayout"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/messageIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_message_black_28dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/messageInputLayout"/>
 
+        <!-- Message Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/messageInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:hint="@string/send_friend_request_message"
-            app:layout_constraintTop_toBottomOf="@id/divider1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:counterEnabled="true"
+            app:counterMaxLength="@integer/friend_request_message_max_characters"
+            app:layout_constraintTop_toBottomOf="@id/usernameInputLayout"
+            app:layout_constraintStart_toEndOf="@id/messageIcon"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/messageEditText"
+                style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"/>
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:fadeScrollbars="true"
+                android:scrollbars="vertical"
+                android:lines="5"
+                android:maxLength="@integer/friend_request_message_max_characters"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/fragment_reply_progress_layout"
+        android:id="@+id/progressBarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dimmerFilter"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/mediumDimFilter"
         android:visibility="gone">
 
-        <include layout="@layout/layout_content_progress"
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="visible"/>
+            android:layout_gravity="center"/>
 
     </FrameLayout>
 

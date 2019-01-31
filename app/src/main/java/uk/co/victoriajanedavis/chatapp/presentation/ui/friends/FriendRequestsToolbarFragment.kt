@@ -11,8 +11,10 @@ import kotlinx.android.synthetic.main.toolbar.*
 import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
@@ -94,9 +96,10 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
-        val actionBar: ActionBar? = getSupportActionBar()
-        actionBar?.setDisplayShowTitleEnabled(true)
-        actionBar?.title = "Friends"
+        getSupportActionBar()?.apply {
+            setDisplayShowTitleEnabled(true)
+            title = "Friends"
+        }
     }
 
     private fun setupBadge() {
@@ -137,9 +140,15 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     private fun onFriendActionReceived(action: FriendAction) = when(action) {
         is Clicked -> {
-            val bundle = ChatFragment.createBundle(action.chatEntity.uuid.toString(),
-                action.chatEntity.friendship!!.username)
-            findNavController().navigate(R.id.action_friendsFragment_to_chatFragment, bundle)
+            val bundle = ChatFragment.createBundle(
+                action.chatEntity.uuid.toString(),
+                action.chatEntity.friendship!!.username,
+                action.sharedTextView.transitionName
+            )
+            val extras = FragmentNavigatorExtras(
+                action.sharedTextView to ViewCompat.getTransitionName(action.sharedTextView)!!
+            )
+            findNavController().navigate(R.id.action_friendsFragment_to_chatFragment, bundle, null, extras)
         }
     }
 

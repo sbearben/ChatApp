@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import dagger.Binds

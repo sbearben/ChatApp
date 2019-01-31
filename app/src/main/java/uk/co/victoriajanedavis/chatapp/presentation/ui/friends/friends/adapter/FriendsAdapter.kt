@@ -11,8 +11,9 @@ import uk.co.victoriajanedavis.chatapp.injection.scopes.PerChildFragment
 import javax.inject.Inject
 
 @PerChildFragment
-class FriendsAdapter @Inject constructor(private val actionLiveData: MutableLiveData<FriendAction>)
-    : ListAdapter<ChatEntity, FriendViewHolder>(ChatDiffCallback()) {
+class FriendsAdapter @Inject constructor(
+    private val actionLiveData: MutableLiveData<FriendAction>
+) : ListAdapter<ChatEntity, FriendViewHolder>(ChatDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendViewHolder {
         return FriendViewHolder(LayoutInflater.from(parent.context), parent, actionLiveData)

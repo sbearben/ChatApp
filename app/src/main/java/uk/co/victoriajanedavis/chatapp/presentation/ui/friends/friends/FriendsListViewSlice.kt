@@ -10,7 +10,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.viewslice.BaseViewSli
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendsAdapter
 import javax.inject.Inject
 
-class FriendsListViewSlice @Inject constructor(
+class FriendsListViewSlice constructor(
     private val actionLiveData: MutableLiveData<Int>,
     private val layoutManager: LinearLayoutManager,
     private val adapter: FriendsAdapter

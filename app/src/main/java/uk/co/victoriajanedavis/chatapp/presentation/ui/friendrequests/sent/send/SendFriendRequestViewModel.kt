@@ -29,6 +29,8 @@ class SendFriendRequestViewModel @Inject constructor(
     fun getRequestLiveData(): LiveData<State<Unit>> = requestLiveData
 
     fun sendFriendRequest(username: String, message: String?) {
+        requestLiveData.value = ShowLoading
+        compositeDisposable.clear()
         compositeDisposable.add(bindToUseCase(FriendRequestParams(username, message)))
     }
 
@@ -38,11 +40,7 @@ class SendFriendRequestViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { requestLiveData.value = ShowContent(null) },
-                { e -> onError(e) }
+                { e -> requestLiveData.value = ShowError(e.message ?: e.toString()) }
             )
-    }
-
-    private fun onError(e: Throwable) {
-        requestLiveData.value = ShowError(e.message ?: e.toString())
     }
 }

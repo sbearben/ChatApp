@@ -60,7 +60,6 @@ class SentFriendRequestsFragment : DaggerFragment() {
     private fun setupFloatingAction() {
         fab.visible()
         fab.setOnClickListener { view ->
-            // Do something (probably a DialogFragment)
             view.findNavController().navigate(R.id.action_friendRequestsFragment_to_sendFriendRequestFragment)
         }
     }

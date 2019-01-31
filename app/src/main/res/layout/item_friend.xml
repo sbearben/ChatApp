@@ -12,7 +12,7 @@
     android:paddingBottom="8dp">
 
     <TextView
-        android:id="@+id/item_friend_icon_textview"
+        android:id="@+id/iconTextView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/friend_image_placeholder"
@@ -26,18 +26,18 @@
         tools:text="A" />
 
     <LinearLayout
-        android:id="@+id/item_friend_details_layout"
+        android:id="@+id/detailsLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintStart_toEndOf="@id/item_friend_icon_textview"
+        app:layout_constraintStart_toEndOf="@id/iconTextView"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/item_friend_name_textview"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -47,7 +47,7 @@
             tools:text="Armon Khosravi" />
 
         <TextView
-            android:id="@+id/item_friend_lastmsg_textview"
+            android:id="@+id/lastMessageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -64,7 +64,7 @@
         app:layout_constraintGuide_percent="0.86" />
 
     <TextView
-        android:id="@+id/item_friend_date_textview"
+        android:id="@+id/dateTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -73,7 +73,7 @@
         android:textSize="12.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="@id/item_friend_details_layout"
+        app:layout_constraintTop_toTopOf="@id/detailsLayout"
         tools:text="June 14" />
 
 

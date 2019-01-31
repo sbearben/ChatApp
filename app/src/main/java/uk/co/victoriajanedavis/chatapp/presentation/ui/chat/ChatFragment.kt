@@ -2,7 +2,6 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.chat
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
-import kotlinx.android.synthetic.main.toolbar.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.EndlessRecyclerViewOnScrollListener
@@ -22,7 +21,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ext.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter.ChatAdapter
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class ChatFragment : DaggerFragment() {
@@ -33,14 +32,20 @@ class ChatFragment : DaggerFragment() {
 
     lateinit var chatUuid: UUID
     lateinit var username: String
+    lateinit var transitionName: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        postponeEnterTransition()
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ChatViewModel::class.java)
 
         chatUuid = UUID.fromString(arguments?.getString(ARG_CHAT_UUID)!!)
         username = arguments?.getString(ARG_USERNAME) ?: ""
+        transitionName = arguments?.getString(ARG_TRANSITION_NAME) ?: ""
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,11 +65,18 @@ class ChatFragment : DaggerFragment() {
     }
 
     private fun setupToolbar() {
+        toolbarTitle.text = username
+
+        // Set transitionName on the toolbar and start the enter transition
+        toolbarTitle.transitionName = transitionName
+        startPostponedEnterTransition()
+
         setSupportActionBar(toolbar)
-        val actionBar: ActionBar? = getSupportActionBar()
-        actionBar?.setDisplayShowTitleEnabled(true)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.title = username
+        getSupportActionBar()?.apply {
+            //setDisplayShowTitleEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = ""  // This is required as for some reason the app name was being appended next to the username
+        }
     }
 
     private fun setupRecyclerView() {
@@ -97,14 +109,6 @@ class ChatFragment : DaggerFragment() {
         send_button.setOnClickListener { _ -> sendMessage() }
     }
 
-    private fun sendMessage() {
-        if (!message_editText.isEmpty()) {
-            viewModel.postMessage(chatUuid, message_editText.text.toString())
-            message_editText.text.clear()
-            hideKeyboard()
-        }
-    }
-
     private fun setupViewModelStateObserver() {
         viewModel.fetchMessagesForChat(chatUuid)
         viewModel.getMessageLiveData().observe(viewLifecycleOwner) {
@@ -125,6 +129,14 @@ class ChatFragment : DaggerFragment() {
         is ShowError -> showError(state.message)
     }
 
+    private fun sendMessage() {
+        if (!message_editText.isEmpty()) {
+            viewModel.postMessage(chatUuid, message_editText.text.toString())
+            message_editText.text.clear()
+            hideKeyboard()
+        }
+    }
+
     private fun showError(message: String) {
         showSnackbar(message, Snackbar.LENGTH_LONG)
     }
@@ -132,11 +144,17 @@ class ChatFragment : DaggerFragment() {
     companion object {
         const val ARG_CHAT_UUID = "chat_uuid"
         const val ARG_USERNAME = "username"
+        const val ARG_TRANSITION_NAME = "transition_name"
 
-        fun createBundle(uuidStr: String, username: String): Bundle {
+        fun createBundle(
+            uuidStr: String,
+            username: String,
+            transitionName: String
+        ): Bundle {
             val bundle = Bundle()
             bundle.putString(ARG_CHAT_UUID, uuidStr)
             bundle.putString(ARG_USERNAME, username)
+            bundle.putString(ARG_TRANSITION_NAME, transitionName)
             return bundle
         }
     }

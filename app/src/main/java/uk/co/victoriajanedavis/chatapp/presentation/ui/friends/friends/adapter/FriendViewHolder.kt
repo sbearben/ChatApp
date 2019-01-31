@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import kotlinx.android.synthetic.main.item_friend.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
@@ -19,14 +20,21 @@ class FriendViewHolder(
     private lateinit var chatEntity: ChatEntity
 
     init {
-        itemView.setOnClickListener { friendActionLiveData.value = FriendAction.Clicked(chatEntity) }
+        itemView.setOnClickListener {
+            friendActionLiveData.value = FriendAction.Clicked(
+                chatEntity = chatEntity,
+                sharedTextView = nameTextView
+            )
+        }
     }
 
     override fun bind(item: ChatEntity) {
         chatEntity = item
-        item_friend_icon_textview.text = item.friendship?.username?.get(0).toString()
-        item_friend_name_textview.text = item.friendship?.username
-        item_friend_lastmsg_textview.text = item.lastMessageText
-        item_friend_date_textview.text = item.lastMessageDate?.toString()
+        iconTextView.text = item.friendship?.username?.get(0).toString()
+        nameTextView.text = item.friendship?.username
+        lastMessageTextView.text = item.lastMessageText
+        dateTextView.text = item.lastMessageDate?.toString()
+
+        ViewCompat.setTransitionName(nameTextView, chatEntity.uuid.toString());
     }
 }

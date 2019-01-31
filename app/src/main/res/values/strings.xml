@@ -7,6 +7,9 @@
     <string name="action_try_again">Try Again</string>
     <string name="action_check_again">Check Again</string>
 
+    <!-- Common strings used for forms -->
+    <string name="required_field">*Required</string>
+
     <!-- LoginFragment -->
     <string name="fragment_login_username">Username</string>
     <string name="fragment_login_password">Password</string>
@@ -45,7 +48,7 @@
 
     <!-- SendFriendRequestFragment -->
     <string name="send_friend_request">Send</string>
-    <string name="send_friend_request_username">Username</string>
+    <string name="send_friend_request_username">Username*</string>
     <string name="send_friend_request_message">Include a message (optional)</string>
 
 </resources>

@@ -40,8 +40,9 @@
     <color name="whiteOpacity54">#8AFFFFFF</color>
     <color name="whiteOpacity5">#0DFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="dimFilter">#4f000000</color>
-    <color name="dimmerFilter">#A8000000</color>
+    <color name="lightDimFilter">#4f000000</color>
+    <color name="mediumDimFilter">#7f000000</color>
+    <color name="darkDimFilter">#A8000000</color>
 
     <color name="lightLightGray">#F5F5F5</color>
     <color name="lightGray">#F1F1F1</color>

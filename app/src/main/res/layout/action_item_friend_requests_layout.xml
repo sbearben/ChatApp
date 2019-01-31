@@ -22,14 +22,14 @@
 
     <TextView
         android:id="@+id/friend_requests_badge"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:background="@drawable/badge_background"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="8sp"
+        android:textSize="12sp"
         app:layout_constraintCircle="@id/friend_requests_imageview"
-        app:layout_constraintCircleRadius="16dp"
+        app:layout_constraintCircleRadius="18dp"
         app:layout_constraintCircleAngle="45"
         tools:text="10"/>
 

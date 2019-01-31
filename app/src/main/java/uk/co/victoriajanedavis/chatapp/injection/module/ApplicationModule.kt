@@ -17,7 +17,6 @@ abstract class ApplicationModule {
 
     @Module
     companion object {
-
         @JvmStatic
         @Provides
         fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =

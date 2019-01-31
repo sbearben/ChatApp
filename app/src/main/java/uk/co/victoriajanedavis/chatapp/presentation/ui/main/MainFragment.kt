@@ -22,15 +22,22 @@ class MainFragment : DaggerFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        //setupIsUserLoggedInObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupIsUserLoggedInObserver()
+    }
+
+    private fun setupIsUserLoggedInObserver() {
         Log.d("MainFragment", "MAIN FRAGMENT CALLED 1")
+        //viewModel.getIsUserLoggedInLiveData().observe(this) {
         viewModel.getIsUserLoggedInLiveData().observe(viewLifecycleOwner) {
             Log.d("MainFragment", "MAIN FRAGMENT CALLED 2: $it")
             when(it) {
