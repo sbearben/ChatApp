@@ -62,8 +62,9 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupIsUserLoggedInObserver()
         setupViewModelObserver()
-        viewModel.requestItems()
+        //viewModel.requestItems()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -107,6 +108,16 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         else {
             friendRequestsBadge.text = Math.min(friendRequestsCount, 99).toString()
             friendRequestsBadge.visible()
+        }
+    }
+
+    private fun setupIsUserLoggedInObserver() {
+        //viewModel.getIsUserLoggedInLiveData().observe(this) {
+        viewModel.getIsUserLoggedInLiveData().observe(viewLifecycleOwner) {
+            when(it) {
+                false -> findNavController().navigate(R.id.action_friendsFragment_to_loginFlowGraph)
+                true -> {} //findNavController().navigate(R.id.action_mainFragment_to_friendsFragment)
+            }
         }
     }
 

@@ -17,20 +17,14 @@
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat">
 
+            <!--
             <TextView
                 android:id="@+id/sendTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="@drawable/actionbar_send_text_selector"
-                android:clickable="true"
-                android:focusable="true"
-                android:textStyle="bold"
-                android:textAllCaps="true"
+                style="@style/TextActionBarMenuItem"
                 android:layout_gravity="end"
-                style="?attr/actionButtonStyle"
                 android:enabled="false"
-                android:text="@string/send_friend_request" />
+                android:text="@string/menu_send" />
+            -->
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

@@ -31,6 +31,9 @@
         <pair source="c" header="h" fileNamingConvention="NONE" />
       </extensions>
     </Objective-C-extensions>
+    <XML>
+      <option name="XML_ALIGN_ATTRIBUTES" value="false" />
+    </XML>
     <codeStyleSettings language="XML">
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="4" />

@@ -66,7 +66,8 @@ class LoginFragment : DaggerFragment() {
     }
 
     private fun loginSuccessful() {
-        findNavController().navigateUp()
+        //findNavController().navigateUp()
+        findNavController().navigate(R.id.action_loginFragment_to_chatFlowGraph)
     }
 
     private fun showLoading() {

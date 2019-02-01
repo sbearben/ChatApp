@@ -32,9 +32,10 @@ class MainFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupIsUserLoggedInObserver()
+        //setupIsUserLoggedInObserver()
     }
 
+    /*
     private fun setupIsUserLoggedInObserver() {
         Log.d("MainFragment", "MAIN FRAGMENT CALLED 1")
         //viewModel.getIsUserLoggedInLiveData().observe(this) {
@@ -52,6 +53,6 @@ class MainFragment : DaggerFragment() {
             }
         }
     }
-
+    */
 
 }

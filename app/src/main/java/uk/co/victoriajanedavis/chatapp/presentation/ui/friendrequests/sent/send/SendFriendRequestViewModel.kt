@@ -18,7 +18,7 @@ class SendFriendRequestViewModel @Inject constructor(
     private val sendFriendRequest: SendFriendRequest
 ) : ViewModel() {
 
-    private val requestLiveData = MutableLiveData<State<Unit>>()
+    private val requestLiveData = MutableLiveData<State<String>>()
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
@@ -26,7 +26,7 @@ class SendFriendRequestViewModel @Inject constructor(
         compositeDisposable.dispose()
     }
 
-    fun getRequestLiveData(): LiveData<State<Unit>> = requestLiveData
+    fun getRequestLiveData(): LiveData<State<String>> = requestLiveData
 
     fun sendFriendRequest(username: String, message: String?) {
         requestLiveData.value = ShowLoading
@@ -39,8 +39,11 @@ class SendFriendRequestViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { requestLiveData.value = ShowContent(null) },
-                { e -> requestLiveData.value = ShowError(e.message ?: e.toString()) }
+                { requestLiveData.value = ShowContent(requestParams.username) },
+                { e ->
+                    requestLiveData.value = ShowError(e.message ?: e.toString())
+                    requestLiveData.value = null  // Clear it so that on rotation the error isn't shown again
+                }
             )
     }
 }

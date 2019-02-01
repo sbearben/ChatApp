@@ -2,10 +2,10 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_send_friend_request.*
@@ -21,10 +21,14 @@ class SendFriendRequestFragment : DaggerFragment() {
     @Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: SendFriendRequestViewModel
 
+    private var sendMenuItem: MenuItem? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendFriendRequestViewModel::class.java)
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,6 +46,23 @@ class SendFriendRequestFragment : DaggerFragment() {
         setupToolbar()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_send_friend_request_toolbar, menu)
+        sendMenuItem = menu.findItem(R.id.menu_send)
+        sendMenuItem?.isEnabled = usernameEditText.text?.isNotEmpty() ?: false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_send -> {
+                sendFriendRequest()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupToolbar() {
         toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp)
         setSupportActionBar(toolbar)
@@ -53,7 +74,7 @@ class SendFriendRequestFragment : DaggerFragment() {
 
     private fun setupViewListeners() {
         usernameInputLayout.afterTextChanged { s ->
-            sendTextView.isEnabled = s.isNotEmpty()
+            sendMenuItem?.isEnabled = s.isNotEmpty()
             usernameInputLayout.error =
                     if(s.isEmpty() || s.matches(Regex("^[\\w.@+-]+\$"))) null
                     else "Username may only contain letters, numbers, and @/./+/-/_ characters."
@@ -67,11 +88,12 @@ class SendFriendRequestFragment : DaggerFragment() {
                 else -> false
             }
         }
-        sendTextView.setOnClickListener { sendFriendRequest() }
     }
 
     private fun sendFriendRequest() {
-        if(sendTextView.isEnabled) {
+        //val temp : MenuItem? = sendMenuItem  // Need this because of weird Kotlin things in the following if statement
+        //if(temp != null && temp.isEnabled) {
+        if(sendMenuItem?.isEnabled ?: false) {
             hideKeyboard()
             viewModel.sendFriendRequest(
                 usernameEditText.text.toString(),
@@ -86,29 +108,26 @@ class SendFriendRequestFragment : DaggerFragment() {
         }
     }
 
-    private fun onStateChanged(state: State<Unit>) = when(state) {
-        is ShowContent -> showContent()
+    private fun onStateChanged(state: State<String>) = when(state) {
+        is ShowContent -> showContent(state.content)
         is ShowLoading -> showLoading()
         is ShowError -> showError(state.message)
     }
 
-    private fun showContent() {
-        sendTextView.enable()
-        progressBarLayout.gone()
+    private fun showContent(username: String) {
+        showSnackbar("Friend request send to: $username ", Snackbar.LENGTH_LONG)
+        findNavController().popBackStack()
     }
 
     private fun showLoading() {
-        sendTextView.disable()
+        sendMenuItem?.isEnabled = false
         progressBarLayout.visible()
     }
 
     private fun showError(message: String) {
-        sendTextView.enable()
+        Log.d("SendFriendFrag", "showError")
+        sendMenuItem?.isEnabled = true
         progressBarLayout.gone()
         showSnackbar(message, Snackbar.LENGTH_LONG)
-    }
-
-    companion object {
-        fun newInstance() = SendFriendRequestFragment()
     }
 }

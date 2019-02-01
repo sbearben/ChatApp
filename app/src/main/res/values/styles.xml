@@ -11,9 +11,26 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <item name="colorAccent">@color/colorSecondary</item>
+        
+        <item name="actionOverflowMenuStyle">@style/AppActionOverflowMenuStyle</item>
 
         <!--<item name="android:windowBackground">@color/white</item>-->
     </style>
+
+    <style name="AppActionOverflowMenuStyle" parent="@style/Base.Widget.MaterialComponents.PopupMenu.Overflow">
+        <item name="android:overlapAnchor">false</item>
+    </style>
+
+    <!--  Text ActionBar Menu Item -->
+    <style name="TextActionBarMenuItem" parent="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textColor">@drawable/actionbar_send_text_selector</item>
+    </style>
+
 
     <!-- Login/Signup -->
     <style name="AppMaterialTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>

@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/chatFlowGraph">
 
+    <!--
     <fragment
         android:id="@+id/mainFragment"
         android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainFragment"
@@ -18,32 +19,7 @@
             android:id="@+id/action_mainFragment_to_friendsFragment"
             app:destination="@id/chatFlowGraph" />
     </fragment>
-
-
-    <!-- Login/Register Flow (nested graph) -->
-    <navigation android:id="@+id/loginFlowGraph"
-        app:startDestination="@id/loginFragment">
-
-        <fragment
-            android:id="@+id/loginFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment"
-            android:label="fragment_login"
-            tools:layout="@layout/fragment_login">
-            <action
-                android:id="@+id/action_loginFragment_to_signupFragment"
-                app:destination="@id/signupFragment"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"/>
-        </fragment>
-
-        <fragment
-            android:id="@+id/signupFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment"
-            android:label="fragment_signup"
-            tools:layout="@layout/fragment_signup" />
-    </navigation>
+    -->
 
 
     <!-- Chat Flow (nested graph) -->
@@ -55,9 +31,21 @@
             android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment"
             android:label="fragment_friends"
             tools:layout="@layout/fragment_friend_requests_toolbar">
+
+            <action
+                android:id="@+id/action_friendsFragment_to_loginFlowGraph"
+                app:destination="@id/loginFlowGraph"
+                app:popUpTo="@id/chatFlowGraph"
+                app:popUpToInclusive="true"
+                app:enterAnim="@anim/slide_in_bottom"
+                app:exitAnim="@anim/fade_out"
+                app:popEnterAnim="@anim/fade_in"
+                app:popExitAnim="@anim/slide_out_bottom"/>
+
             <action
                 android:id="@+id/action_friendsFragment_to_chatFragment"
                 app:destination="@id/chatFragment" />
+
             <action
                 android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
                 app:destination="@id/friendRequestsFragment"
@@ -73,6 +61,50 @@
             android:label="fragment_chat"
             tools:layout="@layout/fragment_chat" />
     </navigation>
+
+
+    <!-- Login/Register Flow (nested graph) -->
+    <navigation android:id="@+id/loginFlowGraph"
+        app:startDestination="@id/loginFragment">
+
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment"
+            android:label="fragment_login"
+            tools:layout="@layout/fragment_login">
+
+            <action
+                android:id="@+id/action_loginFragment_to_chatFlowGraph"
+                app:destination="@id/chatFlowGraph"
+                app:popUpTo="@id/chatFlowGraph"
+                app:popUpToInclusive="true"/>
+
+            <action
+                android:id="@+id/action_loginFragment_to_signupFragment"
+                app:destination="@id/signupFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
+
+        </fragment>
+
+        <fragment
+            android:id="@+id/signupFragment"
+            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment"
+            android:label="fragment_signup"
+            tools:layout="@layout/fragment_signup">
+
+            <action
+                android:id="@+id/action_signupFragment_to_chatFlowGraph"
+                app:destination="@id/chatFlowGraph"
+                app:popUpTo="@id/chatFlowGraph"
+                app:popUpToInclusive="true"/>
+
+        </fragment>
+
+    </navigation>
+
 
     <!-- FriendRequestsFragment -->
     <fragment

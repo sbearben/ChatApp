@@ -67,7 +67,8 @@ class SignupFragment : DaggerFragment() {
     }
 
     private fun registrationSuccessful() {
-        findNavController().popBackStack(R.id.mainFragment, false)
+        //findNavController().popBackStack(R.id.mainFragment, false)
+        findNavController().navigate(R.id.action_signupFragment_to_chatFlowGraph)
     }
 
     private fun showLoading() {

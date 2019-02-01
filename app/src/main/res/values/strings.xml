@@ -47,8 +47,12 @@
     <string name="sent_friend_request_cancel">Cancel</string>
 
     <!-- SendFriendRequestFragment -->
-    <string name="send_friend_request">Send</string>
+    <string name="menu_send">Send</string>
     <string name="send_friend_request_username">Username*</string>
     <string name="send_friend_request_message">Include a message (optional)</string>
+
+    <!-- FriendRequestsToolbarFragment Menu -->
+    <string name="menu_friend_requests">Friend Requests</string>
+    <string name="menu_logout">Logout</string>
 
 </resources>

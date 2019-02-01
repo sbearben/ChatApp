@@ -5,8 +5,13 @@
     <item
         android:id="@+id/menu_friend_requests"
         android:icon="@drawable/ic_person_add_black_30dp"
-        android:title="@string/fragment_chat_friend_requests"
+        android:title="@string/menu_friend_requests"
         app:actionLayout="@layout/action_item_friend_requests_layout"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="@string/menu_logout"
+        app:showAsAction="never"/>
 
 </menu>
