@@ -49,9 +49,10 @@ class FriendRequestsFragment : DaggerFragment() {
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
-        val actionBar: ActionBar? = getSupportActionBar()
-        actionBar?.setDisplayShowTitleEnabled(true)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.title = getString(R.string.fragment_friend_requests_title)
+        getSupportActionBar()?.apply {
+            setDisplayShowTitleEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = getString(R.string.fragment_friend_requests_title)
+        }
     }
 }

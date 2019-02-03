@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.domain.interactors.GetReceivedFriendRequestsCount
 import uk.co.victoriajanedavis.chatapp.domain.interactors.IsUserLoggedIn
+import uk.co.victoriajanedavis.chatapp.domain.interactors.LogoutUser
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
@@ -17,11 +18,14 @@ import javax.inject.Inject
 
 class FriendRequestsToolbarViewModel @Inject constructor(
     private val receivedRequestsCount: GetReceivedFriendRequestsCount,
-    private val isUserLoggedIn: IsUserLoggedIn
+    private val isUserLoggedIn: IsUserLoggedIn,
+    private val logoutUser: LogoutUser
 ) : ViewModel() {
 
     private val friendRequestsCountLiveData = MutableLiveData<State<Int>>()
     private val isUserLoggedInLiveData = MutableLiveData<Boolean>()
+    private val logoutUserLiveData = MutableLiveData<State<Unit>>()
+
     private val compositeDisposable = CompositeDisposable()
 
     init {
@@ -32,15 +36,22 @@ class FriendRequestsToolbarViewModel @Inject constructor(
         compositeDisposable.dispose()
     }
 
-    fun requestItems() {
+    fun getFriendRequestsCountLiveData(): LiveData<State<Int>> = friendRequestsCountLiveData
+
+    fun getIsUserLoggedInLiveData(): LiveData<Boolean> = isUserLoggedInLiveData
+
+    fun getLogoutUserLiveData(): LiveData<State<Unit>> = logoutUserLiveData
+
+    fun logoutUser() {
+        logoutUserLiveData.value = ShowLoading
+        compositeDisposable.add(bindToLogoutUser())
+    }
+
+    private fun requestItems() {
         compositeDisposable.clear()
         compositeDisposable.add(bindToUseCase())
         compositeDisposable.add(bindToIsUserLoggedIn())
     }
-
-    fun getFriendRequestsCountLiveData(): LiveData<State<Int>> = friendRequestsCountLiveData
-
-    fun getIsUserLoggedInLiveData(): LiveData<Boolean> = isUserLoggedInLiveData
 
     private fun bindToUseCase() : Disposable {
         return receivedRequestsCount.getBehaviorStream(null)
@@ -58,7 +69,18 @@ class FriendRequestsToolbarViewModel @Inject constructor(
         return isUserLoggedIn.getBehaviorStream(null)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ isUserLoggedIn -> isUserLoggedInLiveData.value = isUserLoggedIn },
-                { e -> Log.e("MainViewModel", "Error getting isUserLoggedIn boolean", e)})
+            .subscribe(
+                { isUserLoggedIn -> isUserLoggedInLiveData.value = isUserLoggedIn },
+                { e -> Log.e("FriendReqsToolbar", "Error checking if user is logged in: ${e.message}") }
+            )
+    }
+
+    private fun bindToLogoutUser() : Disposable {
+        return logoutUser.getSingle(null)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({},
+                { e -> logoutUserLiveData.value = ShowError("Logout failed: ${e.message}") }
+            )
     }
 }

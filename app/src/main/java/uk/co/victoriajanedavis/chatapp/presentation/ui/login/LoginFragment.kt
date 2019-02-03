@@ -60,12 +60,12 @@ class LoginFragment : DaggerFragment() {
     }
 
     private fun onStateChanged(state: State<TokenEntity>) = when(state) {
-        is ShowContent -> loginSuccessful()
+        is ShowContent -> onLoginSuccessful()
         is ShowLoading -> showLoading()
         is ShowError -> showError(state.message)
     }
 
-    private fun loginSuccessful() {
+    private fun onLoginSuccessful() {
         //findNavController().navigateUp()
         findNavController().navigate(R.id.action_loginFragment_to_chatFlowGraph)
     }

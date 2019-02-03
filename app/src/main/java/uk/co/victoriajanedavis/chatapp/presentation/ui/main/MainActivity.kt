@@ -23,6 +23,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
         navController = findNavController(R.id.nav_host)
+
+        //addNavControllerDestinationChangedListener()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -39,5 +41,12 @@ class MainActivity : DaggerAppCompatActivity() {
         }
         super.onBackPressed()
     }
+
+    /*
+    private fun addNavControllerDestinationChangedListener() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+        }
+    }
+    */
 
 }

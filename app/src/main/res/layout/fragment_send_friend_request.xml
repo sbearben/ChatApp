@@ -15,18 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat">
+            app:popupTheme="@style/ThemeOverlay.AppCompat"/>
 
-            <!--
-            <TextView
-                android:id="@+id/sendTextView"
-                style="@style/TextActionBarMenuItem"
-                android:layout_gravity="end"
-                android:enabled="false"
-                android:text="@string/menu_send" />
-            -->
-
-        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,25 +94,11 @@
                 android:maxLength="@integer/friend_request_message_max_characters"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
-        android:id="@+id/progressBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@color/mediumDimFilter"
-        android:visibility="gone">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+    <include layout="@layout/layout_content_progress_dim" />
 
-    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

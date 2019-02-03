@@ -6,22 +6,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/chatFlowGraph">
 
-    <!--
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_loginFragment"
-            app:destination="@id/loginFlowGraph" />
-        <action
-            android:id="@+id/action_mainFragment_to_friendsFragment"
-            app:destination="@id/chatFlowGraph" />
-    </fragment>
-    -->
-
-
     <!-- Chat Flow (nested graph) -->
     <navigation android:id="@+id/chatFlowGraph"
         app:startDestination="@id/friendsFragment">
@@ -40,11 +24,13 @@
                 app:enterAnim="@anim/slide_in_bottom"
                 app:exitAnim="@anim/fade_out"
                 app:popEnterAnim="@anim/fade_in"
-                app:popExitAnim="@anim/slide_out_bottom"/>
+                app:popExitAnim="@anim/slide_out_bottom"
+                app:launchSingleTop="true"/>
 
             <action
                 android:id="@+id/action_friendsFragment_to_chatFragment"
-                app:destination="@id/chatFragment" />
+                app:destination="@id/chatFragment"
+                app:launchSingleTop="true"/>
 
             <action
                 android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
@@ -52,7 +38,8 @@
                 app:enterAnim="@anim/grow_in_top_right"
                 app:exitAnim="@anim/fade_out"
                 app:popEnterAnim="@anim/fade_in"
-                app:popExitAnim="@anim/grow_out_top_right"/>
+                app:popExitAnim="@anim/grow_out_top_right"
+                app:launchSingleTop="true"/>
         </fragment>
 
         <fragment
@@ -61,7 +48,6 @@
             android:label="fragment_chat"
             tools:layout="@layout/fragment_chat" />
     </navigation>
-
 
     <!-- Login/Register Flow (nested graph) -->
     <navigation android:id="@+id/loginFlowGraph"
@@ -76,8 +62,9 @@
             <action
                 android:id="@+id/action_loginFragment_to_chatFlowGraph"
                 app:destination="@id/chatFlowGraph"
-                app:popUpTo="@id/chatFlowGraph"
-                app:popUpToInclusive="true"/>
+                app:popUpTo="@id/loginFlowGraph"
+                app:popUpToInclusive="true"
+                app:launchSingleTop="true"/>
 
             <action
                 android:id="@+id/action_loginFragment_to_signupFragment"
@@ -85,7 +72,8 @@
                 app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"/>
+                app:popExitAnim="@anim/slide_out_right"
+                app:launchSingleTop="true"/>
 
         </fragment>
 
@@ -98,13 +86,13 @@
             <action
                 android:id="@+id/action_signupFragment_to_chatFlowGraph"
                 app:destination="@id/chatFlowGraph"
-                app:popUpTo="@id/chatFlowGraph"
-                app:popUpToInclusive="true"/>
+                app:popUpTo="@id/loginFlowGraph"
+                app:popUpToInclusive="true"
+                app:launchSingleTop="true"/>
 
         </fragment>
 
     </navigation>
-
 
     <!-- FriendRequestsFragment -->
     <fragment
@@ -118,7 +106,8 @@
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_bottom"/>
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:launchSingleTop="true"/>
     </fragment>
 
     <!-- SendFriendRequestFragment -->

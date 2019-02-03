@@ -3,7 +3,6 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friends
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import android.util.Log
 import android.view.*
 import dagger.android.support.DaggerFragment
@@ -12,11 +11,10 @@ import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
 import androidx.core.view.ViewCompat
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ext.*
@@ -30,11 +28,14 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelFactory
     @Inject lateinit var friendActionLiveData: MutableLiveData<FriendAction>
-    lateinit var viewModel: FriendRequestsToolbarViewModel
+    private lateinit var viewModel: FriendRequestsToolbarViewModel
 
-
-    lateinit var friendRequestsBadge: TextView
+    private var badgeLayout: View? = null
+    private lateinit var friendRequestsBadge: TextView
     private var friendRequestsCount: Int = 0
+
+    private var logoutUserMenuItem: MenuItem? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupIsUserLoggedInObserver()
+        setupLogoutUserViewModelObserver()
         setupViewModelObserver()
         //viewModel.requestItems()
     }
@@ -75,24 +77,34 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_friend_requests_toolbar, menu)
-        val menuItem = menu.findItem(R.id.menu_friend_requests)
 
-        friendRequestsBadge = menuItem.actionView.findViewById(R.id.friend_requests_badge) as TextView
+        logoutUserMenuItem = menu.findItem(R.id.menu_logout)
 
-        val badgeLayout =  menuItem.actionView.findViewById(R.id.friend_requests_badge_layout) as View
-        badgeLayout.setOnClickListener { onOptionsItemSelected(menuItem) }
+        val friendRequestsMenuItem = menu.findItem(R.id.menu_friend_requests)
+        friendRequestsBadge = friendRequestsMenuItem.actionView.findViewById(R.id.friend_requests_badge) as TextView
+
+        badgeLayout = friendRequestsMenuItem.actionView.findViewById(R.id.friend_requests_badge_layout) as View
+        badgeLayout?.setOnClickListener { findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment) }
 
         setupBadge()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_friend_requests -> {
-                findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment)
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
+        R.id.menu_friend_requests -> {
+            findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment)
+            true
         }
+        R.id.menu_logout -> {
+            logoutUser()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
+        badgeLayout?.setOnClickListener(null)
+        badgeLayout = null
+        super.onDestroyView()
     }
 
     private fun setupToolbar() {
@@ -100,6 +112,12 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         getSupportActionBar()?.apply {
             setDisplayShowTitleEnabled(true)
             title = "Friends"
+        }
+    }
+
+    private fun logoutUser() {
+        if(logoutUserMenuItem?.isEnabled ?: false) {
+            viewModel.logoutUser()
         }
     }
 
@@ -123,18 +141,32 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     private fun setupViewModelObserver() {
         viewModel.getFriendRequestsCountLiveData().observe(viewLifecycleOwner) {
-            it?.let { state ->
-                when(state) {
-                    is ShowContent -> onFriendRequestsCountReceived(state.content)
-                    is ShowLoading -> {}
-                    is ShowError -> showError(state.message)
-                }
+            when(it) {
+                is ShowContent -> onFriendRequestsCountReceived(it.content)
+                is ShowLoading -> {}
+                is ShowError -> showError(it.message)
             }
         }
     }
 
+    private fun setupLogoutUserViewModelObserver() {
+        viewModel.getLogoutUserLiveData().observe(viewLifecycleOwner) {
+           when(it) {
+               is ShowContent -> {}  // IsUserLoggedInLiveData observer will handle this (token is deleted trigger)
+               is ShowLoading -> {
+                   logoutUserMenuItem?.isEnabled = false
+                   progressBarLayout.visible() }
+               is ShowError -> {
+                   logoutUserMenuItem?.isEnabled = true
+                   progressBarLayout.gone()
+                   showError(it.message)
+               }
+           }
+        }
+    }
+
     private fun showError(message: String) {
-        showSnackbar(message, Snackbar.LENGTH_LONG)
+        showSnackbar(message, Snackbar.LENGTH_INDEFINITE)
     }
 
     private fun onFriendRequestsCountReceived(count: Int) {
@@ -156,6 +188,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
                 action.chatEntity.friendship!!.username,
                 action.sharedTextView.transitionName
             )
+
             val extras = FragmentNavigatorExtras(
                 action.sharedTextView to ViewCompat.getTransitionName(action.sharedTextView)!!
             )

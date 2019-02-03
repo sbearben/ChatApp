@@ -7,6 +7,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BasePublishSubjectSingularStore;
+import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
 import uk.co.victoriajanedavis.chatapp.domain.ReactiveSingularStore;
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope;
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenNwSpMapper;
@@ -22,6 +23,7 @@ public class TokenRepository {
 
     private final ReactiveSingularStore<TokenSpModel> tokenStore;
     private final ChatAppService chatService;
+    private final ChatAppDatabase database;
 
     private final TokenSpEntityMapper spEntityMapper;
     private final TokenNwSpMapper nwSpMapper;
@@ -29,9 +31,12 @@ public class TokenRepository {
 
     @Inject
     public TokenRepository(@NonNull final BasePublishSubjectSingularStore<TokenSpModel> tokenStore,
-                           @NonNull final ChatAppService service) {
+                           @NonNull final ChatAppService service,
+                           @NonNull final ChatAppDatabase database) {
         this.tokenStore = tokenStore;
         this.chatService = service;
+        this.database = database;
+
         this.spEntityMapper = new TokenSpEntityMapper();
         this.nwSpMapper = new TokenNwSpMapper();
     }
@@ -51,8 +56,9 @@ public class TokenRepository {
 
     @NonNull
     public Completable deleteTokenViaLogout() {
-        return deleteTokenFromStorage()
-                .andThen(chatService.logout().onErrorResumeNext(e -> Completable.complete()));
+        return chatService.logout().onErrorResumeNext(e -> Completable.complete())
+                .andThen(Completable.fromAction(database::clearAllTables))
+                .andThen(deleteTokenFromStorage());
     }
 
     @NonNull

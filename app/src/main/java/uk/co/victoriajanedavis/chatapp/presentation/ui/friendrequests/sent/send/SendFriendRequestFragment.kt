@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_send_friend_request.*
+import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*

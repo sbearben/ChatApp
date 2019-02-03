@@ -48,7 +48,6 @@ interface ChatAppService {
     ): Single<TokenNwModel>
 
     @POST("rest-auth/logout/")
-    @FormUrlEncoded
     fun logout(): Completable
 
     @POST("rest-auth/registration/")

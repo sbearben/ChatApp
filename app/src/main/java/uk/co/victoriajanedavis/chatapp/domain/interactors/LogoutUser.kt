@@ -15,8 +15,8 @@ class LogoutUser @Inject constructor(
 
     override fun getSingle(aVoid: Void?): Single<TokenEntity> {
         return backendTokenRepo.requestTokenSingle()
-            .flatMap { tokenEntity -> backendTokenRepo.deleteTokenViaLogout()
-                .andThen(firebaseTokenRepo.deleteTokenFromBackend())
+            .flatMap { tokenEntity -> firebaseTokenRepo.deleteTokenFromBackend()
+                .andThen(backendTokenRepo.deleteTokenViaLogout())
                 .andThen(Single.just(tokenEntity))
             }
     }
