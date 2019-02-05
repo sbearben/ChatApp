@@ -4,95 +4,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chatFlowGraph">
+    app:startDestination="@id/friendsFragment">
 
-    <!-- Chat Flow (nested graph) -->
-    <navigation android:id="@+id/chatFlowGraph"
-        app:startDestination="@id/friendsFragment">
+    <!-- Chat Flow -->
+    <!-- FriendRequestsToolbarFragment -->
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friend_requests_toolbar">
 
-        <fragment
-            android:id="@+id/friendsFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment"
-            android:label="fragment_friends"
-            tools:layout="@layout/fragment_friend_requests_toolbar">
+        <action
+            android:id="@+id/action_friendsFragment_to_loginFlowGraph"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/friendsFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:launchSingleTop="true"/>
 
-            <action
-                android:id="@+id/action_friendsFragment_to_loginFlowGraph"
-                app:destination="@id/loginFlowGraph"
-                app:popUpTo="@id/chatFlowGraph"
-                app:popUpToInclusive="true"
-                app:enterAnim="@anim/slide_in_bottom"
-                app:exitAnim="@anim/fade_out"
-                app:popEnterAnim="@anim/fade_in"
-                app:popExitAnim="@anim/slide_out_bottom"
-                app:launchSingleTop="true"/>
+        <action
+            android:id="@+id/action_friendsFragment_to_chatFragment"
+            app:destination="@id/chatFragment"
+            app:launchSingleTop="true"/>
 
-            <action
-                android:id="@+id/action_friendsFragment_to_chatFragment"
-                app:destination="@id/chatFragment"
-                app:launchSingleTop="true"/>
+        <action
+            android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
+            app:destination="@id/friendRequestsFragment"
+            app:enterAnim="@anim/grow_in_top_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/grow_out_top_right"
+            app:launchSingleTop="true"/>
+    </fragment>
 
-            <action
-                android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
-                app:destination="@id/friendRequestsFragment"
-                app:enterAnim="@anim/grow_in_top_right"
-                app:exitAnim="@anim/fade_out"
-                app:popEnterAnim="@anim/fade_in"
-                app:popExitAnim="@anim/grow_out_top_right"
-                app:launchSingleTop="true"/>
-        </fragment>
+    <!-- ChatFragment -->
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
 
-        <fragment
-            android:id="@+id/chatFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment"
-            android:label="fragment_chat"
-            tools:layout="@layout/fragment_chat" />
-    </navigation>
 
-    <!-- Login/Register Flow (nested graph) -->
-    <navigation android:id="@+id/loginFlowGraph"
-        app:startDestination="@id/loginFragment">
+    <!-- Login/Register Flow -->
+    <!-- LoginFragment -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
 
-        <fragment
-            android:id="@+id/loginFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment"
-            android:label="fragment_login"
-            tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_chatFlowGraph"
+            app:destination="@id/friendsFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"/>
 
-            <action
-                android:id="@+id/action_loginFragment_to_chatFlowGraph"
-                app:destination="@id/chatFlowGraph"
-                app:popUpTo="@id/loginFlowGraph"
-                app:popUpToInclusive="true"
-                app:launchSingleTop="true"/>
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"/>
+    </fragment>
 
-            <action
-                android:id="@+id/action_loginFragment_to_signupFragment"
-                app:destination="@id/signupFragment"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"
-                app:launchSingleTop="true"/>
+    <!-- SignupFragment -->
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup">
 
-        </fragment>
-
-        <fragment
-            android:id="@+id/signupFragment"
-            android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment"
-            android:label="fragment_signup"
-            tools:layout="@layout/fragment_signup">
-
-            <action
-                android:id="@+id/action_signupFragment_to_chatFlowGraph"
-                app:destination="@id/chatFlowGraph"
-                app:popUpTo="@id/loginFlowGraph"
-                app:popUpToInclusive="true"
-                app:launchSingleTop="true"/>
-
-        </fragment>
-
-    </navigation>
+        <action
+            android:id="@+id/action_signupFragment_to_chatFlowGraph"
+            app:destination="@id/friendsFragment"
+            app:popUpTo="@id/signupFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"/>
+    </fragment>
 
     <!-- FriendRequestsFragment -->
     <fragment

@@ -17,6 +17,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // For the app private permission used for sending the broadcast and registering the NetworkConnectionReceiver (BNR p.570)
+        buildConfigField("String", "APP_PRIVATE_PREMISSION", "\"${chatAppPrivatePermission}\"")
+        manifestPlaceholders = [chatAppPrivatePermission:"${chatAppPrivatePermission}"]
     }
 
     buildTypes {
@@ -46,7 +50,7 @@ dependencies {
     final ESPRESSO_VERSION = '3.1.1-alpha01'
     final ROOM_VERSION = '2.1.0-alpha04'
     final LIFECYCLE_VERSION = '2.0.0'
-    final NAVIGATION_VERSION = '1.0.0-alpha07'
+    final NAVIGATION_VERSION = '1.0.0-beta01'
     //final TINDER_SCARLET_VERSION = '0.2.1-alpha4'
     final TINDER_SCARLET_VERSION = '0.2.4-alpha1'
     //final ANDROID_KTX_VERSION = '1.0.1'

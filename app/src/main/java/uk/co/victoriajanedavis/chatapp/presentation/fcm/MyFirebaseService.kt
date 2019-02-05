@@ -23,7 +23,6 @@ class MyFirebaseService : FirebaseMessagingService() {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-
     override fun onCreate() {
         super.onCreate()
         AndroidInjection.inject(this);
@@ -32,7 +31,11 @@ class MyFirebaseService : FirebaseMessagingService() {
 
         disposables.add(tokenRefresher.getRefreshSingle(null)
             .subscribeOn(Schedulers.io())  // TODO: do we need this since MyFirebaseService is on its own thread?
-            .subscribe({ Log.d(TAG, "Posting token to backend succeeded") }, { e -> Log.d(TAG, "Posting token to backend failed: " + e.message) }))
+            .subscribe(
+                { Log.d(TAG, "Posting token to backend succeeded") },
+                { e -> Log.d(TAG, "Posting token to backend failed: " + e.message) }
+            )
+        )
 
         Log.d(TAG, " onCreate() Called")
     }
@@ -52,54 +55,17 @@ class MyFirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Log.d(TAG, "Message Received")
         messageResolver.resolveMessage(remoteMessage!!.data)
-        /*
-        if (// check if we need long running process) {
-            // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-            scheduleJob();
-        } else {
-            // Handle message within 10 seconds
-            handleNow();
-        }
-        */
-        // Send notification
     }
 
     override fun onDeletedMessages() {
         Log.d(TAG, "Deleted Messages")
-        disposables.add(fullSync.initiateSync()
+        disposables.add(fullSync.getActionCompletable(0)
             .subscribe({}, { e -> Log.d(TAG, "Full sync failed: " + e.message) }
         ))
     }
 
-
-    // The following is from the "firebase/quickstart-android" repo on Github:
-    // - https://github.com/firebase/quickstart-android/tree/master/messaging
-
-
-    /**
-     * Schedule a job using FirebaseJobDispatcher.
-     */
-    private fun scheduleJob() {
-        /*
-        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-        Job myJob = dispatcher.newJobBuilder()
-                .setService(MyJobService.class)
-                .setTag("my-job-tag")
-                .build();
-        dispatcher.schedule(myJob);
-        */
-    }
-
-    /**
-     * Handle time allotted to BroadcastReceivers.
-     */
-    private fun handleNow() {
-        Log.d(TAG, "Short lived task is done.")
-    }
-
     companion object {
-
-        private val TAG = "FirebaseService"
+        private const val TAG = "FirebaseService"
     }
 
     /**

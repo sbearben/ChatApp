@@ -13,12 +13,6 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainFragment
-
-@Subcomponent()
-interface MainFragmentSubcomponent : AndroidInjector<MainFragment> {
-    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<MainFragment>()
-}
 
 @Subcomponent()
 interface LoginFragmentSubcomponent : AndroidInjector<LoginFragment> {

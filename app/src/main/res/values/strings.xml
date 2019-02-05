@@ -54,4 +54,7 @@
     <string name="menu_friend_requests">Friend Requests</string>
     <string name="menu_logout">Logout</string>
 
+    <!-- SyncService -->
+    <string name="sync_service_description">Service used by ChatApp to perform data syncs</string>
+
 </resources>

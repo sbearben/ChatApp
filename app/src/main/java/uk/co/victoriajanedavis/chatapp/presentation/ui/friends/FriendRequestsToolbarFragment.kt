@@ -11,7 +11,9 @@ import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
@@ -22,6 +24,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction.Clicked
+import java.lang.ref.WeakReference
 
 
 class FriendRequestsToolbarFragment : DaggerFragment() {
@@ -30,7 +33,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
     @Inject lateinit var friendActionLiveData: MutableLiveData<FriendAction>
     private lateinit var viewModel: FriendRequestsToolbarViewModel
 
-    private var badgeLayout: View? = null
+    private var badgeActionView: View? = null
     private lateinit var friendRequestsBadge: TextView
     private var friendRequestsCount: Int = 0
 
@@ -66,7 +69,6 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         setupIsUserLoggedInObserver()
         setupLogoutUserViewModelObserver()
         setupViewModelObserver()
-        //viewModel.requestItems()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,11 +82,14 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
         logoutUserMenuItem = menu.findItem(R.id.menu_logout)
 
-        val friendRequestsMenuItem = menu.findItem(R.id.menu_friend_requests)
-        friendRequestsBadge = friendRequestsMenuItem.actionView.findViewById(R.id.friend_requests_badge) as TextView
+        menu.findItem(R.id.menu_friend_requests).also { menuItem ->
+            friendRequestsBadge = menuItem.actionView.findViewById(R.id.friend_requests_badge) as TextView
+            badgeActionView = menuItem.actionView
+        }
 
-        badgeLayout = friendRequestsMenuItem.actionView.findViewById(R.id.friend_requests_badge_layout) as View
-        badgeLayout?.setOnClickListener { findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment) }
+        //badgeActionView?.setOnClickListener { findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment) }
+        // Commented line above was causing a leak and after a lot of effort this was the only way I could prevent it
+        badgeActionView?.setOnClickListener(BadgeClickListener(WeakReference(this)))
 
         setupBadge()
     }
@@ -99,12 +104,6 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun onDestroyView() {
-        badgeLayout?.setOnClickListener(null)
-        badgeLayout = null
-        super.onDestroyView()
     }
 
     private fun setupToolbar() {
@@ -134,7 +133,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         viewModel.getIsUserLoggedInLiveData().observe(viewLifecycleOwner) {
             when(it) {
                 false -> findNavController().navigate(R.id.action_friendsFragment_to_loginFlowGraph)
-                true -> {} //findNavController().navigate(R.id.action_mainFragment_to_friendsFragment)
+                true -> {}
             }
         }
     }
@@ -171,7 +170,6 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
     private fun onFriendRequestsCountReceived(count: Int) {
         friendRequestsCount = count
-        Log.d("FriendRequestsFragment", "friendRequestsCount: $friendRequestsCount")
         activity?.invalidateOptionsMenu()
     }
 
@@ -205,6 +203,18 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
             fm.beginTransaction()
                 .add(R.id.friendRequestsFragmentContainer, fragment, FriendsFragment.TAG)
                 .commit()
+        }
+    }
+
+    companion object {
+        class BadgeClickListener constructor(
+            private val fragmentReference: WeakReference<Fragment>
+        ) : View.OnClickListener {
+            override fun onClick(view: View?) {
+                fragmentReference.get()?.apply {
+                    findNavController().navigate(R.id.action_friendsFragment_to_friendRequestsFragment)
+                }
+            }
         }
     }
 }

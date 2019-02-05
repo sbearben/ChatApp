@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uk.co.victoriajanedavis.chatapp" >
+    package="uk.co.victoriajanedavis.chatapp">
+
+    <!-- Setting a custom permission for our app -->
+    <permission android:name="${chatAppPrivatePermission}"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${chatAppPrivatePermission}" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <!-- Needed for JobIntentService: https://developer.android.com/reference/android/support/v4/app/JobIntentService -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -27,7 +31,7 @@
         </activity>
 
         <service android:name=".presentation.fcm.MyFirebaseService"
-                 android:exported="false">
+            android:exported="false">
 
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -43,8 +47,9 @@
             android:resource="@drawable/SOME_RECOURCE" /> -->
 
         <service
-            android:name=".presentation.SimpleJobIntentService"
-            android:exported="false">
+            android:name=".presentation.ui.main.SyncService"
+            android:exported="false"
+            android:description="@string/sync_service_description">
         </service>
 
     </application>

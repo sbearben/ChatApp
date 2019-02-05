@@ -26,7 +26,7 @@ public interface ReactiveInteractor {
     }
 
     /**
-     Sends changes to data layer but ignors the result.
+     Sends changes to data layer but ignores the result.
      It returns a {@link Completable} that tells whether the action completed or not.
 
      @param <Params> required parameters for the action.

@@ -14,7 +14,6 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginViewModel
-import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainActivityViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupViewModel
 
@@ -23,11 +22,6 @@ abstract class ViewModelModule {
 
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory : ViewModelFactory): ViewModelProvider.Factory
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainActivityViewModel::class)
-    abstract fun mainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
 
     @Binds
     @IntoMap
