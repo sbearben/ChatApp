@@ -71,39 +71,6 @@ class MessageNotification @Inject constructor(
         return MESSAGE_TAG_PREFIX + chatUuid.toString()
     }
 
-    /***** Start of Reply Action stuff *****/
-
-    /*
-    // Create the reply action and add the remote input.
-    private fun createReplyAction(chatUuid: UUID): NotificationCompat.Action {
-        return NotificationCompat.Action.Builder(
-            R.drawable.ic_send_blue_transparent_36dp,
-            ACTION_REPLY_LABEL, createReplyActionPendingIntent(chatUuid))
-            .addRemoteInput(createRemoteInput())
-            .build()
-    }
-
-    // Build a PendingIntent for the reply action to trigger.
-    private fun createReplyActionPendingIntent(chatUuid: UUID): PendingIntent {
-        return PendingIntent.getBroadcast(
-            context,
-            conversation.getConversationId(),  // TODO: this needs to be unique for each Chat (need to FIO)
-            ReplyActionService.newIntent(
-                context,
-                chatUuid,
-                notificationId
-            ),
-            PendingIntent.FLAG_UPDATE_CURRENT)
-    }
-
-    private fun createRemoteInput(): RemoteInput {
-        return RemoteInput.Builder(KEY_TEXT_REPLY).run {
-            setLabel(ACTION_REPLY_LABEL)
-            build()
-        }
-    }
-    */
-
     /***** End of Reply Action stuff *****/
 
     companion object {

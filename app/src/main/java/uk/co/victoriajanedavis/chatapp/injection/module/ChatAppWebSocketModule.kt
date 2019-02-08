@@ -48,10 +48,9 @@ class ChatAppWebSocketModule {
 
     @Provides
     @ApplicationScope
-    fun scarletConfiguration(lifecycle: Lifecycle, gson: Gson): Scarlet.Configuration {
+    fun scarletConfiguration(lifecycle: Lifecycle): Scarlet.Configuration {
         return Scarlet.Configuration(
             lifecycle = lifecycle,
-            messageAdapterFactories = listOf(GsonMessageAdapter.Factory(gson)),
             streamAdapterFactories = listOf(RxJava2StreamAdapterFactory())
         )
     }

@@ -12,11 +12,12 @@ import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStream
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.MessageReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketStreams
 import java.util.concurrent.ThreadLocalRandom
 import javax.inject.Inject
 
 class MessageStorageBinding @Inject constructor(
-    private val webSocketService: ChatAppWebSocketService,
+    private val webSocketStreams: WebSocketStreams,
     private val firebaseMessagingStreams: FirebaseMessagingStreams,
     private val messageStore: MessageReactiveStore,
     private val chatStore: BaseReactiveStore<ChatDbModel>
@@ -27,7 +28,7 @@ class MessageStorageBinding @Inject constructor(
 
     fun subscribeToMessagesStream(): Disposable {
         return Flowable.merge(
-            webSocketService.observeMessages().doOnNext { Log.d("MessageStorage", "Websocket message emitted") },
+            webSocketStreams.chatMessageStream().doOnNext { Log.d("MessageStorage", "Websocket message emitted") },
             firebaseMessagingStreams.chatMessageStream().doOnNext { Log.d("MessageStorage", "Firebase message emitted") })
             .publish().autoConnect()
             .map(messageMapper::mapFrom)

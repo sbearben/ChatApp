@@ -9,11 +9,12 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketStreams
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ReceivedFriendRequestStore
 import javax.inject.Inject
 
 class CreatedFriendRequestStorageBinding @Inject constructor(
-    private val webSocketService: ChatAppWebSocketService,
+    private val webSocketStreams: WebSocketStreams,
     private val firebaseMessagingStreams: FirebaseMessagingStreams,
     @ReceivedFriendRequestStore private val friendStore: BaseReactiveStore<FriendshipDbModel>
 ) {
@@ -21,7 +22,7 @@ class CreatedFriendRequestStorageBinding @Inject constructor(
 
     fun subscribeToCreatedFriendRequestsStream(): Disposable {
         return Flowable.merge(
-            webSocketService.observerCreatedFriendRequests(),
+            webSocketStreams.createdFriendRequestStream(),
             firebaseMessagingStreams.createdFriendRequestStream())
             .doOnNext { Log.d("CreatedFriendReq", "WebSocket Emitted") }
             .publish().autoConnect()

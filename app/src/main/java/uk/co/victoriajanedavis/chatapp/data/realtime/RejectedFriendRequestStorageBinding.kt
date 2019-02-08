@@ -9,11 +9,12 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketStreams
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.SentFriendRequestStore
 import javax.inject.Inject
 
 class RejectedFriendRequestStorageBinding @Inject constructor(
-    private val webSocketService: ChatAppWebSocketService,
+    private val webSocketStreams: WebSocketStreams,
     private val firebaseMessagingStreams: FirebaseMessagingStreams,
     @SentFriendRequestStore private val friendStore: BaseReactiveStore<FriendshipDbModel>
 ) {
@@ -21,7 +22,7 @@ class RejectedFriendRequestStorageBinding @Inject constructor(
 
     fun subscribeToRejectedFriendRequestsStream(): Disposable {
         return Flowable.merge(
-            webSocketService.observerRejectedFriendRequests(),
+            webSocketStreams.rejectedFriendRequestStream(),
             firebaseMessagingStreams.rejectedFriendRequestStream())
             .doOnNext { Log.d("RejectedFriendReq", "WebSocket Emitted") }
             .publish().autoConnect()

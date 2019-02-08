@@ -16,28 +16,6 @@ import uk.co.victoriajanedavis.chatapp.data.model.network.*
 
 interface ChatAppService {
 
-    /*************** RECEIVED Friend Request Endpoints  */
-    @get:GET("me/receivedfriendrequests/")
-    val receivedFriendRequests: Single<List<UserNwModel>>
-
-
-    /*************** SENT Friend Request Endpoints  */
-    @get:GET("me/sentfriendrequests/")
-    val sentFriendRequests: Single<List<UserNwModel>>
-
-
-    /*************** Friends List  */
-    @get:GET("me/friends/")
-    val friends: Single<List<UserNwModel>>
-
-
-    /*************** Chat Membership List  */
-    @get:GET("me/chats/")
-    val chatMemberships: Single<List<ChatMembershipNwModel>>
-
-    @GET("users/{user_uuid}/")
-    fun getUser(@Path("user_uuid") uuid: String): Single<UserNwModel>
-
     /*************** Login/Logout/Register Endpoints  */
 
     @POST("rest-auth/login/")
@@ -59,17 +37,40 @@ interface ChatAppService {
         @Field("password2") password2: String
     ): Single<TokenNwModel>
 
+
+    /*************** RECEIVED Friend Request Endpoints  */
+    @get:GET("me/receivedfriendrequests/")
+    val receivedFriendRequests: Single<List<UserNwModel>>
+
     @POST("me/receivedfriendrequests/")
     fun acceptFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
     @DELETE("me/receivedfriendrequests/")
     fun rejectFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
+
+    /*************** SENT Friend Request Endpoints  */
+    @get:GET("me/sentfriendrequests/")
+    val sentFriendRequests: Single<List<UserNwModel>>
+
     @POST("me/sentfriendrequests/")
     fun sendFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
     @DELETE("me/sentfriendrequests/")
     fun cancelSentFriendRequest(@Query("username") username: String): Single<UserNwModel>
+
+
+    /*************** Friends List  */
+    @get:GET("me/friends/")
+    val friends: Single<List<UserNwModel>>
+
+
+    /*************** Chat Membership List  */
+    @get:GET("me/chats/")
+    val chatMemberships: Single<List<ChatMembershipNwModel>>
+
+    @GET("users/{user_uuid}/")
+    fun getUser(@Path("user_uuid") uuid: String): Single<UserNwModel>
 
 
     /*************** Chat Details  */

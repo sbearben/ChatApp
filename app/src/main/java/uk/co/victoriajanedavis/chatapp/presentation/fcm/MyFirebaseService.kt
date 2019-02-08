@@ -7,8 +7,9 @@ import com.google.firebase.messaging.RemoteMessage
 import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessageResolver
 import uk.co.victoriajanedavis.chatapp.data.realtime.RealtimeStreamsLifeManager
+import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessageDataStream
+import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.domain.interactors.FirebaseTokenRefresher
 import uk.co.victoriajanedavis.chatapp.domain.interactors.FullSync
 
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class MyFirebaseService : FirebaseMessagingService() {
 
     @Inject lateinit var realtimeStreamsLifeManager: RealtimeStreamsLifeManager
-    @Inject lateinit var messageResolver: FirebaseMessageResolver
+    @Inject lateinit var messageDataStream: FirebaseMessageDataStream
     @Inject lateinit var tokenRefresher: FirebaseTokenRefresher
     @Inject lateinit var fullSync: FullSync
 
@@ -54,7 +55,7 @@ class MyFirebaseService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Log.d(TAG, "Message Received")
-        messageResolver.resolveMessage(remoteMessage!!.data)
+        messageDataStream.push(remoteMessage!!.data)
     }
 
     override fun onDeletedMessages() {
