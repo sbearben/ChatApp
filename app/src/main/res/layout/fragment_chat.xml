@@ -68,7 +68,7 @@
             android:padding="18dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_send_black_24dp"
+            android:background="@drawable/ic_send_blue_24dp"
             android:contentDescription="@string/fragment_messaging_send_button_description"
             app:layout_constraintTop_toTopOf="@+id/message_editText"
             app:layout_constraintBottom_toBottomOf="@+id/message_editText"

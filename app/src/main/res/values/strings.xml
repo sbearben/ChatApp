@@ -55,6 +55,9 @@
     <string name="menu_logout">Logout</string>
 
     <!-- SyncService -->
-    <string name="sync_service_description">Service used by ChatApp to perform data syncs</string>
+    <string name="service_sync_description">Service used by ChatApp to perform data syncs</string>
+
+    <!-- ReplyActionService -->
+    <string name="service_reply_action_description">Service used by ChatApp to enable users to reply to chats from message notifications</string>
 
 </resources>

@@ -9,7 +9,7 @@ import javax.inject.Inject
 @ApplicationScope
 class FirebaseTokenStream @Inject constructor() {
 
-    private val stream : Subject<String> = BehaviorSubject.create<String>().toSerialized();
+    private val stream : Subject<String> = BehaviorSubject.create<String>().toSerialized()
 
     internal fun push(token: String) {
         stream.onNext(token)

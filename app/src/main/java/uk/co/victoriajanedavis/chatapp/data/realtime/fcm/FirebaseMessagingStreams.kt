@@ -12,7 +12,7 @@ import javax.inject.Inject
 @ApplicationScope
 class FirebaseMessagingStreams @Inject constructor() {
 
-    private val stream : Subject<RealtimeModel> = PublishSubject.create<RealtimeModel>().toSerialized();
+    private val stream : Subject<RealtimeModel> = PublishSubject.create<RealtimeModel>().toSerialized()
     private val backpressureStrategy = BackpressureStrategy.BUFFER
 
 

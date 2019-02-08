@@ -1,7 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.main
 
 import androidx.lifecycle.ViewModel
-import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.RealtimeStreamsLifeManager
+import uk.co.victoriajanedavis.chatapp.data.realtime.RealtimeStreamsLifeManager
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(

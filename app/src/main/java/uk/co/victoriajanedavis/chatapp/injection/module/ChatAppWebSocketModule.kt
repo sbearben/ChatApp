@@ -14,8 +14,8 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import uk.co.victoriajanedavis.chatapp.ChatApp
-import uk.co.victoriajanedavis.chatapp.data.websocket.ChatAppWebSocketService
-import uk.co.victoriajanedavis.chatapp.data.websocket.LoggedInLifecycle
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.LoggedInLifecycle
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntityHolder
 import uk.co.victoriajanedavis.chatapp.domain.interactors.IsUserLoggedIn
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope

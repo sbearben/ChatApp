@@ -1,6 +1,7 @@
-package uk.co.victoriajanedavis.chatapp.data.realtime.websocket
+package uk.co.victoriajanedavis.chatapp.data.realtime
 
 import io.reactivex.disposables.CompositeDisposable
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketEventsStreamBinding
 import javax.inject.Inject
 
 class RealtimeStreamsLifeManager @Inject constructor(

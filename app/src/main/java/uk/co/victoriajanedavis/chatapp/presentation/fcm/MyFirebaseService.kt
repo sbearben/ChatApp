@@ -8,7 +8,7 @@ import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessageResolver
-import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.RealtimeStreamsLifeManager
+import uk.co.victoriajanedavis.chatapp.data.realtime.RealtimeStreamsLifeManager
 import uk.co.victoriajanedavis.chatapp.domain.interactors.FirebaseTokenRefresher
 import uk.co.victoriajanedavis.chatapp.domain.interactors.FullSync
 

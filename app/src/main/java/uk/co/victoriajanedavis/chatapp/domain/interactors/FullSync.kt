@@ -17,7 +17,7 @@ class FullSync @Inject constructor(
 
     override fun getActionCompletable(delayMilli: Long) : Completable {
         return Single.timer(delayMilli, TimeUnit.MILLISECONDS)
-            .flatMapObservable { t -> isUserLoggedIn.getBehaviorStream(null) }
+            .flatMapObservable { _ -> isUserLoggedIn.getBehaviorStream(null) }
             .flatMapCompletable(::initiateSyncIfLoggedIn)
     }
 

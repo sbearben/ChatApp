@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.data.realtime.websocket
+package uk.co.victoriajanedavis.chatapp.data.realtime
 
 import android.util.Log
 import io.reactivex.Completable
@@ -10,7 +10,7 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
-import uk.co.victoriajanedavis.chatapp.data.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.FriendshipStore
 import javax.inject.Inject
 
@@ -28,8 +28,8 @@ class AcceptedFriendRequestStorageBinding @Inject constructor(
             webSocketService.observerAcceptedFriendRequests(),
             firebaseMessagingStreams.acceptedFriendRequestStream())
             .doOnNext { Log.d("AcceptedFriendReq", "WebSocket Emitted") }
-            .map(acceptedFriendRequestMapper::mapFrom)
             .publish().autoConnect()
+            .map(acceptedFriendRequestMapper::mapFrom)
             .flatMapCompletable { chatDbModel ->
                 Completable.mergeArray(
                     chatStore.storeSingular(chatDbModel),

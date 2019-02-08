@@ -16,7 +16,7 @@ import uk.co.victoriajanedavis.chatapp.injection.component.ApplicationComponent
 import uk.co.victoriajanedavis.chatapp.injection.component.DaggerApplicationComponent
 import javax.inject.Inject
 import android.content.Intent
-
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.registerAllNotificationChannels
 
 
 class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
@@ -36,6 +36,8 @@ class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
 
     override fun onCreate() {
         super.onCreate()
+        registerAllNotificationChannels(this)
+
         createAppComponent()
         appComponent.inject(this)
 

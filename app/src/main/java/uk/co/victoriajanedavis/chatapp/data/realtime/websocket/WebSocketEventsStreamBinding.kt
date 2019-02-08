@@ -4,7 +4,6 @@ import android.util.Log
 import com.tinder.scarlet.websocket.WebSocketEvent
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import uk.co.victoriajanedavis.chatapp.data.websocket.ChatAppWebSocketService
 import javax.inject.Inject
 
 class WebSocketEventsStreamBinding @Inject constructor(

@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.data.websocket
+package uk.co.victoriajanedavis.chatapp.data.realtime.websocket
 
 import com.tinder.scarlet.Lifecycle
 import com.tinder.scarlet.LifecycleState

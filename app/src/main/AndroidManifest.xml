@@ -49,7 +49,13 @@
         <service
             android:name=".presentation.ui.main.SyncService"
             android:exported="false"
-            android:description="@string/sync_service_description">
+            android:description="@string/service_sync_description">
+        </service>
+
+        <service
+            android:name=".presentation.notifications.message.ReplyActionService"
+            android:exported="false"
+            android:description="@string/service_reply_action_description">
         </service>
 
     </application>

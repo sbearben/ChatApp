@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.data.realtime.websocket
+package uk.co.victoriajanedavis.chatapp.data.realtime
 
 import android.util.Log
 import io.reactivex.Flowable
@@ -8,7 +8,7 @@ import uk.co.victoriajanedavis.chatapp.data.mappers.CanceledFriendRequestWsFrien
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
-import uk.co.victoriajanedavis.chatapp.data.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ReceivedFriendRequestStore
 import javax.inject.Inject
 
@@ -24,8 +24,8 @@ class CanceledFriendRequestStorageBinding @Inject constructor(
             webSocketService.observerCanceledFriendRequests(),
             firebaseMessagingStreams.canceledFriendRequestStream())
             .doOnNext { Log.d("CanceledFriendReq", "WebSocket Emitted") }
-            .map(canceledFriendRequestMapper::mapFrom)
             .publish().autoConnect()
+            .map(canceledFriendRequestMapper::mapFrom)
             .flatMapCompletable(friendStore::storeSingular)
             .subscribeOn(Schedulers.io())
             .subscribe()

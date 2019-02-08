@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.data.realtime.websocket
+package uk.co.victoriajanedavis.chatapp.data.realtime
 
 import android.util.Log
 import io.reactivex.Completable
@@ -11,7 +11,7 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.MessageReactiveStore
-import uk.co.victoriajanedavis.chatapp.data.websocket.ChatAppWebSocketService
+import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
 import java.util.concurrent.ThreadLocalRandom
 import javax.inject.Inject
 
@@ -29,8 +29,8 @@ class MessageStorageBinding @Inject constructor(
         return Flowable.merge(
             webSocketService.observeMessages().doOnNext { Log.d("MessageStorage", "Websocket message emitted") },
             firebaseMessagingStreams.chatMessageStream().doOnNext { Log.d("MessageStorage", "Firebase message emitted") })
-            .map(messageMapper::mapFrom)
             .publish().autoConnect()
+            .map(messageMapper::mapFrom)
             .flatMapCompletable { messageDbModel ->
                 Completable.mergeArray(
                     messageStore.storeSingular(messageDbModel),

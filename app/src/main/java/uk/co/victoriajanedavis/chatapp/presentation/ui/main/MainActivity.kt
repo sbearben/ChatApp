@@ -1,5 +1,8 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.main
 
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +14,6 @@ import uk.co.victoriajanedavis.chatapp.BuildConfig
 import uk.co.victoriajanedavis.chatapp.ChatApp
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.lazyAndroid
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -19,15 +21,15 @@ class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: MainViewModel
 
-    private val connectionReceiver: NetworkConnectionReceiver by lazyAndroid { NetworkConnectionReceiver() }
-    private val navController: NavController by lazyAndroid { findNavController(R.id.nav_host) }
+    private val connectionReceiver: NetworkConnectionReceiver by lazy { NetworkConnectionReceiver() }
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
-        //navController = findNavController(R.id.nav_host)
+        navController = findNavController(R.id.nav_host)
     }
 
     override fun onResume() {
@@ -58,6 +60,14 @@ class MainActivity : DaggerAppCompatActivity() {
             }
         }
         super.onBackPressed()
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        }
     }
 
 }
