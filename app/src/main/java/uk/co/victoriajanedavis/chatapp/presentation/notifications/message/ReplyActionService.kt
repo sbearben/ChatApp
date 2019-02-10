@@ -4,6 +4,7 @@ import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
@@ -11,7 +12,6 @@ import dagger.android.DaggerService
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.R
-import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.SendChatMessage
 import uk.co.victoriajanedavis.chatapp.domain.interactors.SendChatMessage.MessageParams
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.ID
@@ -27,6 +27,7 @@ class ReplyActionService : DaggerService() {
     private var channelId = ""
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d("ReplyActionService", "onStartCommand")
         notificationTag = intent!!.getStringExtra(EXTRA_NOTIFICATION_TAG)
         channelId = intent.getStringExtra(EXTRA_CHANNEL_ID)
 
@@ -47,6 +48,7 @@ class ReplyActionService : DaggerService() {
     }
 
     override fun onDestroy() {
+        Log.d("ReplyActionService", "onDestroy")
         super.onDestroy()
         disposables.dispose()
     }
@@ -67,7 +69,7 @@ class ReplyActionService : DaggerService() {
     }
 
     private fun onReplyError(e: Throwable) {
-        issueNotification(e.message ?: e.toString())
+        issueNotification("Error sending reply: ${e.message ?: e.toString()}")
         stopSelf()
     }
 
@@ -85,6 +87,7 @@ class ReplyActionService : DaggerService() {
             .setSmallIcon(R.drawable.ic_chat_black_72dp)
             .setContentText(contentText)
             //.setRemoteInputHistory()
+            .setAutoCancel(true)
             .build()
     }
 

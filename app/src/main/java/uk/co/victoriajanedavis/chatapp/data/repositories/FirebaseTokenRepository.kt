@@ -17,7 +17,14 @@ class FirebaseTokenRepository @Inject constructor(
 
     fun getTokenStream() : Observable<String> {
         return firebaseTokenStore.getSingular()
+            .doOnNext { token -> Log.d("FirebaseRepository6", "getSingular.doOnNext: ${token.token}") }
             .map { tokenSpModel -> tokenSpModel.token }
+    }
+
+    fun requestTokenSingle() : Single<String> {
+        return firebaseTokenStore.getSingular()
+            .map { tokenSpModel -> tokenSpModel.token }
+            .firstOrError();
     }
 
     fun fetchToken() : Completable {
@@ -25,11 +32,14 @@ class FirebaseTokenRepository @Inject constructor(
             var firebaseToken = ""
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(
                 { r -> r.run() },  // this Executor gets the InstanceId synchronously
-                { instanceIdResult ->  firebaseToken = instanceIdResult.token }
+                { instanceIdResult ->
+                    Log.d("FirebaseRepository4", "token fetched: ${instanceIdResult.token}")
+                    firebaseToken = instanceIdResult.token
+                }
             )
             return@fromCallable firebaseToken
         }
-            .flatMapCompletable { token -> storeToken(token) }
+            .flatMapCompletable(::storeToken)
     }
 
     fun postTokenToBackend(token: String) : Completable {
@@ -39,6 +49,7 @@ class FirebaseTokenRepository @Inject constructor(
 
     fun deleteTokenFromBackend() : Completable {
         return chatService.deleteFirebaseToken()
+            //.andThen(firebaseTokenStore.clear())
     }
 
     fun storeToken(token : String) : Completable {

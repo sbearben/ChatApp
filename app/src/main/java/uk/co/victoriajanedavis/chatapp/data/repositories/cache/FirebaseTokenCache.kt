@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.data.repositories.cache
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.FirebaseTokenSpModel
@@ -12,14 +13,19 @@ class FirebaseTokenCache @Inject constructor(
     private val sharedPref: SharedPreferences
 ) : SingularDiskCache<FirebaseTokenSpModel> {
 
+    @SuppressLint("ApplySharedPref")
     override fun putSingular(value: FirebaseTokenSpModel) {
         sharedPref.edit()
             .putString(FirebaseTokenSpModel.PREF_TOKEN_KEY, value.token)
-            .apply()
+            // Using commit instead of apply since this is done on a background thread anyways so should be synchronous
+            .commit()
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun clear() {
-        sharedPref.edit().remove(FirebaseTokenSpModel.PREF_TOKEN_KEY).apply()
+        sharedPref.edit()
+            .remove(FirebaseTokenSpModel.PREF_TOKEN_KEY)
+            .commit()
     }
 
     override fun getSingular(): Observable<FirebaseTokenSpModel> {

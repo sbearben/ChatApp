@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.domain.interactors
 
+import android.util.Log
 import javax.inject.Inject
 
 import io.reactivex.Single

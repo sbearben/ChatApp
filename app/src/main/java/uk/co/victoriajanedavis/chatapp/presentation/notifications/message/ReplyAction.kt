@@ -29,7 +29,7 @@ class ReplyAction @Inject constructor(
         notificationTag: String,
         channelId: String
     ): PendingIntent {
-        return PendingIntent.getBroadcast(
+        return PendingIntent.getService(
             context,
             0,  // notificationId
             ReplyActionService.newIntent(
@@ -38,7 +38,7 @@ class ReplyAction @Inject constructor(
                 notificationTag,
                 channelId
             ),
-             PendingIntent.FLAG_CANCEL_CURRENT)
+             PendingIntent.FLAG_ONE_SHOT)
     }
 
     private fun createRemoteInput(): RemoteInput {

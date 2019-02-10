@@ -24,22 +24,23 @@ class FirebaseTokenRefresher @Inject constructor(
 
     private fun sendTokenToBackendIfLoggedIn() : Completable {
         return combineLatestFirebaseAndBackendTokenStreams()
-            .flatMapCompletable { token -> firebaseTokenRepo.postTokenToBackend(token) }
+            .flatMapCompletable(firebaseTokenRepo::postTokenToBackend)
     }
 
     private fun combineLatestFirebaseAndBackendTokenStreams() : Observable<String> {
         return Observable.combineLatest(
-            getFirebaseToken().doOnNext { token ->  Log.d("FirebaseRepository", "firebase: $token") },
-            backendTokenRepo.getTokenStream().filter { token -> !token.isEmpty }.doOnNext { token -> Log.d("FirebaseRepository", "backend: $token") },
+            getFirebaseToken().doOnNext { token ->  Log.d("FirebaseRepository1", "firebase: $token") },
+            backendTokenRepo.getTokenStream().filter { token -> !token.isEmpty }.doOnNext { token -> Log.d("FirebaseRepository2", "backend: $token") },
             BiFunction { firebaseToken, backendToken ->
-                Log.d("FirebaseRepository", "firebase: $firebaseToken, backend: ${backendToken.token}")
+                Log.d("FirebaseRepository3", "firebase: $firebaseToken, backend: ${backendToken.token}")
                 firebaseToken
             })
     }
 
     private fun getFirebaseToken() : Observable<String> {
         return firebaseTokenRepo.getTokenStream()
-            .flatMapSingle { token -> fetchWhenEmptyAndThenToken(token) }
+            .doOnNext { token -> Log.d("FirebaseRepository5", "getTokenStream.doOnNext: $token") }
+            .switchMapSingle { token -> fetchWhenEmptyAndThenToken(token) }
     }
 
     private fun fetchWhenEmptyAndThenToken(token: String) : Single<String> {

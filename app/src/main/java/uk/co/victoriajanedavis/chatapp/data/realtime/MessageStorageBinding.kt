@@ -30,8 +30,8 @@ class MessageStorageBinding @Inject constructor(
         return Flowable.merge(
             webSocketStreams.chatMessageStream().doOnNext { Log.d("MessageStorage", "Websocket message emitted") },
             firebaseMessagingStreams.chatMessageStream().doOnNext { Log.d("MessageStorage", "Firebase message emitted") })
-            .publish().autoConnect()
             .map(messageMapper::mapFrom)
+            .publish().autoConnect()
             .flatMapCompletable { messageDbModel ->
                 Completable.mergeArray(
                     messageStore.storeSingular(messageDbModel),

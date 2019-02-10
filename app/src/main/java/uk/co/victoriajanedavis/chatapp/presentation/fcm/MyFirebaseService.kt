@@ -12,6 +12,7 @@ import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessageDataStre
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.domain.interactors.FirebaseTokenRefresher
 import uk.co.victoriajanedavis.chatapp.domain.interactors.FullSync
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.ChatAppNotificationManager
 
 import javax.inject.Inject
 
@@ -20,6 +21,8 @@ class MyFirebaseService : FirebaseMessagingService() {
     @Inject lateinit var realtimeStreamsLifeManager: RealtimeStreamsLifeManager
     @Inject lateinit var messageDataStream: FirebaseMessageDataStream
     @Inject lateinit var tokenRefresher: FirebaseTokenRefresher
+
+    @Inject lateinit var notificationManager: ChatAppNotificationManager
     @Inject lateinit var fullSync: FullSync
 
     private val disposables: CompositeDisposable = CompositeDisposable()
@@ -28,14 +31,12 @@ class MyFirebaseService : FirebaseMessagingService() {
         super.onCreate()
         AndroidInjection.inject(this);
 
+        notificationManager.initializeStreams()
         realtimeStreamsLifeManager.initializeStreams()
 
         disposables.add(tokenRefresher.getRefreshSingle(null)
-            .subscribeOn(Schedulers.io())  // TODO: do we need this since MyFirebaseService is on its own thread?
-            .subscribe(
-                { Log.d(TAG, "Posting token to backend succeeded") },
-                { e -> Log.d(TAG, "Posting token to backend failed: " + e.message) }
-            )
+            .subscribeOn(Schedulers.io())  // do we need this since MyFirebaseService is on its own thread?
+            .subscribe({}, { e -> Log.d(TAG, "Posting token to backend failed: " + e.message) })
         )
 
         Log.d(TAG, " onCreate() Called")
@@ -43,6 +44,7 @@ class MyFirebaseService : FirebaseMessagingService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        notificationManager.clearStreams()
         realtimeStreamsLifeManager.clearStreams()
         disposables.clear()
         Log.d(TAG, " onDestroy() Called")
@@ -68,44 +70,4 @@ class MyFirebaseService : FirebaseMessagingService() {
     companion object {
         private const val TAG = "FirebaseService"
     }
-
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
-    /*
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // Below, 0 is the Request Code
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        String channelId = getString(R.string.default_notification_channel_id);
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                        .setContentTitle(getString(R.string.fcm_message))
-                        .setContentText(messageBody)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        // Below, 0 is ID of notification
-        notificationManager.notify(0, notificationBuilder.build());
-    }
-    */
 }

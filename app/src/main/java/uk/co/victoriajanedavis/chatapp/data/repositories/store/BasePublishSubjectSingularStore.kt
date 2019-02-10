@@ -6,7 +6,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.domain.ReactiveSingularStore
 import uk.co.victoriajanedavis.chatapp.domain.SingularCache
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import uk.co.victoriajanedavis.chatapp.R
+import uk.co.victoriajanedavis.chatapp.data.model.websocket.MessageWsModel
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ApplicationContext
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.ID
@@ -19,31 +20,40 @@ class MessageNotification @Inject constructor(
     private val replyAction: ReplyAction
 ) {
 
-    fun issueNotification(message: MessageEntity) {
+    fun issueNotification(message: MessageWsModel) {
         with(NotificationManagerCompat.from(context)) {
             val notificationTag = generateNotificationTag(message.chatUuid)
             //notificationId is a unique int for each notification that you must define
             notify(
                 notificationTag, ID,  // I think each message notificationId should be unique per chat (not message) - so messages from same user will use same notification
-                createNotificationBuilder(message, notificationTag).build()
+                createNotificationBuilder(
+                    smallIconResId = R.drawable.ic_chat_black_72dp,
+                    title = message.senderUsername,
+                    content = message.message,
+                    relevantUuid = message.chatUuid,
+                    notificationTag = notificationTag
+                ).build()
             )
         }
     }
 
     private fun createNotificationBuilder(
-        message: MessageEntity,
+        smallIconResId: Int,
+        title: String,
+        content: String,
+        relevantUuid: UUID,
         notificationTag: String
     ): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_chat_black_72dp)
-            .setContentTitle(message.userUsername)
-            .setContentText(message.text)
+            .setSmallIcon(smallIconResId)
+            .setContentTitle(title)
+            .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             // Set the intent that will fire when the user taps the notification
-            .setContentIntent(createPendingIntent(message.chatUuid))
+            .setContentIntent(createPendingIntent(relevantUuid))
             // Set the reply action
             .addAction(replyAction.createReplyAction(
-                message.chatUuid,
+                relevantUuid,
                 notificationTag,
                 CHANNEL_ID)
             )
@@ -55,7 +65,7 @@ class MessageNotification @Inject constructor(
             context,
             0,
             MainActivity.newIntent(context),
-            0,
+            PendingIntent.FLAG_CANCEL_CURRENT,
             createBundle(chatUuid)
         )
     }
