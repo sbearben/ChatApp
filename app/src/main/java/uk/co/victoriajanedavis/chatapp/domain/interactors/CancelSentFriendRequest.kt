@@ -11,7 +11,8 @@ class CancelSentFriendRequest @Inject constructor(
     private val repository: SentFriendRequestRepository
 ) : ActionInteractor<UUID> {
 
-    override fun getActionCompletable(receiverUserUuid: UUID): Completable {
-        return repository.cancelSentFriendRequest(receiverUserUuid)
+    // Params is userUuid
+    override fun getActionCompletable(params: UUID): Completable {
+        return repository.cancelSentFriendRequest(receiverUserUuid = params)
     }
 }

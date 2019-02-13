@@ -4,6 +4,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.friend.FriendNotification
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.friendrequest.FriendRequestNotification
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.message.MessageNotification
 
 internal fun registerNotificationChannel(context: Context, id: String, name: String, description: String) {
@@ -21,4 +23,6 @@ internal fun registerNotificationChannel(context: Context, id: String, name: Str
 
 fun registerAllNotificationChannels(context: Context) {
     MessageNotification.registerNotificationChannel(context)
+    FriendRequestNotification.registerNotificationChannel(context)
+    FriendNotification.registerNotificationChannel(context)
 }

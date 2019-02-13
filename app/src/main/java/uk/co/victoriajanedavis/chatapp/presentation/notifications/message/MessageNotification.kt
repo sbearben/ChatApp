@@ -7,30 +7,30 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.data.model.websocket.MessageWsModel
-import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ApplicationContext
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.ID
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.Notification
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.registerNotificationChannel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainActivity
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class MessageNotification @Inject constructor(
     @ApplicationContext private val context: Context,
     private val replyAction: ReplyAction
-) {
+): Notification<MessageWsModel> {
 
-    fun issueNotification(message: MessageWsModel) {
+    override fun issueNotification(model: MessageWsModel) {
         with(NotificationManagerCompat.from(context)) {
-            val notificationTag = generateNotificationTag(message.chatUuid)
+            val notificationTag = generateNotificationTag(model.chatUuid)
             //notificationId is a unique int for each notification that you must define
             notify(
                 notificationTag, ID,  // I think each message notificationId should be unique per chat (not message) - so messages from same user will use same notification
                 createNotificationBuilder(
                     smallIconResId = R.drawable.ic_chat_black_72dp,
-                    title = message.senderUsername,
-                    content = message.message,
-                    relevantUuid = message.chatUuid,
+                    title = model.senderUsername,
+                    content = model.message,
+                    relevantUuid = model.chatUuid,
                     notificationTag = notificationTag
                 ).build()
             )
@@ -72,8 +72,8 @@ class MessageNotification @Inject constructor(
 
     private fun createBundle(chatUuid: UUID): Bundle {
         return Bundle().apply {
-            putString("notification_type", "message")
-            putString("chat_uuid", chatUuid.toString())
+            putString(EXTRA_NOTIFICATION_TYPE, "message")
+            putString(EXTRA_CHAT_UUID, chatUuid.toString())
         }
     }
 
@@ -81,14 +81,15 @@ class MessageNotification @Inject constructor(
         return MESSAGE_TAG_PREFIX + chatUuid.toString()
     }
 
-    /***** End of Reply Action stuff *****/
-
     companion object {
         private const val MESSAGE_TAG_PREFIX = "chatapp_message"
 
         private const val CHANNEL_ID = "message_channel_id"
         private const val CHANNEL_NAME = "Messages"
         private const val CHANNEL_DESCRIPTION = "Received messages"
+
+        const val EXTRA_NOTIFICATION_TYPE = "uk.co.victoriajanedavis.chatapp.MainActivity.notification_type"
+        const val EXTRA_CHAT_UUID = "uk.co.victoriajanedavis.chatapp.MainActivity.chat_uuid"
 
         fun registerNotificationChannel(context: Context) {
             return registerNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME, CHANNEL_DESCRIPTION)

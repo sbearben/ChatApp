@@ -18,7 +18,7 @@ class GetChatList @Inject constructor(
 ) : RetrieveInteractor<Void, StreamState<List<ChatEntity>>> {
 
     override fun getBehaviorStream(params: Void?): Observable<StreamState<List<ChatEntity>>> {
-        return chatRepository.allChatMemberships
+        return chatRepository.allChatMemberships()
             .flatMapSingle(::fetchWhenEmptyAndThenChatMemberships)
             //.startWith(chatRepository.allChatMemberships.toStreamState())
     }

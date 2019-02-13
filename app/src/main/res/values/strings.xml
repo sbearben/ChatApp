@@ -60,4 +60,7 @@
     <!-- ReplyActionService -->
     <string name="service_reply_action_description">Service used by ChatApp to enable users to reply to chats from message notifications</string>
 
+    <!-- AcceptActionService -->
+    <string name="service_accept_action_description">Service used by ChatApp to enable users to accept received friend requests</string>
+
 </resources>

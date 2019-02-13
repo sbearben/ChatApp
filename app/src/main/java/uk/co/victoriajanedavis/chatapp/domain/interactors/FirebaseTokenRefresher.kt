@@ -30,10 +30,10 @@ class FirebaseTokenRefresher @Inject constructor(
     private fun combineLatestFirebaseAndBackendTokenStreams() : Observable<String> {
         return Observable.combineLatest(
             getFirebaseToken().doOnNext { token ->  Log.d("FirebaseRepository1", "firebase: $token") },
-            backendTokenRepo.getTokenStream().filter { token -> !token.isEmpty }.doOnNext { token -> Log.d("FirebaseRepository2", "backend: $token") },
+            backendTokenRepo.tokenStream().filter { token -> !token.isEmpty }.doOnNext { token -> Log.d("FirebaseRepository2", "backend: $token") },
             BiFunction { firebaseToken, backendToken ->
                 Log.d("FirebaseRepository3", "firebase: $firebaseToken, backend: ${backendToken.token}")
-                firebaseToken
+                return@BiFunction firebaseToken
             })
     }
 

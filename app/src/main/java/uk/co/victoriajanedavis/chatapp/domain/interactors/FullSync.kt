@@ -15,8 +15,9 @@ class FullSync @Inject constructor(
     private val sentFriendRequestRepository: SentFriendRequestRepository
 ) : ReactiveInteractor.ActionInteractor<Long> {
 
-    override fun getActionCompletable(delayMilli: Long) : Completable {
-        return Single.timer(delayMilli, TimeUnit.MILLISECONDS)
+    // Params in delay in milliseconds
+    override fun getActionCompletable(params: Long) : Completable {
+        return Single.timer(params, TimeUnit.MILLISECONDS)
             .flatMapObservable { _ -> isUserLoggedIn.getBehaviorStream(null) }
             .flatMapCompletable(::initiateSyncIfLoggedIn)
     }

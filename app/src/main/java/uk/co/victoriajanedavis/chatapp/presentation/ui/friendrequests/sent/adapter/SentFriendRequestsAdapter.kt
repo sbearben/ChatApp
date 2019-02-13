@@ -3,10 +3,8 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adap
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.injection.scopes.PerChildFragment
 import javax.inject.Inject

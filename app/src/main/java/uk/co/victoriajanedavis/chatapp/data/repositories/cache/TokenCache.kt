@@ -10,6 +10,7 @@ import io.reactivex.Observable
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.TokenSpModel
 import uk.co.victoriajanedavis.chatapp.domain.SingularCache
+import java.lang.IllegalArgumentException
 
 @ApplicationScope
 class TokenCache @Inject constructor(
@@ -39,21 +40,15 @@ class TokenCache @Inject constructor(
 
     override fun getSingular(): Observable<TokenSpModel> {
         return Observable.fromCallable {
-            val token = TokenSpModel()
-
-            token.token = sharedPref.getString(TokenSpModel.PREF_TOKEN_KEY, EMPTY_FIELD)
-            token.userUuid = validUuidOrNullIfEmptyString(
-                sharedPref.getString(TokenSpModel.PREF_USER_UUID_KEY, EMPTY_FIELD)
+            return@fromCallable TokenSpModel(
+                token = sharedPref.getString(TokenSpModel.PREF_TOKEN_KEY, EMPTY_FIELD) ?: EMPTY_FIELD,
+                userUuid = try {
+                    UUID.fromString(sharedPref.getString(TokenSpModel.PREF_USER_UUID_KEY, EMPTY_FIELD))
+                } catch (e: IllegalArgumentException) { null },
+                userUsername = sharedPref.getString(TokenSpModel.PREF_USER_USERNAME_KEY, EMPTY_FIELD) ?: EMPTY_FIELD,
+                userEmail = sharedPref.getString(TokenSpModel.PREF_USER_EMAIL_KEY, EMPTY_FIELD) ?: EMPTY_FIELD
             )
-            token.userUsername = sharedPref.getString(TokenSpModel.PREF_USER_USERNAME_KEY, EMPTY_FIELD)
-            token.userEmail = sharedPref.getString(TokenSpModel.PREF_USER_EMAIL_KEY, EMPTY_FIELD)
-
-            return@fromCallable token
         }
-    }
-
-    private fun validUuidOrNullIfEmptyString(uuidStr: String?): UUID? {
-        return if (uuidStr == null || uuidStr == EMPTY_FIELD) null else UUID.fromString(uuidStr)
     }
 
     companion object {

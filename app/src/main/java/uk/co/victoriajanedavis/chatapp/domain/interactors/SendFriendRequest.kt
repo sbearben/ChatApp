@@ -10,8 +10,8 @@ class SendFriendRequest @Inject constructor(
     private val repository: SentFriendRequestRepository
 ) : ActionInteractor<SendFriendRequest.FriendRequestParams> {
 
-    override fun getActionCompletable(requestParams: FriendRequestParams): Completable {
-        return repository.sendFriendRequest(requestParams.username, requestParams.message)
+    override fun getActionCompletable(params: FriendRequestParams): Completable {
+        return repository.sendFriendRequest(params.username, params.message)
     }
 
     class FriendRequestParams(val username: String, val message: String?)

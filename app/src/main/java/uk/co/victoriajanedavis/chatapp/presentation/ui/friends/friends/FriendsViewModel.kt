@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.GetChatList
-import uk.co.victoriajanedavis.chatapp.domain.interactors.IsUserLoggedIn
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*

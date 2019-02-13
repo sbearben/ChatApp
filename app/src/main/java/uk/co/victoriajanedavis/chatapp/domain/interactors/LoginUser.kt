@@ -1,23 +1,22 @@
 package uk.co.victoriajanedavis.chatapp.domain.interactors
 
+import io.reactivex.Completable
 import javax.inject.Inject
 
-import io.reactivex.Single
 import uk.co.victoriajanedavis.chatapp.data.repositories.FirebaseTokenRepository
 import uk.co.victoriajanedavis.chatapp.data.repositories.TokenRepository
-import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
-import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.SendInteractor
+import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.ActionInteractor
 
 class LoginUser @Inject constructor(
     private val backendTokenRepo: TokenRepository,
     private val firebaseTokenRepo: FirebaseTokenRepository
-) : SendInteractor<LoginUser.LoginParams, TokenEntity> {
+) : ActionInteractor<LoginUser.LoginParams> {
 
-    override fun getSingle(loginParams: LoginParams): Single<TokenEntity> {
-        return backendTokenRepo.fetchTokenViaLogin(loginParams.username, loginParams.password)
-            .andThen(firebaseTokenRepo.requestTokenSingle())
+    // Make the POST of the Firebase registration token first so that if that fails whole login process fails
+    override fun getActionCompletable(params: LoginParams): Completable {
+        return firebaseTokenRepo.requestTokenSingle()
             .flatMapCompletable(firebaseTokenRepo::postTokenToBackend)
-            .andThen(backendTokenRepo.requestTokenSingle())
+            .andThen(backendTokenRepo.fetchTokenViaLogin(params.username, params.password))
     }
 
     class LoginParams(

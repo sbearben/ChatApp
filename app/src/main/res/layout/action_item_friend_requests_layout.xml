@@ -30,7 +30,7 @@
         android:textSize="12sp"
         app:layout_constraintCircle="@id/friend_requests_imageview"
         app:layout_constraintCircleRadius="18dp"
-        app:layout_constraintCircleAngle="45"
+        app:layout_constraintCircleAngle="50"
         tools:text="10"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,11 +23,11 @@ class ChatMembershipNwDbMapper : Mapper<ChatMembershipNwModel, ChatDbModel>() {
             }
         }
 
-        if (from.otherUser != null) {
-            val friendDbModel = friendshipMapper.mapFrom(from.otherUser)
-            friendDbModel.chatUuid = chatDbModel.uuid
-            chatDbModel.friendship = friendDbModel
-        }
+        //if (from.otherUser != null) {
+        val friendDbModel = friendshipMapper.mapFrom(from.otherUser)
+        friendDbModel.chatUuid = chatDbModel.uuid
+        chatDbModel.friendship = friendDbModel
+        //}
 
         return chatDbModel
     }

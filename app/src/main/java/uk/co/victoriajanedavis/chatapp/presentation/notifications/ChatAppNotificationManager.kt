@@ -6,19 +6,25 @@ import uk.co.victoriajanedavis.chatapp.data.model.websocket.MessageWsModel
 import uk.co.victoriajanedavis.chatapp.data.model.websocket.RealtimeModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.friend.FriendNotification
+import uk.co.victoriajanedavis.chatapp.presentation.notifications.friendrequest.FriendRequestNotification
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.message.MessageNotification
 import javax.inject.Inject
 
 class ChatAppNotificationManager @Inject constructor(
     private val firebaseMessagingStreams: FirebaseMessagingStreams,
-    private val messageNotification: MessageNotification
+    private val messageNotification: MessageNotification,
+    private val friendRequestNotification: FriendRequestNotification,
+    private val friendNotification: FriendNotification
 ) {
     private val disposables = CompositeDisposable()
 
 
     fun initializeStreams() {
         disposables.addAll(
-            bindToChatMessageStream()
+            bindToChatMessageStream(),
+            bindToCreatedFriendRequestStream(),
+            bindToAcceptedFriendRequestStream()
         )
     }
 
@@ -29,5 +35,15 @@ class ChatAppNotificationManager @Inject constructor(
     private fun bindToChatMessageStream(): Disposable {
         return firebaseMessagingStreams.chatMessageStream()
             .subscribe(messageNotification::issueNotification)
+    }
+
+    private fun bindToCreatedFriendRequestStream(): Disposable {
+        return firebaseMessagingStreams.createdFriendRequestStream()
+            .subscribe(friendRequestNotification::issueNotification)
+    }
+
+    private fun bindToAcceptedFriendRequestStream(): Disposable {
+        return firebaseMessagingStreams.acceptedFriendRequestStream()
+            .subscribe(friendNotification::issueNotification)
     }
 }

@@ -11,7 +11,7 @@ class RejectReceivedFriendRequest @Inject constructor(
     private val repository: ReceivedFriendRequestRepository
 ) : ActionInteractor<UUID> {
 
-    override fun getActionCompletable(userUuid: UUID): Completable {
-        return repository.rejectReceivedFriendRequest(userUuid)
+    override fun getActionCompletable(params: UUID): Completable {
+        return repository.rejectReceivedFriendRequest(userUuid=params)
     }
 }

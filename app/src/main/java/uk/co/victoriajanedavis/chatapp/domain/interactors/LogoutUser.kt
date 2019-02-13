@@ -14,7 +14,7 @@ class LogoutUser @Inject constructor(
     private val firebaseTokenRepo: FirebaseTokenRepository
 ) : DeleteInteractor<Void, TokenEntity> {
 
-    override fun getSingle(aVoid: Void?): Single<TokenEntity> {
+    override fun getSingle(params: Void?): Single<TokenEntity> {
         return backendTokenRepo.requestTokenSingle()
             .flatMap { tokenEntity -> firebaseTokenRepo.deleteTokenFromBackend()
                 .andThen(backendTokenRepo.deleteTokenViaLogout())

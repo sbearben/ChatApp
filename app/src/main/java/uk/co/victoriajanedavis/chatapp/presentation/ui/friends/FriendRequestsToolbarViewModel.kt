@@ -71,7 +71,9 @@ class FriendRequestsToolbarViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { isUserLoggedIn -> isUserLoggedInLiveData.value = isUserLoggedIn },
-                { e -> Log.e("FriendReqsToolbar", "Error checking if user is logged in: ${e.message}") }
+                { e -> Log.e("FriendReqsToolbar", "Error checking if user is logged in: ${e.message}")
+                    throw Exception("Error checking if user is logged in: ${e.message}")
+                }
             )
     }
 

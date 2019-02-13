@@ -14,8 +14,8 @@ class SendChatMessage @Inject constructor(
     private val repository: MessageRepository
 ) : SendInteractor<SendChatMessage.MessageParams, MessageEntity> {
 
-    override fun getSingle(messageParams: MessageParams): Single<MessageEntity> {
-        return repository.postMessageToChat(messageParams.chatUuid, messageParams.message)
+    override fun getSingle(params: MessageParams): Single<MessageEntity> {
+        return repository.postMessageToChat(params.chatUuid, params.message)
     }
 
     class MessageParams(val chatUuid: UUID, val message: String)

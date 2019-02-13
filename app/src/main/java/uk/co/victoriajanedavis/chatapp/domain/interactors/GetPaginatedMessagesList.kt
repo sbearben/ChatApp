@@ -19,23 +19,23 @@ class GetPaginatedMessagesList @Inject constructor(
     private val messageRepository: MessageRepository
 ) : PaginatedRetrieveInteractor<UUID, StreamState<List<MessageEntity>>> {
 
-    override fun getBehaviorStream(chatUuid: UUID?): Observable<StreamState<List<MessageEntity>>> {
-        return messageRepository.getAllMessagesInChat(chatUuid)
-            .flatMapSingle { messages -> fetchWhenEmptyAndThenMessages(messages, chatUuid) }
+    override fun getBehaviorStream(params: UUID?): Observable<StreamState<List<MessageEntity>>> {
+        return messageRepository.getAllMessagesInChat(chatUuid=params!!)
+            .flatMapSingle { messages -> fetchWhenEmptyAndThenMessages(messages, params) }
     }
 
-    override fun fetchMoreItems(chatUuid: UUID?): Completable {
-        return messageRepository.fetchMoreMessagesInChatOlderThanOldestInDb(chatUuid)
+    override fun fetchMoreItems(params: UUID?): Completable {
+        return messageRepository.fetchMoreMessagesInChatOlderThanOldestInDb(chatUuid=params!!)
     }
 
     private fun fetchWhenEmptyAndThenMessages(
         messages: List<MessageEntity>,
-        chatUuid: UUID?
+        chatUuid: UUID
     ): Single<StreamState<List<MessageEntity>>> {
         return fetchWhenEmpty(messages, chatUuid).andThen(just(messages)).toStreamState()
     }
 
-    private fun fetchWhenEmpty(messages: List<MessageEntity>, chatUuid: UUID?): Completable {
+    private fun fetchWhenEmpty(messages: List<MessageEntity>, chatUuid: UUID): Completable {
         return if (messages.isEmpty())
             messageRepository.fetchInitialMessagesInChat(chatUuid)
         else

@@ -12,10 +12,10 @@ class RegisterUser @Inject constructor(
     private val repository: TokenRepository
 ) : SendInteractor<RegisterUser.RegisterParams, TokenEntity> {
 
-    override fun getSingle(registerParams: RegisterParams): Single<TokenEntity> {
+    override fun getSingle(params: RegisterParams): Single<TokenEntity> {
         return repository.fetchTokenViaRegister(
-            registerParams.username, registerParams.email,
-            registerParams.password1, registerParams.password2
+            params.username, params.email,
+            params.password1, params.password2
         ).andThen(repository.requestTokenSingle())
     }
 

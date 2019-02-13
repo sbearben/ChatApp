@@ -58,6 +58,12 @@
             android:description="@string/service_reply_action_description">
         </service>
 
+        <service
+            android:name=".presentation.notifications.friendrequest.AcceptActionService"
+            android:exported="false"
+            android:description="@string/service_accept_action_description">
+        </service>
+
     </application>
 
 </manifest>

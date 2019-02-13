@@ -18,14 +18,14 @@ class LoginViewModel @Inject constructor(
     private val loginUser: LoginUser
 ) : ViewModel() {
 
-    private val loginUserLiveData = MutableLiveData<State<TokenEntity>>()
+    private val loginUserLiveData = MutableLiveData<State<Void>>()
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         compositeDisposable.dispose()
     }
 
-    fun getLoginUserLiveData(): LiveData<State<TokenEntity>> = loginUserLiveData
+    fun getLoginUserLiveData(): LiveData<State<Void>> = loginUserLiveData
 
     fun loginUser(username: String, password: String) {
         loginUserLiveData.value = ShowLoading
@@ -33,11 +33,11 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun bindToUseCase(loginParams: LoginParams) : Disposable {
-        return loginUser.getSingle(loginParams)
+        return loginUser.getActionCompletable(loginParams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { tokenEntity -> loginUserLiveData.value = ShowContent(tokenEntity) },
+                { loginUserLiveData.value = ShowContent(null) },
                 { e -> loginUserLiveData.value = ShowError(e.message ?: e.toString()) }
             )
     }

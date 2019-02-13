@@ -7,7 +7,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.SendFriendRequest
 import uk.co.victoriajanedavis.chatapp.domain.interactors.SendFriendRequest.FriendRequestParams
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
