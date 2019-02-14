@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.presentation.common
+package uk.co.victoriajanedavis.chatapp.domain.common
 
 sealed class StreamState<in T> {
     data class OnNext<T>(val content: T) : StreamState<T>()

@@ -10,8 +10,8 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.RetrieveInteractor
 
 import io.reactivex.Single.just
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState
-import uk.co.victoriajanedavis.chatapp.presentation.ext.toStreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.toStreamState
 
 class GetReceivedFriendRequestsList @Inject constructor(
     private val repository: ReceivedFriendRequestRepository

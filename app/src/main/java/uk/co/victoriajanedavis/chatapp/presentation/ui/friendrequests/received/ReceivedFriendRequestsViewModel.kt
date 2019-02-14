@@ -3,7 +3,6 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -15,7 +14,7 @@ import uk.co.victoriajanedavis.chatapp.domain.interactors.RefreshReceivedFriendR
 import uk.co.victoriajanedavis.chatapp.domain.interactors.RejectReceivedFriendRequest
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState.*
 import java.util.UUID
 import javax.inject.Inject
 

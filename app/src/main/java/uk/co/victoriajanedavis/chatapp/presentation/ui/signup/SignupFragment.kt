@@ -60,7 +60,7 @@ class SignupFragment : DaggerFragment() {
         }
     }
 
-    private fun onStateChanged(state: State<TokenEntity>) = when(state) {
+    private fun onStateChanged(state: State<Void>) = when(state) {
         is ShowContent -> registrationSuccessful()
         is ShowLoading -> showLoading()
         is ShowError -> showError(state.message)

@@ -11,7 +11,7 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.GetChatList
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState.*
 import javax.inject.Inject
 
 class FriendsViewModel @Inject constructor(

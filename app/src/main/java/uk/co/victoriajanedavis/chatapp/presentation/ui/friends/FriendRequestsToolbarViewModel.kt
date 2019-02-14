@@ -13,7 +13,7 @@ import uk.co.victoriajanedavis.chatapp.domain.interactors.IsUserLoggedIn
 import uk.co.victoriajanedavis.chatapp.domain.interactors.LogoutUser
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState.*
 import javax.inject.Inject
 
 class FriendRequestsToolbarViewModel @Inject constructor(

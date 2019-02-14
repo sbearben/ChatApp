@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.data.mappers
 
+import uk.co.victoriajanedavis.chatapp.data.common.TimestampProvider
 import uk.co.victoriajanedavis.chatapp.data.model.db.MessageDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.network.MessageNwModel
 import uk.co.victoriajanedavis.chatapp.domain.common.Mapper

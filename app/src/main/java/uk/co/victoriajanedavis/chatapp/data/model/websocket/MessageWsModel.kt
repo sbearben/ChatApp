@@ -13,5 +13,6 @@ data class MessageWsModel (
     @SerializedName("sender_uuid") @Expose var senderUuid: UUID,
     @SerializedName("sender_username") @Expose var senderUsername: String,
     @SerializedName("date") @Expose var date: Date,
-    @SerializedName("message") @Expose var message: String
+    @SerializedName("message") @Expose var message: String,
+    @SerializedName("from_current_user") @Expose var isFromCurrentUser: Boolean
 ) : RealtimeModel

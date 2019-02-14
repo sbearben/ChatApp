@@ -17,17 +17,38 @@ class FirebaseTokenRepository @Inject constructor(
 
     fun getTokenStream() : Observable<String> {
         return firebaseTokenStore.getSingular()
-            .doOnNext { token -> Log.d("FirebaseRepository6", "getSingular.doOnNext: ${token.token}") }
             .map { tokenSpModel -> tokenSpModel.token }
     }
 
-    fun requestTokenSingle() : Single<String> {
-        return firebaseTokenStore.getSingular()
-            .map { tokenSpModel -> tokenSpModel.token }
-            .firstOrError();
+    fun fetchTokenAndStore() : Completable {
+        return fetchToken()
+            .flatMapCompletable(::storeToken)
     }
 
-    fun fetchToken() : Completable {
+    fun postTokenToBackend(token: String) : Completable {
+        return chatService.postFirebaseToken(token)
+    }
+
+    fun postTokenToBackend() : Completable {
+        return requestTokenSingle()
+            .flatMapCompletable { token ->
+                if (token.isNotEmpty())
+                    postTokenToBackend(token)
+                else
+                    fetchToken().flatMapCompletable(::postTokenToBackend)
+            }
+    }
+
+    fun deleteTokenFromBackend() : Completable {
+        return chatService.deleteFirebaseToken()
+            //.andThen(firebaseTokenStore.clear())
+    }
+
+    fun storeToken(token : String) : Completable {
+        return firebaseTokenStore.storeSingular(FirebaseTokenSpModel(token))
+    }
+
+    private fun fetchToken(): Single<String> {
         return Single.fromCallable  {
             var firebaseToken = ""
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(
@@ -39,20 +60,10 @@ class FirebaseTokenRepository @Inject constructor(
             )
             return@fromCallable firebaseToken
         }
-            .flatMapCompletable(::storeToken)
     }
 
-    fun postTokenToBackend(token: String) : Completable {
-        return chatService.postFirebaseToken(token)
-    }
-
-
-    fun deleteTokenFromBackend() : Completable {
-        return chatService.deleteFirebaseToken()
-            //.andThen(firebaseTokenStore.clear())
-    }
-
-    fun storeToken(token : String) : Completable {
-        return firebaseTokenStore.storeSingular(FirebaseTokenSpModel(token))
+    private fun requestTokenSingle() : Single<String> {
+        return getTokenStream()
+            .firstOrError()
     }
 }

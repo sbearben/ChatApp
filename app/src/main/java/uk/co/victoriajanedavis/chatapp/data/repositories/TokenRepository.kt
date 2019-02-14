@@ -1,22 +1,17 @@
 package uk.co.victoriajanedavis.chatapp.data.repositories
 
-import android.util.Log
 import javax.inject.Inject
 
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.annotations.NonNull
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BasePublishSubjectSingularStore
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase
-import uk.co.victoriajanedavis.chatapp.domain.ReactiveSingularStore
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenNwSpMapper
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenSpEntityMapper
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.TokenSpModel
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.TokenReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
-import uk.co.victoriajanedavis.chatapp.domain.ReactiveStore
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
 
 @ApplicationScope
@@ -46,20 +41,20 @@ class TokenRepository @Inject constructor(
             .andThen(deleteTokenFromStorage())
     }
 
-    fun fetchTokenViaLogin(username: String, password: String): Completable {
+    fun fetchTokenViaLoginAndStore(username: String, password: String): Completable {
         return chatService.login(username, password)
             .map(nwSpMapper::mapFrom)
             .flatMapCompletable(tokenStore::storeSingular)
     }
 
-    fun fetchTokenViaRegister(username: String, email: String,
-                              password1: String, password2: String): Completable {
+    fun fetchTokenViaRegisterAndStore(username: String, email: String,
+                                      password1: String, password2: String): Completable {
         return chatService.register(username, email, password1, password2)
             .map(nwSpMapper::mapFrom)
             .flatMapCompletable(tokenStore::storeSingular)
     }
 
-    private fun deleteTokenFromStorage(): Completable {
+    fun deleteTokenFromStorage(): Completable {
         return tokenStore.clear()
     }
 }

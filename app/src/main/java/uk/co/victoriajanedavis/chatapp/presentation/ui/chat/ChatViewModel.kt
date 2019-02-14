@@ -14,7 +14,7 @@ import uk.co.victoriajanedavis.chatapp.domain.interactors.SendChatMessage
 import uk.co.victoriajanedavis.chatapp.domain.interactors.SendChatMessage.MessageParams
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState
 
 import java.util.*
 import javax.inject.Inject

@@ -29,7 +29,7 @@ class FirebaseTokenRefresher @Inject constructor(
 
     private fun combineLatestFirebaseAndBackendTokenStreams() : Observable<String> {
         return Observable.combineLatest(
-            getFirebaseToken().doOnNext { token ->  Log.d("FirebaseRepository1", "firebase: $token") },
+            firebaseTokenRepo.getTokenStream().filter { token -> !token.isEmpty() }.doOnNext { token ->  Log.d("FirebaseRepository1", "firebase: $token") },
             backendTokenRepo.tokenStream().filter { token -> !token.isEmpty }.doOnNext { token -> Log.d("FirebaseRepository2", "backend: $token") },
             BiFunction { firebaseToken, backendToken ->
                 Log.d("FirebaseRepository3", "firebase: $firebaseToken, backend: ${backendToken.token}")
@@ -37,6 +37,7 @@ class FirebaseTokenRefresher @Inject constructor(
             })
     }
 
+    /*
     private fun getFirebaseToken() : Observable<String> {
         return firebaseTokenRepo.getTokenStream()
             .doOnNext { token -> Log.d("FirebaseRepository5", "getTokenStream.doOnNext: $token") }
@@ -49,9 +50,10 @@ class FirebaseTokenRefresher @Inject constructor(
 
     private fun fetchWhenEmpty(token: String) : Completable {
         return if (token.isEmpty()) {
-            firebaseTokenRepo.fetchToken()
+            firebaseTokenRepo.fetchTokenAndStore()
         } else {
             Completable.complete()
         }
     }
+    */
 }

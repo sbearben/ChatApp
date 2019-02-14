@@ -10,8 +10,8 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.RetrieveInteractor
 
 import io.reactivex.Single.just
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState
-import uk.co.victoriajanedavis.chatapp.presentation.ext.toStreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.toStreamState
 
 class GetChatList @Inject constructor(
     private val chatRepository: ChatRepository

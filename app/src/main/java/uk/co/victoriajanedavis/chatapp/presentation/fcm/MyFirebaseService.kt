@@ -29,7 +29,7 @@ class MyFirebaseService : FirebaseMessagingService() {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidInjection.inject(this);
+        AndroidInjection.inject(this)
 
         notificationManager.initializeStreams()
         realtimeStreamsLifeManager.initializeStreams()
@@ -38,8 +38,6 @@ class MyFirebaseService : FirebaseMessagingService() {
             .subscribeOn(Schedulers.io())  // do we need this since MyFirebaseService is on its own thread?
             .subscribe({}, { e -> Log.d(TAG, "Posting token to backend failed: " + e.message) })
         )
-
-        Log.d(TAG, " onCreate() Called")
     }
 
     override fun onDestroy() {
@@ -47,7 +45,6 @@ class MyFirebaseService : FirebaseMessagingService() {
         notificationManager.clearStreams()
         realtimeStreamsLifeManager.clearStreams()
         disposables.clear()
-        Log.d(TAG, " onDestroy() Called")
     }
 
     override fun onNewToken(s: String?) {
@@ -63,6 +60,7 @@ class MyFirebaseService : FirebaseMessagingService() {
     override fun onDeletedMessages() {
         Log.d(TAG, "Deleted Messages")
         disposables.add(fullSync.getActionCompletable(0)
+            .subscribeOn(Schedulers.io())
             .subscribe({}, { e -> Log.d(TAG, "Full sync failed: " + e.message) }
         ))
     }

@@ -18,14 +18,14 @@ class SignupViewModel @Inject constructor(
     private val registerUser: RegisterUser
 ) : ViewModel() {
 
-    private val registerUserLiveData = MutableLiveData<State<TokenEntity>>()
+    private val registerUserLiveData = MutableLiveData<State<Void>>()
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         compositeDisposable.dispose()
     }
 
-    fun getRegisterUserLiveData(): LiveData<State<TokenEntity>> = registerUserLiveData
+    fun getRegisterUserLiveData(): LiveData<State<Void>> = registerUserLiveData
 
     fun registerUser(username: String, email: String, password1: String, password2: String) {
         registerUserLiveData.value = ShowLoading
@@ -33,11 +33,11 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun bindToUseCase(loginParams: RegisterParams) : Disposable {
-        return registerUser.getSingle(loginParams)
+        return registerUser.getActionCompletable(loginParams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { tokenEntity -> registerUserLiveData.value = ShowContent(tokenEntity) },
+                { registerUserLiveData.value = ShowContent(null) },
                 { e -> registerUserLiveData.value = ShowError( e.message ?: e.toString()) }
             )
     }

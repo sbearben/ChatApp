@@ -4,7 +4,6 @@ import java.util.UUID
 
 import javax.inject.Inject
 
-import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Observable
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
@@ -16,7 +15,8 @@ import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.*
-import uk.co.victoriajanedavis.chatapp.presentation.ext.doOnErrorOrDispose
+import uk.co.victoriajanedavis.chatapp.domain.common.doOnErrorOrDispose
+import uk.co.victoriajanedavis.chatapp.domain.common.mapList
 
 @ApplicationScope
 class ReceivedFriendRequestRepository @Inject constructor(
@@ -29,22 +29,28 @@ class ReceivedFriendRequestRepository @Inject constructor(
 
     fun allReceivedFriendRequests(): Observable<List<FriendshipEntity>> {
         return friendStore.getAll(null)
-            .switchMapSingle { dbModels -> Observable.fromIterable(dbModels)
-                .map(dbEntityMapper::mapFrom)
-                .toList() }
+            .mapList(dbEntityMapper::mapFrom)
         }
 
     fun fetchReceivedFriendRequests(): Completable {
         return chatService.receivedFriendRequests
-            .flatMap { nwModels -> Observable.fromIterable(nwModels)
-                .map(nwReceivedDbMapper::mapFrom)
-                .toList() }
+            .mapList(nwReceivedDbMapper::mapFrom)
             .flatMapCompletable { friendRequests -> friendStore.replaceAll(null, friendRequests) }
     }
 
+    /* TODO: this code exposes structural issues with the app and the way we're storing and displaying Chats:
+     * - When storing the accepted friend in order for the new Chat to appear on the fragment that displays chats
+     *   we also need a new ChatDbModel to store in the chats room database and includes a chatUuid to identify
+     *  the conversation. We don't receive that from the "accepting friend request" REST call below.  Because of this
+     *  flaw we have to rely on getting that from a websocket event. We should really have a separate fragments for
+     *  "Friends" and "Chats" with the ability to send messages to friends that don't currently have "Chats" in order
+     *  to alleviate this. We should also consider getting rid of the ChatDbModel and table all together and just
+     *  getting the elements on the "Chats" fragment by getting the latest message by each unique chatUuid from the
+     *  Messages Room DB table.
+     */
     fun acceptReceivedFriendRequest(userUuid: UUID): Completable {
         return friendStore.getSingular(userUuid)
-            .flatMapSingle { friendDbModel -> friendStore.storeSingular(friendDbModel.copy(loadingState = ACCEPT))
+            .switchMapSingle { friendDbModel -> friendStore.storeSingular(friendDbModel.copy(loadingState = ACCEPT))
                 .andThen(chatService.acceptFriendRequest(friendDbModel.username)
                     .doOnErrorOrDispose {
                         //Log.d("ReceivedRepo", "network doOnErrorOrDispose() ${friendDbModel.username}")
@@ -52,12 +58,13 @@ class ReceivedFriendRequestRepository @Inject constructor(
                     })
             }
             .map(nwAcceptedDbMapper::mapFrom)
-            .flatMapCompletable(friendStore::storeSingular)
+            .ignoreElements()
+            //.flatMapCompletable(friendStore::storeSingular)
     }
 
     fun rejectReceivedFriendRequest(userUuid: UUID): Completable {
         return friendStore.getSingular(userUuid)
-            .flatMapSingle { friendDbModel -> friendStore.storeSingular(friendDbModel.copy(loadingState = REJECT))
+            .switchMapSingle { friendDbModel -> friendStore.storeSingular(friendDbModel.copy(loadingState = REJECT))
                 .andThen(chatService.rejectFriendRequest(friendDbModel.username)
                     .doOnErrorOrDispose {
                         friendStore.storeSingular(friendDbModel.copy(loadingState = NONE)).blockingAwait()

@@ -31,13 +31,14 @@ class AcceptedFriendRequestStorageBinding @Inject constructor(
             .doOnNext { Log.d("AcceptedFriendReq", "WebSocket Emitted") }
             .publish().autoConnect()
             .map(acceptedFriendRequestMapper::mapFrom)
-            .flatMapCompletable { chatDbModel ->
-                Completable.mergeArray(
-                    chatStore.storeSingular(chatDbModel),
-                    friendStore.storeSingular(chatDbModel.friendship!!)
-                )
-            }
+            .flatMapCompletable(::storeChatAndFriend)
             .subscribeOn(Schedulers.io())
             .subscribe()
+    }
+
+    private fun storeChatAndFriend(chatDbModel: ChatDbModel): Completable {
+        return Completable.complete()
+            .andThen(chatStore.storeSingular(chatDbModel))
+            .andThen(friendStore.storeSingular(chatDbModel.friendship!!))
     }
 }

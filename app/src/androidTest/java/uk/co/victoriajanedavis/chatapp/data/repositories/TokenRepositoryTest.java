@@ -63,7 +63,7 @@ public class TokenRepositoryTest extends BaseTest {
         TokenNwModel tokenNwModel = ModelGenerationUtil.createTokenNwModel();
         new ArrangeBuilder().withTokenFromServiceAfterLogin(tokenNwModel);
 
-        TestObserver fetchObserver = repository.fetchTokenViaLogin("username", "password").test();
+        TestObserver fetchObserver = repository.fetchTokenViaLoginAndStore("username", "password").test();
         TestObserver<TokenEntity> requestObserver = repository.requestTokenSingle().test();
 
         fetchObserver.assertComplete();
@@ -78,7 +78,7 @@ public class TokenRepositoryTest extends BaseTest {
         TokenNwModel tokenNwModel = ModelGenerationUtil.createTokenNwModel();
         new ArrangeBuilder().withTokenFromServiceAfterRegister(tokenNwModel);
 
-        TestObserver fetchObserver = repository.fetchTokenViaRegister("username", "email", "password1", "password2").test();
+        TestObserver fetchObserver = repository.fetchTokenViaRegisterAndStore("username", "email", "password1", "password2").test();
         TestObserver<TokenEntity> requestObserver = repository.requestTokenSingle().test();
 
         fetchObserver.assertComplete();

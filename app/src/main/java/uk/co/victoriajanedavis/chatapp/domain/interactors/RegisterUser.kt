@@ -1,22 +1,32 @@
 package uk.co.victoriajanedavis.chatapp.domain.interactors
 
+import io.reactivex.Completable
 import javax.inject.Inject
 
-import io.reactivex.Single
-import io.reactivex.annotations.NonNull
+import uk.co.victoriajanedavis.chatapp.data.repositories.FirebaseTokenRepository
 import uk.co.victoriajanedavis.chatapp.data.repositories.TokenRepository
-import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
-import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.SendInteractor
+import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.ActionInteractor
 
 class RegisterUser @Inject constructor(
-    private val repository: TokenRepository
-) : SendInteractor<RegisterUser.RegisterParams, TokenEntity> {
+    private val backendTokenRepo: TokenRepository,
+    private val firebaseTokenRepo: FirebaseTokenRepository
+) : ActionInteractor<RegisterUser.RegisterParams> {
 
-    override fun getSingle(params: RegisterParams): Single<TokenEntity> {
-        return repository.fetchTokenViaRegister(
+    // If POST of the Firebase registration token fails then whole registration process fails
+    override fun getActionCompletable(params: RegisterParams): Completable {
+        return backendTokenRepo.fetchTokenViaRegisterAndStore(
             params.username, params.email,
             params.password1, params.password2
-        ).andThen(repository.requestTokenSingle())
+        ).andThen(firebaseTokenRepo.postTokenToBackend()
+            .onErrorResumeNext(::deleteTokenFromStorageThenError)
+        )
+    }
+
+    private fun deleteTokenFromStorageThenError(e: Throwable): Completable {
+        return backendTokenRepo.deleteTokenFromStorage()
+            .andThen {
+                Completable.error(Exception("Account created, but something went wrong logging in: ${e.message}"))
+            }
     }
 
     class RegisterParams(

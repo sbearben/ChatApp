@@ -12,8 +12,8 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.PaginatedRetrieveInteractor
 
 import io.reactivex.Single.just
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState
-import uk.co.victoriajanedavis.chatapp.presentation.ext.toStreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.toStreamState
 
 class GetPaginatedMessagesList @Inject constructor(
     private val messageRepository: MessageRepository

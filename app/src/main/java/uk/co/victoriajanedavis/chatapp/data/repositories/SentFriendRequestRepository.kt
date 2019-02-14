@@ -13,7 +13,8 @@ import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.*
-import uk.co.victoriajanedavis.chatapp.presentation.ext.doOnErrorOrDispose
+import uk.co.victoriajanedavis.chatapp.domain.common.doOnErrorOrDispose
+import uk.co.victoriajanedavis.chatapp.domain.common.mapList
 import java.util.UUID
 
 @ApplicationScope
@@ -26,18 +27,12 @@ class SentFriendRequestRepository @Inject constructor(
 
     fun getAllSentFriendRequests(): Observable<List<FriendshipEntity>> {
         return friendStore.getAll(null)
-            .switchMapSingle { dbModels -> Observable.fromIterable(dbModels)
-                .map(dbEntityMapper::mapFrom)
-                .toList()
-            }
+            .mapList(dbEntityMapper::mapFrom)
     }
 
     fun fetchSentFriendRequests(): Completable {
         return chatService.sentFriendRequests
-            .flatMap { nwModels -> Observable.fromIterable(nwModels)
-                .map(nwSentDbMapper::mapFrom)
-                .toList()
-            }
+            .mapList(nwSentDbMapper::mapFrom)
             .flatMapCompletable { friendRequests -> friendStore.replaceAll(null, friendRequests) }
     }
 
@@ -58,14 +53,4 @@ class SentFriendRequestRepository @Inject constructor(
             .map(nwSentDbMapper::mapFrom)
             .flatMapCompletable(friendStore::delete)
     }
-
-    /*
-    fun cancelSentFriendRequest(username: String): Single<FriendshipEntity> {
-        return chatService.cancelSentFriendRequest(username)
-            .map(nwSentDbMapper::mapFrom)
-            .flatMap { friendEntity -> friendStore.delete(friendEntity)
-                .andThen(Single.just(friendEntity).map(dbEntityMapper::mapFrom))
-            }
-    }
-    */
 }

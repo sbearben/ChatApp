@@ -17,6 +17,7 @@ import uk.co.victoriajanedavis.chatapp.data.mappers.FriendshipDbEntityMapper
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
+import uk.co.victoriajanedavis.chatapp.domain.common.mapList
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 
@@ -50,7 +51,7 @@ class ChatRepository @Inject constructor(
 
     fun fetchChatMemberships(): Completable {
         return chatService.chatMemberships
-            .map { nwModels -> nwModels.map { chatNwDbMapper.mapFrom(it) } }
+            .mapList(chatNwDbMapper::mapFrom)
             .flatMapCompletable(::replaceAllDeep)
     }
 

@@ -2,8 +2,8 @@ package uk.co.victoriajanedavis.chatapp.domain.interactors
 
 import io.reactivex.Observable
 import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.RetrieveInteractor
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState
-import uk.co.victoriajanedavis.chatapp.presentation.common.StreamState.*
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState
+import uk.co.victoriajanedavis.chatapp.domain.common.StreamState.*
 
 import javax.inject.Inject
 

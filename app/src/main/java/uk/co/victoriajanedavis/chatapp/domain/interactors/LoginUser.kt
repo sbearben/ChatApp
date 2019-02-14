@@ -12,11 +12,17 @@ class LoginUser @Inject constructor(
     private val firebaseTokenRepo: FirebaseTokenRepository
 ) : ActionInteractor<LoginUser.LoginParams> {
 
-    // Make the POST of the Firebase registration token first so that if that fails whole login process fails
+    // If POST of the Firebase registration token fails then whole login process fails
     override fun getActionCompletable(params: LoginParams): Completable {
-        return firebaseTokenRepo.requestTokenSingle()
-            .flatMapCompletable(firebaseTokenRepo::postTokenToBackend)
-            .andThen(backendTokenRepo.fetchTokenViaLogin(params.username, params.password))
+        return backendTokenRepo.fetchTokenViaLoginAndStore(params.username, params.password)
+            .andThen(firebaseTokenRepo.postTokenToBackend()
+                .onErrorResumeNext(::deleteTokenFromStorageThenError)
+            )
+    }
+
+    private fun deleteTokenFromStorageThenError(e: Throwable): Completable {
+        return backendTokenRepo.deleteTokenFromStorage()
+            .andThen { Completable.error(Exception("Login failed: ${e.message}")) }
     }
 
     class LoginParams(

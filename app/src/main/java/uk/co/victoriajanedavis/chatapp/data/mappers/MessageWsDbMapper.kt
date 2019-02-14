@@ -14,7 +14,7 @@ class MessageWsDbMapper: Mapper<MessageWsModel, MessageDbModel>() {
             chatUuid = from.chatUuid,
             userUuid = from.senderUuid,
             userUsername = from.senderUsername,
-            isFromCurrentUser = false
+            isFromCurrentUser = from.isFromCurrentUser
         )
     }
 }
