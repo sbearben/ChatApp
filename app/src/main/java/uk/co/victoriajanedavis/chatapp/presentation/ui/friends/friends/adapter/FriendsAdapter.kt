@@ -30,7 +30,7 @@ class FriendsAdapter @Inject constructor(
             }
 
             override fun areContentsTheSame(oldItem: ChatEntity, newItem: ChatEntity): Boolean {
-                return (oldItem.uuid == newItem.uuid) && (oldItem.lastMessageDate == newItem.lastMessageDate)
+                return oldItem.lastMessage.uuid == newItem.lastMessage.uuid
             }
         }
     }

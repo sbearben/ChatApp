@@ -8,15 +8,15 @@ import uk.co.victoriajanedavis.chatapp.data.mappers.CreatedFriendRequestWsFriend
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
-import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.ChatAppWebSocketService
 import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketStreams
-import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ReceivedFriendRequestStore
+import uk.co.victoriajanedavis.chatapp.data.repositories.store.ReceivedFriendRequestStore
 import javax.inject.Inject
+import javax.inject.Named
 
 class CreatedFriendRequestStorageBinding @Inject constructor(
     private val webSocketStreams: WebSocketStreams,
     private val firebaseMessagingStreams: FirebaseMessagingStreams,
-    @ReceivedFriendRequestStore private val friendStore: BaseReactiveStore<FriendshipDbModel>
+    @Named(ReceivedFriendRequestStore) private val friendStore: BaseReactiveStore<FriendshipDbModel>
 ) {
     private val createdFriendRequestMapper = CreatedFriendRequestWsFriendshipDbMapper()
 

@@ -1,9 +1,7 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter
 
 import androidx.lifecycle.MutableLiveData
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import kotlinx.android.synthetic.main.item_friend.*
@@ -30,10 +28,11 @@ class FriendViewHolder(
 
     override fun bind(item: ChatEntity) {
         chatEntity = item
-        iconTextView.text = item.friendship?.username?.get(0).toString()
-        nameTextView.text = item.friendship?.username
-        lastMessageTextView.text = item.lastMessageText
-        dateTextView.text = item.lastMessageDate?.toString()
+        iconTextView.text = item.friendship.username.get(0).toString()
+        nameTextView.text = item.friendship.username
+        val lastMessageText = (if(item.lastMessage.isFromCurrentUser) "You: " else "") + item.lastMessage.text
+        lastMessageTextView.text = lastMessageText
+        dateTextView.text = item.lastMessage.created.toString()
 
         ViewCompat.setTransitionName(nameTextView, chatEntity.uuid.toString());
     }

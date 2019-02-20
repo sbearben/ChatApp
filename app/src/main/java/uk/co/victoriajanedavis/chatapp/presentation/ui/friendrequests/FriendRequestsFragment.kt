@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.ActionBar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_friend_requests.*
 import kotlinx.android.synthetic.main.toolbar.*
 import uk.co.victoriajanedavis.chatapp.R
-import uk.co.victoriajanedavis.chatapp.presentation.ext.getSupportActionBar
-import uk.co.victoriajanedavis.chatapp.presentation.ext.setSupportActionBar
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.getSupportActionBar
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.setSupportActionBar
 import javax.inject.Inject
 
 class FriendRequestsFragment : DaggerFragment() {

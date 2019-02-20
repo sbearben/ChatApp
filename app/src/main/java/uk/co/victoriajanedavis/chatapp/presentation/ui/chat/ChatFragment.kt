@@ -19,7 +19,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.EndlessRecyclerViewOn
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter.ChatAdapter
 import java.util.UUID
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.util
+package uk.co.victoriajanedavis.chatapp.presentation.common.util
 
 import io.reactivex.disposables.Disposable
 

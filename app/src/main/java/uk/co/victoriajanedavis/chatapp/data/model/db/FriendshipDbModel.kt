@@ -2,27 +2,15 @@ package uk.co.victoriajanedavis.chatapp.data.model.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 import java.util.UUID
 
-import androidx.room.ForeignKey.CASCADE
 import uk.co.victoriajanedavis.chatapp.data.common.TimestampProvider
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.NONE
 
-@Entity(
-    tableName = "friendships",
-    foreignKeys = arrayOf(ForeignKey(
-        entity = ChatDbModel::class,
-        parentColumns = arrayOf("uuid"),
-        childColumns = arrayOf("chat_uuid"),
-        onDelete = CASCADE
-    )),
-    indices = arrayOf(Index(value = ["chat_uuid"]))
-)
+@Entity(tableName = "friendships")
 data class FriendshipDbModel (
     @PrimaryKey var uuid: UUID,
     var username: String,

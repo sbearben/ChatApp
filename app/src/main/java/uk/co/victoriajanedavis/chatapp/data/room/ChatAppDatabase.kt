@@ -17,7 +17,6 @@ import uk.co.victoriajanedavis.chatapp.data.room.daos.MessageDao
 
 @Database(
     entities = arrayOf(
-        ChatDbModel::class,
         FriendshipDbModel::class,
         MessageDbModel::class
     ),
@@ -31,7 +30,7 @@ import uk.co.victoriajanedavis.chatapp.data.room.daos.MessageDao
     FriendshipLoadingStateConverter::class
 )
 abstract class ChatAppDatabase : RoomDatabase() {
-    abstract fun chatMembershipDao(): ChatMembershipDao
+    //abstract fun chatMembershipDao(): ChatMembershipDao
     abstract fun friendshipDao(): FriendshipDao
     abstract fun messageDao(): MessageDao
 

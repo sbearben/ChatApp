@@ -15,10 +15,10 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.gone
-import uk.co.victoriajanedavis.chatapp.presentation.ext.observe
-import uk.co.victoriajanedavis.chatapp.presentation.ext.makeSnackbar
-import uk.co.victoriajanedavis.chatapp.presentation.ext.visible
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.gone
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.observe
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.makeSnackbar
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.visible
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendsAdapter
 import javax.inject.Inject
 

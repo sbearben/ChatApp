@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.ChatMembershipNwModel;
-import uk.co.victoriajanedavis.chatapp.data.repositories.cache.ChatMembershipCache;
+import uk.co.victoriajanedavis.chatapp.data.repositories.cache.RecentMessagesCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.FriendshipCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.MessageCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
@@ -56,7 +56,7 @@ public class ChatRepositoryTest extends BaseTest {
                 .allowMainThreadQueries()
                 .build();
 
-        Cache.DiskCache<UUID, ChatDbModel> chatCache = new ChatMembershipCache(database);
+        Cache.DiskCache<UUID, ChatDbModel> chatCache = new RecentMessagesCache(database);
         chatStore = new BaseReactiveStore<>(chatCache);
 
         Cache.DiskCache<UUID, FriendshipDbModel> friendshipCache = new FriendshipCache(database);

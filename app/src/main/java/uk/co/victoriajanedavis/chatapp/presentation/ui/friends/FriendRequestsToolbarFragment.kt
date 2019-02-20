@@ -3,7 +3,6 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.friends
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.toolbar.*
@@ -13,13 +12,12 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction
@@ -183,7 +181,7 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
         is Clicked -> {
             val bundle = ChatFragment.createBundle(
                 action.chatEntity.uuid.toString(),
-                action.chatEntity.friendship!!.username,
+                action.chatEntity.friendship.username,
                 action.sharedTextView.transitionName
             )
 

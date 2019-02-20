@@ -22,7 +22,7 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel;
 import uk.co.victoriajanedavis.chatapp.data.model.network.UserNwModel;
 import uk.co.victoriajanedavis.chatapp.data.repositories.SentFriendRequestRepository;
-import uk.co.victoriajanedavis.chatapp.data.repositories.cache.ChatMembershipCache;
+import uk.co.victoriajanedavis.chatapp.data.repositories.cache.RecentMessagesCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.SentFriendRequestCache;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
@@ -54,7 +54,7 @@ public class GetSentFriendRequestsListTest extends BaseTest {
                 .allowMainThreadQueries()
                 .build();
 
-        Cache.DiskCache<UUID, ChatDbModel> chatCache = new ChatMembershipCache(database);
+        Cache.DiskCache<UUID, ChatDbModel> chatCache = new RecentMessagesCache(database);
         chatStore = new BaseReactiveStore<>(chatCache);
 
         Cache.DiskCache<UUID, FriendshipDbModel> friendshipCache = new SentFriendRequestCache(database);

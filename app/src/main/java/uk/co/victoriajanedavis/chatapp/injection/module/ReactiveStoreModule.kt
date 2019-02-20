@@ -2,57 +2,52 @@ package uk.co.victoriajanedavis.chatapp.injection.module
 
 import dagger.Module
 import dagger.Provides
-import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.db.MessageDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.FirebaseTokenSpModel
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.TokenSpModel
 import uk.co.victoriajanedavis.chatapp.data.repositories.cache.*
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.BasePublishSubjectSingularStore
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.MessageReactiveStore
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.TokenReactiveStore
+import uk.co.victoriajanedavis.chatapp.data.repositories.store.*
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
-import uk.co.victoriajanedavis.chatapp.injection.qualifiers.FriendshipStore
-import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ReceivedFriendRequestStore
-import uk.co.victoriajanedavis.chatapp.injection.qualifiers.SentFriendRequestStore
+import javax.inject.Named
 
 @Module
 class ReactiveStoreModule {
 
     @Provides
     @ApplicationScope
-    fun chatMembershipReactiveStore(cache: ChatMembershipCache)
-            : BaseReactiveStore<ChatDbModel> {
+    @Named(ChatStore)
+    fun chatMembershipReactiveStore(cache: RecentMessagesCache): BaseReactiveStore<MessageDbModel> {
         return BaseReactiveStore(cache)
     }
 
     @Provides
     @ApplicationScope
-    @FriendshipStore
+    @Named(FriendshipStore)
+    //@FriendshipStore
     fun friendshipReactiveStore(cache: FriendshipCache): BaseReactiveStore<FriendshipDbModel> {
         return BaseReactiveStore(cache)
     }
 
     @Provides
     @ApplicationScope
-    fun messageReactiveStore(cache: MessageCache): BaseReactiveStore<MessageDbModel> {
+    fun messageReactiveStore(cache: MessageCache): MessageReactiveStore {
         return MessageReactiveStore(cache)
     }
 
     @Provides
     @ApplicationScope
-    @ReceivedFriendRequestStore
-    fun receivedFriendRequestReactiveStore(cache: ReceivedFriendRequestCache)
-            : BaseReactiveStore<FriendshipDbModel> {
+    @Named(ReceivedFriendRequestStore)
+    //@ReceivedFriendRequestStore
+    fun receivedFriendRequestReactiveStore(cache: ReceivedFriendRequestCache): BaseReactiveStore<FriendshipDbModel> {
         return BaseReactiveStore(cache)
     }
 
     @Provides
     @ApplicationScope
-    @SentFriendRequestStore
-    fun sentFriendRequestCache(cache: SentFriendRequestCache)
-            : BaseReactiveStore<FriendshipDbModel> {
+    @Named(SentFriendRequestStore)
+    //@SentFriendRequestStore
+    fun sentFriendRequestCache(cache: SentFriendRequestCache): BaseReactiveStore<FriendshipDbModel> {
         return BaseReactiveStore(cache)
     }
 

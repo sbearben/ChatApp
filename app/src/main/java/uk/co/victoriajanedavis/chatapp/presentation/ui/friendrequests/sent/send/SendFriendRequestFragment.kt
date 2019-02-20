@@ -14,7 +14,7 @@ import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import javax.inject.Inject
 
 class SendFriendRequestFragment : DaggerFragment() {

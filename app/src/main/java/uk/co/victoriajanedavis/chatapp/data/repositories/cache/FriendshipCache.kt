@@ -8,14 +8,13 @@ import io.reactivex.Observable
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase
+import uk.co.victoriajanedavis.chatapp.data.room.daos.FriendshipDao
 import uk.co.victoriajanedavis.chatapp.domain.Cache.DiskCache
 
 @ApplicationScope
 class FriendshipCache @Inject constructor(
-    database: ChatAppDatabase
+    private val dao: FriendshipDao
 ) : DiskCache<UUID, FriendshipDbModel> {
-
-    private val dao = database.friendshipDao()
 
 
     override fun putSingular(value: FriendshipDbModel) {

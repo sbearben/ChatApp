@@ -10,11 +10,10 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import uk.co.victoriajanedavis.chatapp.R
-import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
-import uk.co.victoriajanedavis.chatapp.presentation.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import javax.inject.Inject
 
 class LoginFragment : DaggerFragment() {

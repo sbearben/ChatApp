@@ -5,7 +5,6 @@ import java.util.UUID
 import javax.inject.Inject
 
 import io.reactivex.Single
-import io.reactivex.annotations.NonNull
 import uk.co.victoriajanedavis.chatapp.data.repositories.MessageRepository
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.domain.interactors.ReactiveInteractor.SendInteractor

@@ -31,7 +31,7 @@ abstract class MessageDao {
             "   LEFT JOIN messages b " +
             "       ON m.chat_uuid = b.chat_uuid " +
             "       AND m.created < b.created " +
-            "WHERE b.created IS NULL")
+            "WHERE b.created IS NULL ")
     abstract fun getNewestMessagePerUniqueChat(): Flowable<List<MessageDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

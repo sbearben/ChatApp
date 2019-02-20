@@ -19,7 +19,7 @@ import io.reactivex.observers.TestObserver;
 import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel;
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore;
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase;
-import uk.co.victoriajanedavis.chatapp.data.repositories.cache.ChatMembershipCache;
+import uk.co.victoriajanedavis.chatapp.data.repositories.cache.RecentMessagesCache;
 import uk.co.victoriajanedavis.chatapp.domain.Cache;
 import uk.co.victoriajanedavis.chatapp.test_common.BaseTest;
 import uk.co.victoriajanedavis.chatapp.test_common.ModelGenerationUtil;
@@ -40,7 +40,7 @@ public class ChatMembershipReactiveStoreTest extends BaseTest {
                 .allowMainThreadQueries()
                 .build();
 
-        Cache.DiskCache<UUID, ChatDbModel> cache = new ChatMembershipCache(database);
+        Cache.DiskCache<UUID, ChatDbModel> cache = new RecentMessagesCache(database);
 
         reactiveStore = new BaseReactiveStore<>(cache);
     }

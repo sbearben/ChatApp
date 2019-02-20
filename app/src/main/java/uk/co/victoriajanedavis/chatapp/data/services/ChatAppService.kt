@@ -43,7 +43,8 @@ interface ChatAppService {
     val receivedFriendRequests: Single<List<UserNwModel>>
 
     @POST("me/receivedfriendrequests/")
-    fun acceptFriendRequest(@Query("username") username: String): Single<UserNwModel>
+    fun acceptFriendRequest(@Query("username") username: String): Single<ChatMembershipNwModel>
+    //fun acceptFriendRequest(@Query("username") username: String): Single<UserNwModel>
 
     @DELETE("me/receivedfriendrequests/")
     fun rejectFriendRequest(@Query("username") username: String): Single<UserNwModel>
@@ -75,16 +76,10 @@ interface ChatAppService {
 
     /*************** Chat Details  */
     @GET("me/chats/{chat_uuid}/")
-    fun getChatMessages(@Path("chat_uuid") chatUuid: String): Single<CollectionNwModel<MessageNwModel>>
-
-    @GET("me/chats/{chat_uuid}/")
     fun getNewestChatMessages(
         @Path("chat_uuid") chatUuid: String,
         @Query("per_page") perPage: Int?
     ): Single<List<MessageNwModel>>
-
-    @GET
-    fun getChatMessagesByUrl(@Url url: String): Single<CollectionNwModel<MessageNwModel>>
 
     @GET("me/chats/{chat_uuid}/")
     fun getChatMessagesOlderThanGivenDate(

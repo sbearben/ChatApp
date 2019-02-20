@@ -8,7 +8,7 @@ import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseViewHolder
-import uk.co.victoriajanedavis.chatapp.presentation.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 
 class SentFriendRequestViewHolder(
     layoutInflater: LayoutInflater,

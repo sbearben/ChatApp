@@ -14,13 +14,13 @@ import uk.co.victoriajanedavis.chatapp.data.common.TimestampProvider
 
 @Entity(
     tableName = "messages",
-    foreignKeys = arrayOf(ForeignKey(
-        entity = ChatDbModel::class,
+    /*foreignKeys = arrayOf(ForeignKey(
+        entity = FriendshipDbModel::class,
         parentColumns = arrayOf("uuid"),
-        childColumns = arrayOf("chat_uuid"),
+        childColumns = arrayOf("user_uuid"),
         onDelete = CASCADE
-    )),
-    indices = arrayOf(Index(value = ["chat_uuid"]))
+    )),*/
+    indices = arrayOf(Index(value = ["user_uuid"]))
 )
 data class MessageDbModel (
     @PrimaryKey var uuid: UUID,
