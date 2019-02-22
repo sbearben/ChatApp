@@ -43,7 +43,7 @@ class ChatViewModel @Inject constructor(
         compositeDisposable.add(bindToLoadMore(chatUuid))
     }
 
-    fun postMessage(chatUuid: UUID, message: String) {
+    fun sendMessage(chatUuid: UUID, message: String) {
         compositeDisposable.add(bindToSendMessage(MessageParams(chatUuid, message)))
     }
 

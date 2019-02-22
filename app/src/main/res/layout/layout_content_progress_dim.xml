@@ -5,6 +5,7 @@
     android:clickable="true"
     android:focusable="true"
     android:background="@color/mediumDimFilter"
+    android:elevation="5dp"
     android:visibility="gone">
 
     <ProgressBar

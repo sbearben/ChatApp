@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send
+package uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -36,6 +36,7 @@
         android:paddingBottom="8dp"
         android:textSize="@dimen/text_message"
         app:layout_constraintStart_toEndOf="@+id/friend_icon_textview"
-        tools:text="How are you doing? This is a long message that should probably wrap." />
+        tools:text="How are you doing? This is a long message that should probably wrap."
+        android:elevation="2dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

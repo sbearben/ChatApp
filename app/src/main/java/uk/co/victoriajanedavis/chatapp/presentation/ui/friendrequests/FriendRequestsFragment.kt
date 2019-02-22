@@ -28,7 +28,7 @@ class FriendRequestsFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupPager()
+        setupPagerAdapter()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -38,12 +38,12 @@ class FriendRequestsFragment : DaggerFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        view_pager.adapter = null
+        viewPager.adapter = null
     }
 
-    private fun setupPager() {
-        view_pager.adapter = pagerAdapter
-        tab_layout.setupWithViewPager(view_pager)
+    private fun setupPagerAdapter() {
+        viewPager.adapter = pagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     private fun setupToolbar() {

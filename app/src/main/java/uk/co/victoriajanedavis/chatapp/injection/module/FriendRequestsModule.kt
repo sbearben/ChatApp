@@ -9,5 +9,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequ
 class FriendRequestsModule {
 
     @Provides
-    fun provideChildFragmentManager(fragment: FriendRequestsFragment): FragmentManager = fragment.childFragmentManager
+    fun provideChildFragmentManager(
+        fragment: FriendRequestsFragment
+    ): FragmentManager = fragment.childFragmentManager
 }

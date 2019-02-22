@@ -26,38 +26,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/usernameIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_lock_black_28dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/usernameInputLayout"/>
-
-        <!-- Username Label -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/usernameInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:hint="@string/send_friend_request_username_hint"
-            app:helperText="@string/required_field"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/usernameIcon"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/usernameEditText"
-                style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionSend"
-                android:inputType="text"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/messageIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,11 +40,11 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:hint="@string/send_friend_request_message_hint"
+            android:hint="@string/send_message_hint"
+            app:helperText="@string/required_field"
             app:counterEnabled="true"
-            app:counterMaxLength="@integer/friend_request_message_max_characters"
+            app:counterMaxLength="@integer/send_message_max_characters"
+            android:layout_marginStart="16dp"
             app:layout_constraintTop_toBottomOf="@id/usernameInputLayout"
             app:layout_constraintStart_toEndOf="@id/messageIcon"
             app:layout_constraintEnd_toEndOf="parent">
@@ -88,10 +56,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:inputType="textMultiLine"
+                android:imeOptions="actionSend"
                 android:fadeScrollbars="true"
                 android:scrollbars="vertical"
                 android:lines="5"
-                android:maxLength="@integer/friend_request_message_max_characters"/>
+                android:maxLength="@integer/send_message_max_characters"/>
 
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

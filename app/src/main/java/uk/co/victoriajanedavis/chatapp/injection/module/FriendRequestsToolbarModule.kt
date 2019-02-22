@@ -1,15 +1,21 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.FragmentManager
 import dagger.Module
 import dagger.Provides
-import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.adapter.FriendAction
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.FriendRequestsToolbarFragment
 
 @Module
 class FriendRequestsToolbarModule {
 
     @Provides
+    fun provideChildFragmentManager(
+        fragment: FriendRequestsToolbarFragment
+    ): FragmentManager = fragment.childFragmentManager
+
+    /*
+    @Provides
     @PerFragment
-    fun provideFriendActionLiveData(): MutableLiveData<FriendAction> = MutableLiveData()
+    fun provideChatItemActionLiveData(): MutableLiveData<ChatItemAction> = MutableLiveData()
+    */
 }

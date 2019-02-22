@@ -9,9 +9,10 @@ import uk.co.victoriajanedavis.chatapp.injection.module.FriendRequestsToolbarMod
 import uk.co.victoriajanedavis.chatapp.injection.scopes.PerFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest.SendFriendRequestFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
 
 @Subcomponent()
@@ -51,4 +52,9 @@ interface FriendRequestsFragmentSubcomponent : AndroidInjector<FriendRequestsFra
 @Subcomponent()
 interface SendFriendRequestFragmentSubcomponent : AndroidInjector<SendFriendRequestFragment> {
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<SendFriendRequestFragment>()
+}
+
+@Subcomponent()
+interface SendMessageFragmentSubcomponent : AndroidInjector<SendMessageFragment> {
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<SendMessageFragment>()
 }

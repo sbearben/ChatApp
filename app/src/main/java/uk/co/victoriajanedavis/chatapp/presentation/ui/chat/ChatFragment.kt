@@ -20,14 +20,14 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
-import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter.ChatAdapter
+import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter.MessagesAdapter
 import java.util.UUID
 import javax.inject.Inject
 
 class ChatFragment : DaggerFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var adapter: ChatAdapter
+    @Inject lateinit var adapter: MessagesAdapter
     lateinit var viewModel: ChatViewModel
 
     lateinit var chatUuid: UUID
@@ -131,7 +131,7 @@ class ChatFragment : DaggerFragment() {
 
     private fun sendMessage() {
         if (!message_editText.isEmpty()) {
-            viewModel.postMessage(chatUuid, message_editText.text.toString())
+            viewModel.sendMessage(chatUuid, message_editText.text.toString())
             message_editText.text.clear()
             hideKeyboard()
         }
@@ -147,15 +147,15 @@ class ChatFragment : DaggerFragment() {
         const val ARG_TRANSITION_NAME = "transition_name"
 
         fun createBundle(
-            uuidStr: String,
+            chatUuid: UUID,
             username: String,
             transitionName: String
         ): Bundle {
-            val bundle = Bundle()
-            bundle.putString(ARG_CHAT_UUID, uuidStr)
-            bundle.putString(ARG_USERNAME, username)
-            bundle.putString(ARG_TRANSITION_NAME, transitionName)
-            return bundle
+            return Bundle().apply {
+                putString(ARG_CHAT_UUID, chatUuid.toString())
+                putString(ARG_USERNAME, username)
+                putString(ARG_TRANSITION_NAME, transitionName)
+            }
         }
     }
 }

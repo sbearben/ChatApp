@@ -16,11 +16,24 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/friendRequestsFragmentContainer"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/Widget.MaterialComponents.TabLayout.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mediumLightGray"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabTextColor="@color/darkMediumGray"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
+    </androidx.viewpager.widget.ViewPager>
 
     <include layout="@layout/layout_content_progress_dim" />
 

@@ -14,7 +14,7 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 @Dao
 abstract class FriendshipDao {
 
-    @get:Query("SELECT * FROM friendships WHERE friendship_accepted = 1")
+    @get:Query("SELECT * FROM friendships WHERE friendship_accepted = 1 ORDER BY username")
     abstract val allAcceptedFriendships: Flowable<List<FriendshipDbModel>>
 
     /***** Sent Friend Request Methods  */

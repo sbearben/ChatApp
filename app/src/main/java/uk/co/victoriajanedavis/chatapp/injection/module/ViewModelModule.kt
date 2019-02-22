@@ -10,11 +10,13 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.ReceivedFriendRequestsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.SentFriendRequestsViewModel
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestViewModel
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarViewModel
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest.SendFriendRequestViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.FriendRequestsToolbarViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.ChatsViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.FriendsViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.MainViewModel
+import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupViewModel
 
 @Module
@@ -45,6 +47,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(ChatsViewModel::class)
+    abstract fun chatsViewModel(viewModel: ChatsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(FriendsViewModel::class)
     abstract fun friendsViewModel(viewModel: FriendsViewModel): ViewModel
 
@@ -67,4 +74,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SendFriendRequestViewModel::class)
     abstract fun sendFriendRequestViewModel(viewModel: SendFriendRequestViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SendMessageViewModel::class)
+    abstract fun sendMessageViewModel(viewModel: SendMessageViewModel): ViewModel
 }

@@ -7,8 +7,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
+    style="?attr/actionButtonStyle"
     android:focusable="true">
-    <!--style="?attr/actionButtonStyle"-->
 
     <ImageView
         android:id="@+id/friend_requests_imageview"
@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/menu_friend_requests_icon_description"/>
 
     <TextView
         android:id="@+id/friend_requests_badge"

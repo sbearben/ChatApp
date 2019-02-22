@@ -23,6 +23,7 @@
         android:paddingBottom="8dp"
         android:textSize="@dimen/text_message"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Placeholder message and other good stuff and more words and such" />
+        tools:text="Placeholder message and other good stuff and more words and such"
+        android:elevation="2dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

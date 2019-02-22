@@ -1,4 +1,4 @@
-package uk.co.victoriajanedavis.chatapp.presentation.ui.friends
+package uk.co.victoriajanedavis.chatapp.presentation.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

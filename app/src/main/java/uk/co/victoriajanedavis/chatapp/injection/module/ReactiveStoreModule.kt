@@ -16,7 +16,7 @@ class ReactiveStoreModule {
 
     @Provides
     @ApplicationScope
-    @Named(ChatStore)
+    @Named(RecentMessagesStore)
     fun chatMembershipReactiveStore(cache: RecentMessagesCache): BaseReactiveStore<MessageDbModel> {
         return BaseReactiveStore(cache)
     }

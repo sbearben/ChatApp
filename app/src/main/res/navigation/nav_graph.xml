@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/friendsFragment">
+    app:startDestination="@id/homeFragment">
 
     <!-- Chat Flow -->
     <!-- FriendRequestsToolbarFragment -->
     <fragment
-        android:id="@+id/friendsFragment"
-        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment"
+        android:id="@+id/homeFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.home.FriendRequestsToolbarFragment"
         android:label="fragment_friends"
         tools:layout="@layout/fragment_friend_requests_toolbar">
 
         <action
-            android:id="@+id/action_friendsFragment_to_loginFlowGraph"
+            android:id="@+id/action_homeFragment_to_loginFlowGraph"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/friendsFragment"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/fade_out"
@@ -26,12 +26,21 @@
             app:launchSingleTop="true"/>
 
         <action
-            android:id="@+id/action_friendsFragment_to_chatFragment"
+            android:id="@+id/action_homeFragment_to_chatFragment"
             app:destination="@id/chatFragment"
             app:launchSingleTop="true"/>
 
         <action
-            android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
+            android:id="@+id/action_homeFragment_to_sendMessageFragment"
+            app:destination="@id/sendMessageFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:launchSingleTop="true"/>
+
+        <action
+            android:id="@+id/action_homeFragment_to_friendRequestsFragment"
             app:destination="@id/friendRequestsFragment"
             app:enterAnim="@anim/grow_in_top_right"
             app:exitAnim="@anim/fade_out"
@@ -47,6 +56,13 @@
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
 
+    <!-- SendMessageFragment -->
+    <fragment
+        android:id="@+id/sendMessageFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageFragment"
+        android:label="fragment_send_message"
+        tools:layout="@layout/fragment_send_message" />
+
 
     <!-- Login/Register Flow -->
     <!-- LoginFragment -->
@@ -58,7 +74,7 @@
 
         <action
             android:id="@+id/action_loginFragment_to_chatFlowGraph"
-            app:destination="@id/friendsFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"
             app:launchSingleTop="true"/>
@@ -82,7 +98,7 @@
 
         <action
             android:id="@+id/action_signupFragment_to_chatFlowGraph"
-            app:destination="@id/friendsFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/signupFragment"
             app:popUpToInclusive="true"
             app:launchSingleTop="true"/>
@@ -107,7 +123,7 @@
     <!-- SendFriendRequestFragment -->
     <fragment
         android:id="@+id/sendFriendRequestFragment"
-        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest.SendFriendRequestFragment"
         android:label="fragment_send_friend_request"
         tools:layout="@layout/fragment_send_friend_request" />
 

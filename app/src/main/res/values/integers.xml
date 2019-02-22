@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="friend_request_message_max_characters">200</integer>
+    <integer name="send_message_max_characters">250</integer>
     <integer name="transition_animation_speed">200</integer>
 </resources>

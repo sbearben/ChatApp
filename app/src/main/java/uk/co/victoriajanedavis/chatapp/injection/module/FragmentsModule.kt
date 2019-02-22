@@ -9,9 +9,10 @@ import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.component.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send.SendFriendRequestFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.FriendRequestsToolbarFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest.SendFriendRequestFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.FriendRequestsToolbarFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.login.LoginFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
 
 @Module(subcomponents = [
@@ -21,7 +22,8 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
     FriendsFragmentSubcomponent::class,
     ChatFragmentSubcomponent::class,
     FriendRequestsFragmentSubcomponent::class,
-    SendFriendRequestFragmentSubcomponent::class
+    SendFriendRequestFragmentSubcomponent::class,
+    SendMessageFragmentSubcomponent::class
 ])
 abstract class FragmentsModule {
 
@@ -59,6 +61,12 @@ abstract class FragmentsModule {
     @IntoMap
     @FragmentKey(SendFriendRequestFragment::class)
     abstract fun bindSendFriendRequestFragmentInjectFactory(builder: SendFriendRequestFragmentSubcomponent.Builder):
+            AndroidInjector.Factory<out Fragment>
+
+    @Binds
+    @IntoMap
+    @FragmentKey(SendMessageFragment::class)
+    abstract fun bindMessageFragmentInjectFactory(builder: SendMessageFragmentSubcomponent.Builder):
             AndroidInjector.Factory<out Fragment>
 
 }

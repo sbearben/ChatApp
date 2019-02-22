@@ -38,7 +38,7 @@
 
 
     <!-- Received/Sent Friend Request - Base Button -->
-    <style name="FriendRequestBaseButton">
+    <style name="FriendActionBaseButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
@@ -51,7 +51,7 @@
     </style>
 
 
-    <style name="AcceptFriendRequestButton" parent="FriendRequestBaseButton">
+    <style name="AcceptFriendRequestButton" parent="FriendActionBaseButton">
         <item name="android:background">@drawable/button_accept_background_selector</item>
         <item name="android:textColor">@drawable/button_accept_textcolor_selector</item>
         <item name="android:textStyle">bold</item>
@@ -59,10 +59,16 @@
     </style>
 
 
-    <style name="RejectFriendRequestButton" parent="FriendRequestBaseButton">
+    <style name="RejectFriendRequestButton" parent="FriendActionBaseButton">
         <item name="android:background">@drawable/button_reject_background_selector</item>
         <item name="android:textColor">@drawable/button_reject_textcolor_selector</item>
         <item name="android:text">@string/received_friend_request_reject</item>
+    </style>
+
+    <style name="SendMessageToFriendButton" parent="FriendActionBaseButton">
+        <item name="android:background">@drawable/button_reject_background_selector</item>
+        <item name="android:textColor">@drawable/button_reject_textcolor_selector</item>
+        <item name="android:text">@string/send_friend_message</item>
     </style>
 
 </resources>

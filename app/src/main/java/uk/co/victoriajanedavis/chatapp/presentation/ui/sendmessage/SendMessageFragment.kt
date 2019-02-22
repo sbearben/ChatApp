@@ -1,39 +1,45 @@
-package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.send
+package uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_send_friend_request.*
+import kotlinx.android.synthetic.main.fragment_send_message.*
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.R
+import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
+import java.util.UUID
 import javax.inject.Inject
 
-class SendFriendRequestFragment : DaggerFragment() {
+class SendMessageFragment : DaggerFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    lateinit var viewModel: SendFriendRequestViewModel
+    lateinit var viewModel: SendMessageViewModel
 
+    lateinit var chatUuid: UUID
+    lateinit var username: String
     private var sendMenuItem: MenuItem? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendFriendRequestViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SendMessageViewModel::class.java)
+
+        chatUuid = UUID.fromString(arguments?.getString(ARG_CHAT_UUID)!!)
+        username = arguments?.getString(ARG_USERNAME) ?: ""
 
         setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_send_friend_request, container, false)
+        return inflater.inflate(R.layout.fragment_send_message, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,13 +57,13 @@ class SendFriendRequestFragment : DaggerFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_send_friend_request_toolbar, menu)
         sendMenuItem = menu.findItem(R.id.menu_send)
-        sendMenuItem?.isEnabled = usernameEditText.text?.isNotEmpty() ?: false
+        sendMenuItem?.isEnabled = messageEditText.text?.isNotEmpty() ?: false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu_send -> {
-                sendFriendRequest()
+                sendMessage()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -69,21 +75,21 @@ class SendFriendRequestFragment : DaggerFragment() {
         setSupportActionBar(toolbar)
         getSupportActionBar()?.apply {
             setDisplayShowTitleEnabled(true)
-            title = "Send Friend Request"
+            title = "Message: \'$username\'"
         }
     }
 
     private fun setupViewListeners() {
-        usernameInputLayout.afterTextChanged { s ->
+        messageInputLayout.afterTextChanged { s ->
             sendMenuItem?.isEnabled = s.isNotEmpty()
-            usernameInputLayout.error =
-                    if(s.isEmpty() || s.matches(Regex("^[\\w.@+-]+\$"))) null
-                    else "Username may only contain letters, numbers, and @/./+/-/_ characters."
+            messageInputLayout.error =
+                    if(s.isEmpty()) "Message may not be empty."
+                    else null
         }
-        usernameEditText.setOnEditorActionListener { _, actionId, _ ->
+        messageEditText.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEND -> {
-                    sendFriendRequest()
+                    sendMessage()
                     true
                 }
                 else -> false
@@ -91,32 +97,30 @@ class SendFriendRequestFragment : DaggerFragment() {
         }
     }
 
-    private fun sendFriendRequest() {
-        //val temp : MenuItem? = sendMenuItem  // Need this because of weird Kotlin things in the following if statement
-        //if(temp != null && temp.isEnabled) {
+    private fun sendMessage() {
         if(sendMenuItem?.isEnabled ?: false) {
             hideKeyboard()
-            viewModel.sendFriendRequest(
-                usernameEditText.text.toString(),
+            viewModel.sendMessage(
+                chatUuid,
                 messageEditText.text.toString()
             )
         }
     }
 
     private fun setupViewModelStateObserver() {
-        viewModel.getRequestLiveData().observe(viewLifecycleOwner) {
+        viewModel.getSendMessageLiveData().observe(viewLifecycleOwner) {
             it?.let(::onStateChanged)
         }
     }
 
-    private fun onStateChanged(state: State<String>) = when(state) {
-        is ShowContent -> showContent(state.content)
+    private fun onStateChanged(state: State<MessageEntity>) = when(state) {
+        is ShowContent -> showContent()
         is ShowLoading -> showLoading()
         is ShowError -> showError(state.message)
     }
 
-    private fun showContent(username: String) {
-        showSnackbar("Friend request send to: $username ", Snackbar.LENGTH_LONG)
+    private fun showContent() {
+        showSnackbar("Message sent to: $username", Snackbar.LENGTH_LONG)
         findNavController().popBackStack()
     }
 
@@ -126,9 +130,20 @@ class SendFriendRequestFragment : DaggerFragment() {
     }
 
     private fun showError(message: String) {
-        Log.d("SendFriendFrag", "showError")
         sendMenuItem?.isEnabled = true
         progressBarLayout.gone()
         showSnackbar(message, Snackbar.LENGTH_LONG)
+    }
+
+    companion object {
+        const val ARG_CHAT_UUID = "chat_uuid"
+        const val ARG_USERNAME = "username"
+
+        fun createBundle(chatUuid: UUID, username: String): Bundle {
+            return Bundle().apply {
+                putString(ARG_CHAT_UUID, chatUuid.toString())
+                putString(ARG_USERNAME, username)
+            }
+        }
     }
 }

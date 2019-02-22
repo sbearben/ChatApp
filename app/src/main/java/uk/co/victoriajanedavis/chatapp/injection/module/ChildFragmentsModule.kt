@@ -9,12 +9,20 @@ import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.component.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.ReceivedFriendRequestsFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.SentFriendRequestsFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friends.friends.FriendsFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.ChatsFragment
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.FriendsFragment
 
 @Module(subcomponents = [
+    ChatsFragmentSubcomponent::class,
     FriendsFragmentSubcomponent::class
 ])
 abstract class FriendRequestsToolbarChildFragmentsModule {
+
+    @Binds
+    @IntoMap
+    @FragmentKey(ChatsFragment::class)
+    abstract fun bindChatsFragmentInjectorFactory(builder: ChatsFragmentSubcomponent.Builder):
+            AndroidInjector.Factory<out Fragment>
 
     @Binds
     @IntoMap

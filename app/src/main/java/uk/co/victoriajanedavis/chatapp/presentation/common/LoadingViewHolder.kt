@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import uk.co.victoriajanedavis.chatapp.R
 
 class LoadingViewHolder<T>(
-    private val layoutInflater: LayoutInflater,
-    private val parent: ViewGroup
+    layoutInflater: LayoutInflater,
+    parent: ViewGroup
 ) : BaseViewHolder<T>(layoutInflater.inflate(R.layout.item_progress_bar, parent, false)) {
 
 

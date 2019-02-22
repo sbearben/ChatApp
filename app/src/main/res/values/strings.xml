@@ -47,12 +47,21 @@
 
     <!-- SendFriendRequestFragment -->
     <string name="menu_send">Send</string>
-    <string name="send_friend_request_username">Username*</string>
-    <string name="send_friend_request_message">Include a message (optional)</string>
+    <string name="send_friend_request_username_hint">Username*</string>
+    <string name="send_friend_request_message_hint">Include a message (optional)</string>
 
-    <!-- FriendRequestsToolbarFragment Menu -->
+    <!-- FriendRequestsToolbarFragment -->
     <string name="menu_friend_requests">Friend Requests</string>
+    <string name="menu_friend_requests_icon_description">Icon that navigate to list of friend requests upon clicking</string>
     <string name="menu_logout">Logout</string>
+    <string name="friend_requests_toolbar_pager_adapter_chats">Chats</string>
+    <string name="friend_requests_toolbar_pager_adapter_friends">Friends</string>
+
+    <!-- SendMessageFragment -->
+    <string name="send_message_hint">Message*</string>
+
+    <!-- FriendsFragment -->
+    <string name="send_friend_message">Message</string>
 
     <!-- SyncService -->
     <string name="service_sync_description">Service used by ChatApp to perform data syncs</string>
