@@ -13,8 +13,8 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.BaseViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.common.LoadingViewHolder
 import javax.inject.Inject
 
-@PerFragment
-class MessagesAdapter @Inject  constructor()
+//@PerFragment
+class MessagesAdapter @Inject constructor()
     : ListAdapter<MessageEntity, BaseViewHolder<MessageEntity>>(MessageDiffCallback()) {
 
     private val handler: Handler = Handler()

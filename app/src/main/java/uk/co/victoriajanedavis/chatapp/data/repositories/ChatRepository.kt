@@ -1,7 +1,5 @@
 package uk.co.victoriajanedavis.chatapp.data.repositories
 
-import java.util.ArrayList
-
 import javax.inject.Inject
 
 import io.reactivex.Completable
@@ -14,20 +12,21 @@ import uk.co.victoriajanedavis.chatapp.data.mappers.ChatMembershipNwDbMapper
 import uk.co.victoriajanedavis.chatapp.data.mappers.FriendshipDbEntityMapper
 import uk.co.victoriajanedavis.chatapp.data.mappers.MessageDbEntityMapper
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.RecentMessagesStore
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.FriendshipStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
+import uk.co.victoriajanedavis.chatapp.domain.ReactiveStore
 import uk.co.victoriajanedavis.chatapp.domain.common.mapList
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
+import java.util.UUID
 import javax.inject.Named
 
 @ApplicationScope
 class ChatRepository @Inject constructor(
-    @Named(RecentMessagesStore) private val messagesStore: BaseReactiveStore<MessageDbModel>,
-    @Named(FriendshipStore) private val friendStore: BaseReactiveStore<FriendshipDbModel>,
+    @Named(RecentMessagesStore) private val messagesStore: ReactiveStore<UUID, MessageDbModel>,
+    @Named(FriendshipStore) private val friendStore: ReactiveStore<UUID, FriendshipDbModel>,
     private val chatService: ChatAppService
 ) {
     private val messageDbEntityMapper = MessageDbEntityMapper()

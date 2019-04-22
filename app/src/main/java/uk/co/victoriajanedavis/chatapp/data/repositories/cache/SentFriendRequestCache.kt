@@ -40,14 +40,15 @@ class SentFriendRequestCache @Inject constructor(
 
     override fun clear() {}
 
-    override fun getSingular(key: UUID?): Observable<FriendshipDbModel> {
-        return dao.get(key!!)
+    override fun getSingular(key: UUID): Observable<FriendshipDbModel> {
+        return dao.get(key)
             //.filter(this::notExpired)
             .toObservable()
     }
 
     override fun getAll(key: UUID?): Observable<List<FriendshipDbModel>> {
         return dao.sentFriendRequests
+            .distinctUntilChanged()
             //.flatMap(Flowable::fromIterable)
             //.filter(this::notExpired)
             //.toList()

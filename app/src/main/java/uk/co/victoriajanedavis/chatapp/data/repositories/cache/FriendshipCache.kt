@@ -38,8 +38,8 @@ class FriendshipCache @Inject constructor(
     }
 
     // Key should be chatUuid
-    override fun getSingular(key: UUID?): Observable<FriendshipDbModel> {
-        return dao.getFriendshipByChatUuid(key!!).toObservable()
+    override fun getSingular(key: UUID): Observable<FriendshipDbModel> {
+        return dao.getFriendshipByChatUuid(key).toObservable()
     }
 
     override fun getAll(key: UUID?): Observable<List<FriendshipDbModel>> {

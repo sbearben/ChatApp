@@ -8,18 +8,22 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_friend_requests.*
 import kotlinx.android.synthetic.main.toolbar.*
 import uk.co.victoriajanedavis.chatapp.R
+import uk.co.victoriajanedavis.chatapp.presentation.common.InjectingFragmentFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.getSupportActionBar
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.setSupportActionBar
 import javax.inject.Inject
 
 class FriendRequestsFragment : DaggerFragment() {
 
-    @Inject lateinit var pagerAdapter: FriendRequestsPagerAdapter
+    @Inject lateinit var injectingFragmentFactory: InjectingFragmentFactory
+    //@Inject lateinit var pagerAdapter: FriendRequestsPagerAdapter
+    private lateinit var pagerAdapter: FriendRequestsPagerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        childFragmentManager.fragmentFactory = injectingFragmentFactory
         pagerAdapter = FriendRequestsPagerAdapter(context, childFragmentManager)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -19,7 +19,7 @@ interface Cache<Key, Value> {
 
     fun clear()
 
-    fun getSingular(key: Key?): Observable<Value>
+    fun getSingular(key: Key): Observable<Value>
 
     fun getAll(key: Key?): Observable<List<Value>>
 

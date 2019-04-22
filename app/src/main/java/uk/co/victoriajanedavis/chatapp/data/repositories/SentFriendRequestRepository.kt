@@ -11,6 +11,7 @@ import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.SentFriendRequestStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
+import uk.co.victoriajanedavis.chatapp.domain.ReactiveStore
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.*
 import uk.co.victoriajanedavis.chatapp.domain.common.doOnErrorOrDispose
@@ -20,7 +21,7 @@ import javax.inject.Named
 
 @ApplicationScope
 class SentFriendRequestRepository @Inject constructor(
-    @Named(SentFriendRequestStore) private val friendStore: BaseReactiveStore<FriendshipDbModel>,
+    @Named(SentFriendRequestStore) private val friendStore: ReactiveStore<UUID, FriendshipDbModel>,
     private val chatService: ChatAppService
 ) {
     private val dbEntityMapper = FriendshipDbEntityMapper()

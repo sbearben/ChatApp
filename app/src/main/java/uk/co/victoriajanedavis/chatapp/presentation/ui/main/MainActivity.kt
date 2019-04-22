@@ -12,19 +12,25 @@ import dagger.android.support.DaggerAppCompatActivity
 import uk.co.victoriajanedavis.chatapp.BuildConfig
 import uk.co.victoriajanedavis.chatapp.ChatApp
 import uk.co.victoriajanedavis.chatapp.R
+import uk.co.victoriajanedavis.chatapp.presentation.common.InjectingFragmentFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    lateinit var viewModel: MainViewModel
+    @Inject lateinit var injectingFragmentFactory: InjectingFragmentFactory
+
+    private lateinit var viewModel: MainViewModel
 
     private val connectionReceiver: NetworkConnectionReceiver by lazy { NetworkConnectionReceiver() }
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportFragmentManager.fragmentFactory = injectingFragmentFactory
+
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
@@ -50,6 +56,7 @@ class MainActivity : DaggerAppCompatActivity() {
         return navController.navigateUp() ||  super.onSupportNavigateUp()
     }
 
+    /*
     override fun onBackPressed() {
         navController.currentDestination.also { destination ->
             when(destination?.id) {
@@ -60,6 +67,7 @@ class MainActivity : DaggerAppCompatActivity() {
         }
         super.onBackPressed()
     }
+    */
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -68,5 +76,4 @@ class MainActivity : DaggerAppCompatActivity() {
             }
         }
     }
-
 }

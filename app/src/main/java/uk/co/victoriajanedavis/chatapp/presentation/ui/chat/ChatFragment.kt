@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.chat
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.EndlessRecyclerViewOnScrollListener
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
@@ -24,11 +26,15 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter.MessagesAdap
 import java.util.UUID
 import javax.inject.Inject
 
-class ChatFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class ChatFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory,
+    private val adapter: MessagesAdapter
+) : BaseFragment() { //DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var adapter: MessagesAdapter
-    lateinit var viewModel: ChatViewModel
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var adapter: MessagesAdapter
+    private lateinit var viewModel: ChatViewModel
 
     lateinit var chatUuid: UUID
     lateinit var username: String

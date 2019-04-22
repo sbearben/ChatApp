@@ -7,16 +7,17 @@ import io.reactivex.schedulers.Schedulers
 import uk.co.victoriajanedavis.chatapp.data.mappers.CanceledFriendRequestWsFriendshipDbMapper
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.realtime.fcm.FirebaseMessagingStreams
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.BaseReactiveStore
 import uk.co.victoriajanedavis.chatapp.data.realtime.websocket.WebSocketStreams
 import uk.co.victoriajanedavis.chatapp.data.repositories.store.ReceivedFriendRequestStore
+import uk.co.victoriajanedavis.chatapp.domain.ReactiveStore
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Named
 
 class CanceledFriendRequestStorageBinding @Inject constructor(
     private val webSocketStreams: WebSocketStreams,
     private val firebaseMessagingStreams: FirebaseMessagingStreams,
-    @Named(ReceivedFriendRequestStore) private val friendStore: BaseReactiveStore<FriendshipDbModel>
+    @Named(ReceivedFriendRequestStore) private val friendStore: ReactiveStore<UUID, FriendshipDbModel>
 ) {
     private val canceledFriendRequestMapper = CanceledFriendRequestWsFriendshipDbMapper()
 

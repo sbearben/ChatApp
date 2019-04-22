@@ -19,7 +19,7 @@ class GetReceivedFriendRequestsList @Inject constructor(
 
     override fun getBehaviorStream(params: Void?): Observable<StreamState<List<FriendshipEntity>>> {
         return repository.allReceivedFriendRequests()
-            .flatMapSingle(::fetchWhenEmptyAndThenReceivedFriendRequests)
+            .switchMapSingle(::fetchWhenEmptyAndThenReceivedFriendRequests)
     }
 
     private fun fetchWhenEmptyAndThenReceivedFriendRequests(

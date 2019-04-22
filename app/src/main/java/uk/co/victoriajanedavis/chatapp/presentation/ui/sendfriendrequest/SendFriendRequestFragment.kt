@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
@@ -10,15 +11,19 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_send_friend_request.*
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.R
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import javax.inject.Inject
 
-class SendFriendRequestFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class SendFriendRequestFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory
+) : BaseFragment() { //DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: SendFriendRequestViewModel
 
     private var sendMenuItem: MenuItem? = null

@@ -31,19 +31,4 @@ class NetworkModule {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
     }
-
-    /*
-    @Provides
-    @ApplicationScope
-    fun webSocket(okHttpClient: OkHttpClient,
-                  webSocketListener: ChatWebSocketListener
-    ): WebSocket {
-        val request: Request = Request.Builder()
-            .url("ws://10.0.2.2:8000/ws/chat/")
-            .addHeader("Authorization", "Token ${tokenEntity.token}")
-            .build()
-
-        return okHttpClient.newWebSocket(request, webSocketListener)
-    }
-    */
 }

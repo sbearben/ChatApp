@@ -43,8 +43,8 @@ class MessageCache @Inject constructor(
         dao.clear()
     }
 
-    override fun getSingular(key: UUID?): Observable<MessageDbModel> {
-        return dao.get(key!!).toObservable()
+    override fun getSingular(key: UUID): Observable<MessageDbModel> {
+        return dao.get(key).toObservable()
     }
 
     // Key should be chatUuid

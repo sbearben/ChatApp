@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_send_message.*
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
@@ -18,9 +20,12 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import java.util.UUID
 import javax.inject.Inject
 
-class SendMessageFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class SendMessageFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory
+): BaseFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: SendMessageViewModel
 
     lateinit var chatUuid: UUID

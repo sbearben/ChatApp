@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.login
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,16 +11,20 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import uk.co.victoriajanedavis.chatapp.R
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import javax.inject.Inject
 
-class LoginFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class LoginFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory
+) : BaseFragment() {  //: DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    lateinit var viewModel: LoginViewModel
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: LoginViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

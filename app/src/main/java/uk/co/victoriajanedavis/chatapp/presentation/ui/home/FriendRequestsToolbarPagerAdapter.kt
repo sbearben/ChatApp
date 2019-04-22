@@ -14,12 +14,22 @@ import javax.inject.Inject
 @PerFragment
 class FriendRequestsToolbarPagerAdapter @Inject constructor(
     @ActivityContext private val context: Context?,
-    fm: FragmentManager
+    private val fm: FragmentManager
 ) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int) : Fragment = when(position) {
-        0 -> ChatsFragment.newInstance()
-        else -> FriendsFragment.newInstance()
+        0 -> {
+            fm.fragmentFactory.instantiate(
+                ChatsFragment::class.java.classLoader!!,
+                ChatsFragment::class.java.name
+            )
+        }
+        else -> {
+            fm.fragmentFactory.instantiate(
+                FriendsFragment::class.java.classLoader!!,
+                FriendsFragment::class.java.name
+            )
+        }
     }
 
     override fun getCount(): Int {

@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.ViewModelKey
+import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatViewModel
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.ReceivedFriendRequestsViewModel
@@ -20,7 +21,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageVi
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupViewModel
 
 @Module
-abstract class ViewModelModule {
+abstract class ActivitiesViewModelModule {
 
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory : ViewModelFactory): ViewModelProvider.Factory
@@ -30,6 +31,7 @@ abstract class ViewModelModule {
     @ViewModelKey(MainViewModel::class)
     abstract fun mainViewModel(viewModel: MainViewModel): ViewModel
 
+    /*
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
@@ -79,4 +81,70 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SendMessageViewModel::class)
     abstract fun sendMessageViewModel(viewModel: SendMessageViewModel): ViewModel
+    */
+}
+
+
+@Module
+abstract class FragmentsViewModelModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    abstract fun loginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SignupViewModel::class)
+    abstract fun signupViewModel(viewModel: SignupViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendRequestsToolbarViewModel::class)
+    abstract fun friendRequestsToolbarViewModel(viewModel: FriendRequestsToolbarViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatViewModel::class)
+    abstract fun chatViewModel(viewModel: ChatViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SendFriendRequestViewModel::class)
+    abstract fun sendFriendRequestViewModel(viewModel: SendFriendRequestViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SendMessageViewModel::class)
+    abstract fun sendMessageViewModel(viewModel: SendMessageViewModel): ViewModel
+}
+
+
+@Module
+abstract class FriendRequestsToolbarViewModelModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatsViewModel::class)
+    abstract fun chatsViewModel(viewModel: ChatsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendsViewModel::class)
+    abstract fun friendsViewModel(viewModel: FriendsViewModel): ViewModel
+}
+
+
+@Module
+abstract class FriendRequestsViewModelModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ReceivedFriendRequestsViewModel::class)
+    abstract fun receivedFriendRequestsViewModel(viewModel: ReceivedFriendRequestsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SentFriendRequestsViewModel::class)
+    abstract fun sentFriendRequestsViewModel(viewModel: SentFriendRequestsViewModel): ViewModel
 }

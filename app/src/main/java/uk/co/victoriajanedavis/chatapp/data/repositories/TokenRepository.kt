@@ -5,18 +5,18 @@ import javax.inject.Inject
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.BasePublishSubjectSingularStore
 import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenNwSpMapper
 import uk.co.victoriajanedavis.chatapp.data.mappers.TokenSpEntityMapper
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.TokenSpModel
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
+import uk.co.victoriajanedavis.chatapp.domain.ReactiveSingularStore
 import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntity
 
 @ApplicationScope
 class TokenRepository @Inject constructor(
-    private val tokenStore: BasePublishSubjectSingularStore<TokenSpModel>,
+    private val tokenStore: ReactiveSingularStore<TokenSpModel>,
     private val chatService: ChatAppService,
     private val database: ChatAppDatabase
 ) {

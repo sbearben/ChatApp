@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_chats.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
@@ -29,12 +31,17 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter.ChatIt
 import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter.ChatsAdapter
 import javax.inject.Inject
 
-class ChatsFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class ChatsFragment constructor(
+    private val viewModelFactory: ViewModelFactory,
+    private val actionLiveData: MutableLiveData<ChatItemAction>,
+    private val adapter: ChatsAdapter
+) : BaseFragment() {  //DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var chatActionLiveData: MutableLiveData<ChatItemAction>
-    @Inject lateinit var adapter: ChatsAdapter
-    lateinit var viewModel: ChatsViewModel
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var actionLiveData: MutableLiveData<ChatItemAction>
+    //@Inject lateinit var adapter: ChatsAdapter
+    private lateinit var viewModel: ChatsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,11 +94,11 @@ class ChatsFragment : DaggerFragment() {
 
     private fun showError(message: String) {
         makeSnackbar(message, Snackbar.LENGTH_LONG)
-            .setAction("Retry") { _ -> viewModel.retry() }
+            ?.setAction("Retry") { _ -> viewModel.retry() }
     }
 
     private fun setupChatItemActionObserver() {
-        chatActionLiveData.observe(this) {
+        actionLiveData.observe(this) {
             it?.let(::onChatItemActionReceived)
         }
     }
@@ -113,6 +120,6 @@ class ChatsFragment : DaggerFragment() {
 
     companion object {
         const val TAG = "ChatsFragment"
-        fun newInstance() = ChatsFragment()
+        //fun newInstance() = ChatsFragment()
     }
 }

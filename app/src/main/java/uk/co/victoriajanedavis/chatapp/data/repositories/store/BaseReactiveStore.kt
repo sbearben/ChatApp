@@ -29,7 +29,7 @@ open class BaseReactiveStore<Value> @Inject constructor(
         return Completable.fromRunnable { cache.delete(value) }
     }
 
-    override fun getSingular(key: UUID?): Observable<Value> {
+    override fun getSingular(key: UUID): Observable<Value> {
         return cache.getSingular(key)
     }
 

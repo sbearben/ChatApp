@@ -17,7 +17,7 @@ interface ReactiveStore<Key, Value> {
 
     fun delete(value: Value): Completable
 
-    fun getSingular(key: Key?): Observable<Value>
+    fun getSingular(key: Key): Observable<Value>
 
     fun getAll(key: Key?): Observable<List<Value>>
 }

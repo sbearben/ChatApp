@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_friends.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
@@ -27,12 +29,18 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.adapter.Frie
 import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageFragment
 import javax.inject.Inject
 
-class FriendsFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class FriendsFragment constructor(
+    private val viewModelFactory: ViewModelFactory,
+    private val actionLiveData: MutableLiveData<FriendItemAction>,
+    private val adapter: FriendsAdapter
+) : BaseFragment() {  //DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var friendActionLiveData: MutableLiveData<FriendItemAction>
-    @Inject lateinit var adapter: FriendsAdapter
-    lateinit var viewModel: FriendsViewModel
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var friendActionLiveData: MutableLiveData<FriendItemAction>
+    //@Inject lateinit var adapter: FriendsAdapter
+    private lateinit var viewModel: FriendsViewModel
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,11 +93,11 @@ class FriendsFragment : DaggerFragment() {
 
     private fun showError(message: String) {
         makeSnackbar(message, Snackbar.LENGTH_LONG)
-            .setAction("Retry") { _ -> viewModel.retry() }
+            ?.setAction("Retry") { _ -> viewModel.retry() }
     }
 
     private fun setupFriendItemActionObserver() {
-        friendActionLiveData.observe(this) {
+        actionLiveData.observe(this) {
             it?.let(::onFriendItemActionReceived)
         }
     }
@@ -106,6 +114,6 @@ class FriendsFragment : DaggerFragment() {
 
     companion object {
         const val TAG = "FriendsFragment"
-        fun newInstance() = FriendsFragment()
+        //fun newInstance() = FriendsFragment()
     }
 }

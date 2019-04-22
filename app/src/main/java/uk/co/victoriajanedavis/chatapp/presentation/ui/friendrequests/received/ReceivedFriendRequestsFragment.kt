@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_friend_requests_tab.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
@@ -22,12 +24,17 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.a
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter.ReceivedFriendRequestsAdapter
 import javax.inject.Inject
 
-class ReceivedFriendRequestsFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class ReceivedFriendRequestsFragment constructor(
+    private val viewModelFactory: ViewModelFactory,
+    private val actionLiveData: MutableLiveData<ReceivedFriendRequestAction>,
+    private val adapter: ReceivedFriendRequestsAdapter
+) : BaseFragment() {  //DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var actionLiveData: MutableLiveData<ReceivedFriendRequestAction>
-    @Inject lateinit var adapter: ReceivedFriendRequestsAdapter
-    lateinit var viewModel: ReceivedFriendRequestsViewModel
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var actionLiveData: MutableLiveData<ReceivedFriendRequestAction>
+    //@Inject lateinit var adapter: ReceivedFriendRequestsAdapter
+    private lateinit var viewModel: ReceivedFriendRequestsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +103,6 @@ class ReceivedFriendRequestsFragment : DaggerFragment() {
     }
 
     companion object {
-        fun newInstance() = ReceivedFriendRequestsFragment()
+        //fun newInstance() = ReceivedFriendRequestsFragment()
     }
 }

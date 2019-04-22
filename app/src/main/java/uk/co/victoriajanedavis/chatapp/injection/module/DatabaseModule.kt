@@ -21,14 +21,6 @@ class DatabaseModule {
                 .build()
     }
 
-    /*
-    @Provides
-    @ApplicationScope
-    fun chatMembershipDao(db: ChatAppDatabase): ChatMembershipDao {
-        return db.chatMembershipDao()
-    }
-    */
-
     @Provides
     @ApplicationScope
     fun friendshipDao(db: ChatAppDatabase): FriendshipDao {

@@ -17,8 +17,7 @@ class RecentMessagesCache @Inject constructor(
 
 
     override fun putSingular(value: MessageDbModel) {
-        //dao.insertChatMembership(chatDbModel);
-        //dao.upsertChatMembership(value)
+        dao.insertMessage(value)
     }
 
     override fun putAll(valuesList: List<MessageDbModel>) {
@@ -39,8 +38,8 @@ class RecentMessagesCache @Inject constructor(
         dao.clear()
     }
 
-    override fun getSingular(key: UUID?): Observable<MessageDbModel> {
-        return dao.get(key!!).toObservable()
+    override fun getSingular(key: UUID): Observable<MessageDbModel> {
+        return dao.get(key).toObservable()
     }
 
     override fun getAll(key: UUID?): Observable<List<MessageDbModel>> {

@@ -11,7 +11,7 @@
         android:id="@+id/nav_host"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:name="uk.co.victoriajanedavis.chatapp.presentation.common.FactoryNavHostFragment"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true"
         app:layout_constraintStart_toStartOf="parent"

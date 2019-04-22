@@ -1,5 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,21 +15,29 @@ import kotlinx.android.synthetic.main.fragment_friend_requests_tab.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
+import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter.ReceivedFriendRequestAction
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter.ReceivedFriendRequestsAdapter
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestAction
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestAction.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestsAdapter
 import javax.inject.Inject
 
-class SentFriendRequestsFragment : DaggerFragment() {
+@SuppressLint("ValidFragment")
+class SentFriendRequestsFragment constructor(
+    private val viewModelFactory: ViewModelFactory,
+    private val actionLiveData: MutableLiveData<SentFriendRequestAction>,
+    private val adapter: SentFriendRequestsAdapter
+) : BaseFragment() { //DaggerFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var actionLiveData: MutableLiveData<SentFriendRequestAction>
-    @Inject lateinit var adapter: SentFriendRequestsAdapter
-    lateinit var viewModel: SentFriendRequestsViewModel
+    //@Inject lateinit var viewModelFactory: ViewModelFactory
+    //@Inject lateinit var actionLiveData: MutableLiveData<SentFriendRequestAction>
+    //@Inject lateinit var adapter: SentFriendRequestsAdapter
+    private lateinit var viewModel: SentFriendRequestsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,6 +111,6 @@ class SentFriendRequestsFragment : DaggerFragment() {
     }
 
     companion object {
-        fun newInstance() = SentFriendRequestsFragment()
+        //fun newInstance() = SentFriendRequestsFragment()
     }
 }

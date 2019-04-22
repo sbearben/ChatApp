@@ -6,13 +6,13 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import uk.co.victoriajanedavis.chatapp.data.model.sharedpref.FirebaseTokenSpModel
-import uk.co.victoriajanedavis.chatapp.data.repositories.store.BasePublishSubjectSingularStore
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
+import uk.co.victoriajanedavis.chatapp.domain.ReactiveSingularStore
 import javax.inject.Inject
 
 class FirebaseTokenRepository @Inject constructor(
     private val chatService: ChatAppService,
-    private val firebaseTokenStore: BasePublishSubjectSingularStore<FirebaseTokenSpModel>
+    private val firebaseTokenStore: ReactiveSingularStore<FirebaseTokenSpModel>
 ) {
 
     fun getTokenStream() : Observable<String> {

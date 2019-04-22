@@ -1,12 +1,14 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjector
 import dagger.android.support.FragmentKey
 import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.component.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.InjectingFragmentFactory
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.FriendRequestsFragment
 import uk.co.victoriajanedavis.chatapp.presentation.ui.sendfriendrequest.SendFriendRequestFragment
@@ -16,28 +18,41 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageFr
 import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupFragment
 
 @Module(subcomponents = [
-    LoginFragmentSubcomponent::class,
-    SignupFragmentSubcomponent::class,
     FriendRequestsToolbarFragmentSubcomponent::class,
-    FriendsFragmentSubcomponent::class,
-    ChatFragmentSubcomponent::class,
-    FriendRequestsFragmentSubcomponent::class,
-    SendFriendRequestFragmentSubcomponent::class,
-    SendMessageFragmentSubcomponent::class
+    FriendRequestsFragmentSubcomponent::class
 ])
 abstract class FragmentsModule {
 
     @Binds
+    abstract fun bindFragmentFactory(viewModelFactory : InjectingFragmentFactory): FragmentFactory
+
+    @Binds
     @IntoMap
     @FragmentKey(LoginFragment::class)
-    abstract fun bindLoginFragmentInjectorFactory(builder: LoginFragmentSubcomponent.Builder):
-            AndroidInjector.Factory<out Fragment>
+    abstract fun bindLoginFragmentInjectorFactory(loginFragment: LoginFragment): Fragment
 
     @Binds
     @IntoMap
     @FragmentKey(SignupFragment::class)
-    abstract fun bindSignupFragmentInjectorFactory(builder: SignupFragmentSubcomponent.Builder):
-            AndroidInjector.Factory<out Fragment>
+    abstract fun bindSignupFragment(signupFragment: SignupFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(ChatFragment::class)
+    abstract fun bindChatFragment(chatFragment: ChatFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(SendFriendRequestFragment::class)
+    abstract fun bindSendFriendRequestFragment(sendFriendRequestFragment: SendFriendRequestFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(SendMessageFragment::class)
+    abstract fun bindMessageFragment(sendMessageFragment: SendMessageFragment): Fragment
+
+
+    /* Subcomponents */
 
     @Binds
     @IntoMap
@@ -47,26 +62,8 @@ abstract class FragmentsModule {
 
     @Binds
     @IntoMap
-    @FragmentKey(ChatFragment::class)
-    abstract fun bindChatFragmentInjectorFactory(builder: ChatFragmentSubcomponent.Builder):
-            AndroidInjector.Factory<out Fragment>
-
-    @Binds
-    @IntoMap
     @FragmentKey(FriendRequestsFragment::class)
     abstract fun bindFriendRequestsFragmentInjectFactory(builder: FriendRequestsFragmentSubcomponent.Builder):
-            AndroidInjector.Factory<out Fragment>
-
-    @Binds
-    @IntoMap
-    @FragmentKey(SendFriendRequestFragment::class)
-    abstract fun bindSendFriendRequestFragmentInjectFactory(builder: SendFriendRequestFragmentSubcomponent.Builder):
-            AndroidInjector.Factory<out Fragment>
-
-    @Binds
-    @IntoMap
-    @FragmentKey(SendMessageFragment::class)
-    abstract fun bindMessageFragmentInjectFactory(builder: SendMessageFragmentSubcomponent.Builder):
             AndroidInjector.Factory<out Fragment>
 
 }

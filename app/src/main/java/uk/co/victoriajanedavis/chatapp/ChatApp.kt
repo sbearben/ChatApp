@@ -19,7 +19,7 @@ import android.content.Intent
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.registerAllNotificationChannels
 
 
-class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
+open class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
@@ -27,7 +27,7 @@ class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
     lateinit var appComponent: ApplicationComponent
         private set
 
-    lateinit var refWatcher: RefWatcher
+    private var refWatcher: RefWatcher? = null
 
 
     override fun activityInjector() = dispatchingAndroidInjector
@@ -38,23 +38,31 @@ class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
         super.onCreate()
         registerAllNotificationChannels(this)
 
-        createAppComponent()
+        appComponent = createAppComponent()
         appComponent.inject(this)
 
+        initLeakCanary()
+
+        registerConnectivityNetworkMonitor()
+    }
+
+    open fun initLeakCanary() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
             return
         }
         refWatcher = LeakCanary.install(this)
-
-        registerConnectivityNetworkMonitor()
     }
 
-    private fun createAppComponent() {
-        appComponent = DaggerApplicationComponent.builder()
-                .application(this)
-                .build()
+    open fun mustDie(`object`: Any) {
+        refWatcher?.watch(`object`)
+    }
+
+    open fun createAppComponent(): ApplicationComponent {
+        return DaggerApplicationComponent.builder()
+            .application(this)
+            .build()
     }
 
     private fun registerConnectivityNetworkMonitor() {
@@ -78,10 +86,6 @@ class ChatApp : Application(), HasActivityInjector, HasServiceInjector {
             putExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, noConnection)
             return this
         }
-    }
-
-    fun mustDie(`object`: Any) {
-        refWatcher.watch(`object`)
     }
 
     companion object {

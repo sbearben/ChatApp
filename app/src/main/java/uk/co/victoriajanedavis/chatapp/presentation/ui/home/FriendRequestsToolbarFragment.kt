@@ -2,6 +2,7 @@ package uk.co.victoriajanedavis.chatapp.presentation.ui.home
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.toolbar.*
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_friend_requests_toolbar.*
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
+import uk.co.victoriajanedavis.chatapp.presentation.common.InjectingFragmentFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
@@ -21,8 +23,11 @@ import java.lang.ref.WeakReference
 
 class FriendRequestsToolbarFragment : DaggerFragment() {
 
+    @Inject lateinit var injectingFragmentFactory: InjectingFragmentFactory
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var pagerAdapter: FriendRequestsToolbarPagerAdapter
+
+    //@Inject lateinit var pagerAdapter: FriendRequestsToolbarPagerAdapter
+    private lateinit var pagerAdapter: FriendRequestsToolbarPagerAdapter
     private lateinit var viewModel: FriendRequestsToolbarViewModel
 
     private var badgeActionView: View? = null
@@ -33,9 +38,12 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        childFragmentManager.fragmentFactory = injectingFragmentFactory
+        pagerAdapter = FriendRequestsToolbarPagerAdapter(context, childFragmentManager)
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendRequestsToolbarViewModel::class.java)
         setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -140,7 +148,8 @@ class FriendRequestsToolbarFragment : DaggerFragment() {
                is ShowContent -> {}  // IsUserLoggedInLiveData observer will handle this (token is deleted trigger)
                is ShowLoading -> {
                    logoutUserMenuItem?.isEnabled = false
-                   progressBarLayout.visible() }
+                   progressBarLayout.visible()
+               }
                is ShowError -> {
                    logoutUserMenuItem?.isEnabled = true
                    progressBarLayout.gone()
