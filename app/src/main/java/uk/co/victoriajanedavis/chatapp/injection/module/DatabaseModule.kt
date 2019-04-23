@@ -11,9 +11,9 @@ import uk.co.victoriajanedavis.chatapp.data.room.daos.MessageDao
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 
 @Module
-class DatabaseModule {
+object DatabaseModule {
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun chatAppDatabase(app: ChatApp): ChatAppDatabase {
         return Room.databaseBuilder(app, ChatAppDatabase::class.java, "ChatApp.db")
@@ -21,13 +21,13 @@ class DatabaseModule {
                 .build()
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun friendshipDao(db: ChatAppDatabase): FriendshipDao {
         return db.friendshipDao()
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun messageDao(db: ChatAppDatabase): MessageDao {
         return db.messageDao()

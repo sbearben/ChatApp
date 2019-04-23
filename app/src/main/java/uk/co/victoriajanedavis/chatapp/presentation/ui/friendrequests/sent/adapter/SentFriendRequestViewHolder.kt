@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter
 
-import androidx.lifecycle.MutableLiveData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_sent_friend_request.*
@@ -9,11 +8,12 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
+import java.util.UUID
 
 class SentFriendRequestViewHolder(
     layoutInflater: LayoutInflater,
     parent: ViewGroup,
-    private val actionLiveData: MutableLiveData<SentFriendRequestAction>
+    private val clickListener: OnClickListener
 ) : BaseViewHolder<FriendshipEntity>(
     layoutInflater.inflate(R.layout.item_sent_friend_request, parent, false)
 ) {
@@ -23,7 +23,7 @@ class SentFriendRequestViewHolder(
     init {
         cancelButton.setOnClickListener {
             stateCanceling()
-            actionLiveData.value = SentFriendRequestAction.Cancel(friendshipEntity.uuid!!)
+            clickListener.onCancelClicked(receiverUserUuid = friendshipEntity.uuid!!)
         }
     }
 
@@ -51,5 +51,9 @@ class SentFriendRequestViewHolder(
     private fun stateNormal() {
         cancelButtonProgressBar.gone()
         cancelButton.enable()
+    }
+
+    interface OnClickListener {
+        fun onCancelClicked(receiverUserUuid: UUID)
     }
 }

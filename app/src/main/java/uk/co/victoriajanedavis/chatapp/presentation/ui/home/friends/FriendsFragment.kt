@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_friends.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -23,30 +21,23 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.ext.gone
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.observe
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.makeSnackbar
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.visible
-import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.adapter.FriendItemAction
-import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.adapter.FriendItemAction.*
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.adapter.FriendViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.ui.home.friends.adapter.FriendsAdapter
 import uk.co.victoriajanedavis.chatapp.presentation.ui.sendmessage.SendMessageFragment
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
-class FriendsFragment constructor(
-    private val viewModelFactory: ViewModelFactory,
-    private val actionLiveData: MutableLiveData<FriendItemAction>,
-    private val adapter: FriendsAdapter
-) : BaseFragment() {  //DaggerFragment() {
+class FriendsFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory
+) : BaseFragment(), FriendViewHolder.OnClickListener {
 
-    //@Inject lateinit var viewModelFactory: ViewModelFactory
-    //@Inject lateinit var friendActionLiveData: MutableLiveData<FriendItemAction>
-    //@Inject lateinit var adapter: FriendsAdapter
+    private val adapter = FriendsAdapter(this)
     private lateinit var viewModel: FriendsViewModel
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsViewModel::class.java)
-        setupFriendItemActionObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,6 +48,14 @@ class FriendsFragment constructor(
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupViewModelStateObserver()
+    }
+
+    override fun onMessageClicked(friendEntity: FriendshipEntity) {
+        val bundle = SendMessageFragment.createBundle(
+            chatUuid = friendEntity.chatUuid!!,
+            username = friendEntity.username
+        )
+        findNavController().navigate(R.id.action_homeFragment_to_sendMessageFragment, bundle)
     }
 
     private fun setupRecyclerView() {
@@ -94,26 +93,5 @@ class FriendsFragment constructor(
     private fun showError(message: String) {
         makeSnackbar(message, Snackbar.LENGTH_LONG)
             ?.setAction("Retry") { _ -> viewModel.retry() }
-    }
-
-    private fun setupFriendItemActionObserver() {
-        actionLiveData.observe(this) {
-            it?.let(::onFriendItemActionReceived)
-        }
-    }
-
-    private fun onFriendItemActionReceived(action: FriendItemAction) = when(action) {
-        is Clicked -> {
-            val bundle = SendMessageFragment.createBundle(
-                chatUuid = action.friendEntity.chatUuid!!,
-                username = action.friendEntity.username
-            )
-            findNavController().navigate(R.id.action_homeFragment_to_sendMessageFragment, bundle)
-        }
-    }
-
-    companion object {
-        const val TAG = "FriendsFragment"
-        //fun newInstance() = FriendsFragment()
     }
 }

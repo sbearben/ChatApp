@@ -17,13 +17,6 @@ class FriendRequestsPagerAdapter @Inject constructor(
     private val fm: FragmentManager
 ) : FragmentPagerAdapter(fm) {
 
-    /*
-    override fun getItem(position: Int) : Fragment = when(position) {
-        0 -> ReceivedFriendRequestsFragment.newInstance()
-        else -> SentFriendRequestsFragment.newInstance()
-    }
-    */
-
     override fun getItem(position: Int) : Fragment = when(position) {
         0 -> {
             fm.fragmentFactory.instantiate(

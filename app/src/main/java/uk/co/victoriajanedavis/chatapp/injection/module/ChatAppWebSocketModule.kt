@@ -1,11 +1,9 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
-import com.google.gson.Gson
 import com.tinder.scarlet.Lifecycle
 import com.tinder.scarlet.Protocol
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.lifecycle.android.AndroidLifecycle
-import com.tinder.scarlet.messageadapter.gson.GsonMessageAdapter
 import com.tinder.scarlet.streamadapter.rxjava2.RxJava2StreamAdapterFactory
 import com.tinder.scarlet.websocket.ShutdownReason
 import com.tinder.scarlet.websocket.okhttp.OkHttpWebSocket
@@ -21,9 +19,9 @@ import uk.co.victoriajanedavis.chatapp.domain.interactors.IsUserLoggedIn
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 
 @Module
-class ChatAppWebSocketModule {
+object ChatAppWebSocketModule {
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun chatAppWebSocketService(
         protocol: Protocol,
@@ -33,7 +31,7 @@ class ChatAppWebSocketModule {
             .create()
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun okHttpWebSocket(okHttpClient: OkHttpClient, tokenHolder: TokenEntityHolder): Protocol {
         return OkHttpWebSocket(okHttpClient,
@@ -46,7 +44,7 @@ class ChatAppWebSocketModule {
             ))
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun scarletConfiguration(lifecycle: Lifecycle): Scarlet.Configuration {
         return Scarlet.Configuration(
@@ -55,7 +53,7 @@ class ChatAppWebSocketModule {
         )
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun scarletLifecycle(application: ChatApp, isUserLoggedIn: IsUserLoggedIn): Lifecycle {
         return AndroidLifecycle.ofApplicationForeground(application)

@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.ViewCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chats.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -26,28 +25,22 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.ext.observe
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.makeSnackbar
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.visible
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.ChatFragment
-import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter.ChatItemAction
-import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter.ChatItemAction.*
+import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter.ChatViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter.ChatsAdapter
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
-class ChatsFragment constructor(
-    private val viewModelFactory: ViewModelFactory,
-    private val actionLiveData: MutableLiveData<ChatItemAction>,
-    private val adapter: ChatsAdapter
-) : BaseFragment() {  //DaggerFragment() {
+class ChatsFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory
+) : BaseFragment(), ChatViewHolder.OnClickListener {
 
-    //@Inject lateinit var viewModelFactory: ViewModelFactory
-    //@Inject lateinit var actionLiveData: MutableLiveData<ChatItemAction>
-    //@Inject lateinit var adapter: ChatsAdapter
+    private val adapter = ChatsAdapter(this)
     private lateinit var viewModel: ChatsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ChatsViewModel::class.java)
-        setupChatItemActionObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,6 +51,19 @@ class ChatsFragment constructor(
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupViewModelStateObserver()
+    }
+
+    override fun onChatClicked(chatEntity: ChatEntity, sharedTextView: TextView) {
+        val bundle = ChatFragment.createBundle(
+            chatUuid = chatEntity.uuid,
+            username = chatEntity.friendship.username,
+            transitionName = sharedTextView.transitionName
+        )
+
+        val extras = FragmentNavigatorExtras(
+            sharedTextView to ViewCompat.getTransitionName(sharedTextView)!!
+        )
+        findNavController().navigate(R.id.action_homeFragment_to_chatFragment, bundle, null, extras)
     }
 
     private fun setupRecyclerView() {
@@ -95,31 +101,5 @@ class ChatsFragment constructor(
     private fun showError(message: String) {
         makeSnackbar(message, Snackbar.LENGTH_LONG)
             ?.setAction("Retry") { _ -> viewModel.retry() }
-    }
-
-    private fun setupChatItemActionObserver() {
-        actionLiveData.observe(this) {
-            it?.let(::onChatItemActionReceived)
-        }
-    }
-
-    private fun onChatItemActionReceived(action: ChatItemAction) = when(action) {
-        is Clicked -> {
-            val bundle = ChatFragment.createBundle(
-                chatUuid = action.chatEntity.uuid,
-                username = action.chatEntity.friendship.username,
-                transitionName = action.sharedTextView.transitionName
-            )
-
-            val extras = FragmentNavigatorExtras(
-                action.sharedTextView to ViewCompat.getTransitionName(action.sharedTextView)!!
-            )
-            findNavController().navigate(R.id.action_homeFragment_to_chatFragment, bundle, null, extras)
-        }
-    }
-
-    companion object {
-        const val TAG = "ChatsFragment"
-        //fun newInstance() = ChatsFragment()
     }
 }

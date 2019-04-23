@@ -10,9 +10,9 @@ import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 import java.util.concurrent.TimeUnit
 
 @Module
-class NetworkModule {
+object NetworkModule {
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun okHttpClient(loggingInterceptor: HttpLoggingInterceptor,
                      authenticationInterceptor: AuthenticationInterceptor
@@ -24,7 +24,7 @@ class NetworkModule {
             .build()
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun loggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor { message -> Log.d("OkHttp", message) }

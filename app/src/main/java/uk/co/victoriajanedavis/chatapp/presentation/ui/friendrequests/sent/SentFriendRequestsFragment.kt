@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_friend_requests_tab.*
 import kotlinx.android.synthetic.main.layout_message.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -20,23 +18,17 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter.ReceivedFriendRequestAction
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter.ReceivedFriendRequestsAdapter
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestAction
-import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestAction.*
+import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.sent.adapter.SentFriendRequestsAdapter
+import java.util.*
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
-class SentFriendRequestsFragment constructor(
-    private val viewModelFactory: ViewModelFactory,
-    private val actionLiveData: MutableLiveData<SentFriendRequestAction>,
-    private val adapter: SentFriendRequestsAdapter
-) : BaseFragment() { //DaggerFragment() {
+class SentFriendRequestsFragment @Inject constructor(
+    private val viewModelFactory: ViewModelFactory
+) : BaseFragment(), SentFriendRequestViewHolder.OnClickListener {
 
-    //@Inject lateinit var viewModelFactory: ViewModelFactory
-    //@Inject lateinit var actionLiveData: MutableLiveData<SentFriendRequestAction>
-    //@Inject lateinit var adapter: SentFriendRequestsAdapter
+    private val adapter = SentFriendRequestsAdapter(this)
     private lateinit var viewModel: SentFriendRequestsViewModel
 
 
@@ -54,8 +46,9 @@ class SentFriendRequestsFragment constructor(
         setupRecyclerView()
         setupFloatingAction()
         setupViewModelStateObserver()
-        setupViewHolderActionObserver()
     }
+
+    override fun onCancelClicked(receiverUserUuid: UUID) = viewModel.cancelFriendRequest(receiverUserUuid)
 
     private fun setupRecyclerView() {
         recyclerview.layoutManager = LinearLayoutManager(context)
@@ -86,12 +79,6 @@ class SentFriendRequestsFragment constructor(
         is ShowEmpty -> showEmpty()
     }
 
-    private fun setupViewHolderActionObserver() {
-        actionLiveData.observe(viewLifecycleOwner) { action ->
-            when(action) { is Cancel -> viewModel.cancelFriendRequest(action.receiverUserUuid) }
-        }
-    }
-
     private fun showContent(list: List<FriendshipEntity>) {
         message_layout.gone()
         adapter.submitList(list)
@@ -108,9 +95,5 @@ class SentFriendRequestsFragment constructor(
     private fun showError(message: String) {
         showSnackbar(message, Snackbar.LENGTH_LONG)
         swipeRefreshLayout.isRefreshing = false
-    }
-
-    companion object {
-        //fun newInstance() = SentFriendRequestsFragment()
     }
 }

@@ -19,8 +19,7 @@ import uk.co.victoriajanedavis.chatapp.injection.module.*
     NetworkModule::class,
     ReactiveStoreModule::class,
     ReplyActionServiceModule::class,
-    SyncServiceModule::class,
-    ActivitiesViewModelModule::class
+    SyncServiceModule::class
 ])
 interface ApplicationComponent {
 

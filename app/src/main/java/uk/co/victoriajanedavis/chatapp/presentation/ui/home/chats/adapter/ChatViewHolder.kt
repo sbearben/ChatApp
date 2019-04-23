@@ -1,8 +1,8 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.home.chats.adapter
 
-import androidx.lifecycle.MutableLiveData
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.ViewCompat
 import kotlinx.android.synthetic.main.item_chat.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -12,14 +12,14 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.BaseViewHolder
 class ChatViewHolder(
     layoutInflater: LayoutInflater,
     parent: ViewGroup,
-    private val actionLiveData: MutableLiveData<ChatItemAction>
+    private val clickListener: OnClickListener
 ) : BaseViewHolder<ChatEntity>(layoutInflater.inflate(R.layout.item_chat, parent, false)) {
 
     private lateinit var chatEntity: ChatEntity
 
     init {
         itemView.setOnClickListener {
-            actionLiveData.value = ChatItemAction.Clicked(
+            clickListener.onChatClicked(
                 chatEntity = chatEntity,
                 sharedTextView = nameTextView
             )
@@ -35,5 +35,9 @@ class ChatViewHolder(
         dateTextView.text = item.lastMessage.created.toString()
 
         ViewCompat.setTransitionName(nameTextView, chatEntity.uuid.toString())
+    }
+
+    interface OnClickListener {
+        fun onChatClicked(chatEntity: ChatEntity, sharedTextView: TextView)
     }
 }

@@ -1,6 +1,5 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter
 
-import androidx.lifecycle.MutableLiveData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_received_friend_request.*
@@ -9,11 +8,12 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipLoadingState.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseViewHolder
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
+import java.util.*
 
 class ReceivedFriendRequestViewHolder(
     layoutInflater: LayoutInflater,
     parent: ViewGroup,
-    private val actionLiveData: MutableLiveData<ReceivedFriendRequestAction>
+    private val clickListener: OnClickListener
 ) : BaseViewHolder<FriendshipEntity>(
     layoutInflater.inflate(R.layout.item_received_friend_request, parent, false)
 ) {
@@ -23,11 +23,11 @@ class ReceivedFriendRequestViewHolder(
     init {
         acceptButton.setOnClickListener {
             stateAccepting()
-            actionLiveData.value = ReceivedFriendRequestAction.Accept(friendshipEntity.uuid!!)
+            clickListener.onAcceptClicked(senderUserUuid = friendshipEntity.uuid!!)
         }
         rejectButton.setOnClickListener {
             stateRejecting()
-            actionLiveData.value = ReceivedFriendRequestAction.Reject(friendshipEntity.uuid!!)
+            clickListener.onRejectClicked(senderUserUuid = friendshipEntity.uuid!!)
         }
     }
 
@@ -65,5 +65,10 @@ class ReceivedFriendRequestViewHolder(
         acceptButton.enable()
         rejectButtonProgressBar.gone()
         rejectButton.enable()
+    }
+
+    interface OnClickListener {
+        fun onAcceptClicked(senderUserUuid: UUID)
+        fun onRejectClicked(senderUserUuid: UUID)
     }
 }

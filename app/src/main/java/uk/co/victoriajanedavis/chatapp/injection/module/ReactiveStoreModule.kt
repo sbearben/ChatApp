@@ -15,16 +15,16 @@ import java.util.*
 import javax.inject.Named
 
 @Module
-class ReactiveStoreModule {
+object ReactiveStoreModule {
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     @Named(RecentMessagesStore)
     fun chatMembershipReactiveStore(cache: RecentMessagesCache): ReactiveStore<UUID, MessageDbModel> {
         return BaseReactiveStore(cache)
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     @Named(FriendshipStore)
     //@FriendshipStore
@@ -32,13 +32,13 @@ class ReactiveStoreModule {
         return BaseReactiveStore(cache)
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun messageReactiveStore(cache: MessageCache): MessageReactiveStore {
         return MessageReactiveStore(cache)
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     @Named(ReceivedFriendRequestStore)
     //@ReceivedFriendRequestStore
@@ -46,7 +46,7 @@ class ReactiveStoreModule {
         return BaseReactiveStore(cache)
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     @Named(SentFriendRequestStore)
     //@SentFriendRequestStore
@@ -54,13 +54,13 @@ class ReactiveStoreModule {
         return BaseReactiveStore(cache)
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun tokenReactiveStore(cache: TokenCache): ReactiveSingularStore<TokenSpModel> {
         return BasePublishSubjectSingularStore(cache)
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun firebaseTokenReactiveStore(cache: FirebaseTokenCache): ReactiveSingularStore<FirebaseTokenSpModel> {
         return BasePublishSubjectSingularStore(cache)

@@ -1,21 +1,18 @@
 package uk.co.victoriajanedavis.chatapp.presentation.ui.friendrequests.received.adapter
 
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
-import uk.co.victoriajanedavis.chatapp.injection.scopes.PerChildFragment
 import javax.inject.Inject
 
-@PerChildFragment
 class ReceivedFriendRequestsAdapter @Inject constructor(
-    private val actionLiveData: MutableLiveData<ReceivedFriendRequestAction>
+    private val clickListener: ReceivedFriendRequestViewHolder.OnClickListener
 ) : ListAdapter<FriendshipEntity, ReceivedFriendRequestViewHolder>(ChatDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceivedFriendRequestViewHolder {
-        return ReceivedFriendRequestViewHolder(LayoutInflater.from(parent.context), parent, actionLiveData)
+        return ReceivedFriendRequestViewHolder(LayoutInflater.from(parent.context), parent, clickListener)
     }
 
     override fun onBindViewHolder(viewHolder: ReceivedFriendRequestViewHolder, position: Int) {

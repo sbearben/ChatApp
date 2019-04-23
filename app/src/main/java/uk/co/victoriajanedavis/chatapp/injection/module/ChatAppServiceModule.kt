@@ -14,13 +14,13 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.TokenEntityHolder
 import uk.co.victoriajanedavis.chatapp.injection.scopes.ApplicationScope
 
 @Module(includes = [NetworkModule::class])
-class ChatAppServiceModule {
+object ChatAppServiceModule {
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun chatAppService(retrofit: Retrofit): ChatAppService =  retrofit.create(ChatAppService::class.java)
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun retrofit(okHttpClient: OkHttpClient,
                  gson: Gson,
@@ -35,7 +35,7 @@ class ChatAppServiceModule {
             .build()
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun gson(): Gson {
         return GsonBuilder()
@@ -43,7 +43,7 @@ class ChatAppServiceModule {
             .create()
     }
 
-    @Provides
+    @Provides @JvmStatic
     @ApplicationScope
     fun tokenEntityHolder(): TokenEntityHolder {
         return TokenEntityHolder()
