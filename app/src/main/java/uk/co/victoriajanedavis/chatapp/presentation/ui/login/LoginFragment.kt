@@ -6,24 +6,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
 class LoginFragment @Inject constructor(
-    private val viewModelFactory: ViewModelFactory
-) : BaseFragment() {  //: DaggerFragment() {
+    private val viewModelFactory: ViewModelProvider.Factory
+) : BaseFragment() {
 
-    //@Inject lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: LoginViewModel
 
 
@@ -70,7 +68,6 @@ class LoginFragment @Inject constructor(
     }
 
     private fun onLoginSuccessful() {
-        //findNavController().navigateUp()
         findNavController().navigate(R.id.action_loginFragment_to_chatFlowGraph)
     }
 
@@ -82,7 +79,6 @@ class LoginFragment @Inject constructor(
     private fun showError(message: String) {
         enableViews()
         progressBar.invisible()
-
         showSnackbar(message, Snackbar.LENGTH_LONG)
     }
 

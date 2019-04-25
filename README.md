@@ -11,6 +11,11 @@ Written with Clean Architecture in mind and Single Activity Architecture, as wel
 * [RxJava](https://github.com/ReactiveX/RxJava): Reactive Extensions for the JVM
 * [Dagger2](https://github.com/google/dagger): A fast dependency injector for Android and Java
 
+Testing libraries include:
+* [Mockito](https://site.mockito.org/): Mocking framework for unit tests in Java
+* [Roboelectric](http://robolectric.org/): Brings fast and reliable unit tests to Android
+* [Espresso](https://developer.android.com/training/testing/espresso): Write concise, beautiful, and reliable Android UI tests.
+
 ### Features
 * Login/registration
 * Add friends

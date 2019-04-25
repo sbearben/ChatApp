@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +20,6 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.gone
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.observe
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.makeSnackbar
@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
 class ChatsFragment @Inject constructor(
-    private val viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelProvider.Factory
 ) : BaseFragment(), ChatViewHolder.OnClickListener {
 
     private val adapter = ChatsAdapter(this)

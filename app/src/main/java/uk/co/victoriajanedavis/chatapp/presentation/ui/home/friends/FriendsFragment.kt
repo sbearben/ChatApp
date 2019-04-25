@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_friends.*
@@ -16,7 +17,6 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.FriendshipEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState
 import uk.co.victoriajanedavis.chatapp.presentation.common.ListState.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.gone
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.observe
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.makeSnackbar
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
 class FriendsFragment @Inject constructor(
-    private val viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelProvider.Factory
 ) : BaseFragment(), FriendViewHolder.OnClickListener {
 
     private val adapter = FriendsAdapter(this)

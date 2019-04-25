@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_send_message.*
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.R
@@ -15,17 +15,15 @@ import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
 import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.State
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import java.util.UUID
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
 class SendMessageFragment @Inject constructor(
-    private val viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelProvider.Factory
 ): BaseFragment() {
 
-    //@Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: SendMessageViewModel
 
     lateinit var chatUuid: UUID

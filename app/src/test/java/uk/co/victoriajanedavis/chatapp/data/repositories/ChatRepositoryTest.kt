@@ -13,6 +13,7 @@ import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.mockito.Mock
 import org.mockito.Mockito
+import uk.co.victoriajanedavis.chatapp.common.BaseRoboelectricTest
 import uk.co.victoriajanedavis.chatapp.data.model.db.ChatDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.db.FriendshipDbModel
 import uk.co.victoriajanedavis.chatapp.data.model.network.ChatMembershipNwModel
@@ -25,10 +26,9 @@ import uk.co.victoriajanedavis.chatapp.data.room.ChatAppDatabase
 import uk.co.victoriajanedavis.chatapp.data.services.ChatAppService
 import uk.co.victoriajanedavis.chatapp.domain.Cache
 import uk.co.victoriajanedavis.chatapp.domain.entities.ChatEntity
-import uk.co.victoriajanedavis.chatapp.common.BaseTest
 import uk.co.victoriajanedavis.chatapp.common.ModelGenerationUtil
 
-class ChatRepositoryTest : BaseTest() {
+class ChatRepositoryTest : BaseRoboelectricTest() {
 
     private var chatStore: BaseReactiveStore<ChatDbModel>? = null
     private var friendshipStore: BaseReactiveStore<FriendshipDbModel>? = null

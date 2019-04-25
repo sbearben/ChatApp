@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -13,12 +14,11 @@ import uk.co.victoriajanedavis.chatapp.BuildConfig
 import uk.co.victoriajanedavis.chatapp.ChatApp
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.presentation.common.InjectingFragmentFactory
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var injectingFragmentFactory: InjectingFragmentFactory
 
     private lateinit var viewModel: MainViewModel

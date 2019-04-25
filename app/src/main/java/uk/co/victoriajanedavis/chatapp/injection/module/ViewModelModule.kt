@@ -25,7 +25,7 @@ import uk.co.victoriajanedavis.chatapp.presentation.ui.signup.SignupViewModel
 @Module
 abstract class ActivitiesViewModelModule {
 
-    @Binds @PerActivity
+    @Binds
     abstract fun bindViewModelFactory(viewModelFactory : ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
@@ -68,9 +68,6 @@ abstract class ActivitiesViewModelModule {
 @Module
 abstract class FriendRequestsToolbarViewModelModule {
 
-    @Binds @PerFragment
-    abstract fun bindViewModelFactory(viewModelFactory : ViewModelFactory): ViewModelProvider.Factory
-
     @Binds
     @IntoMap
     @ViewModelKey(ChatsViewModel::class)
@@ -85,9 +82,6 @@ abstract class FriendRequestsToolbarViewModelModule {
 
 @Module
 abstract class FriendRequestsViewModelModule {
-
-    @Binds @PerFragment
-    abstract fun bindViewModelFactory(viewModelFactory : ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap

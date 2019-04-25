@@ -9,10 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
 import uk.co.victoriajanedavis.chatapp.R
 import uk.co.victoriajanedavis.chatapp.domain.entities.MessageEntity
@@ -20,7 +20,6 @@ import uk.co.victoriajanedavis.chatapp.presentation.common.BaseFragment
 import uk.co.victoriajanedavis.chatapp.presentation.common.EndlessRecyclerViewOnScrollListener
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState
 import uk.co.victoriajanedavis.chatapp.presentation.common.PaginatedState.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import uk.co.victoriajanedavis.chatapp.presentation.ui.chat.adapter.MessagesAdapter
 import java.util.UUID
@@ -28,12 +27,10 @@ import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
 class ChatFragment @Inject constructor(
-    private val viewModelFactory: ViewModelFactory,
+    private val viewModelFactory: ViewModelProvider.Factory,
     private val adapter: MessagesAdapter
-) : BaseFragment() { //DaggerFragment() {
+) : BaseFragment() {
 
-    //@Inject lateinit var viewModelFactory: ViewModelFactory
-    //@Inject lateinit var adapter: MessagesAdapter
     private lateinit var viewModel: ChatViewModel
 
     lateinit var chatUuid: UUID

@@ -16,7 +16,6 @@ import javax.inject.Inject
 class FriendRequestsFragment : DaggerFragment() {
 
     @Inject lateinit var injectingFragmentFactory: InjectingFragmentFactory
-    //@Inject lateinit var pagerAdapter: FriendRequestsPagerAdapter
     private lateinit var pagerAdapter: FriendRequestsPagerAdapter
 
 

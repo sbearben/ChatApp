@@ -10,23 +10,21 @@ import uk.co.victoriajanedavis.chatapp.R
 import javax.inject.Inject
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_friend_requests_toolbar.*
 import kotlinx.android.synthetic.main.layout_content_progress_dim.*
 import uk.co.victoriajanedavis.chatapp.presentation.common.InjectingFragmentFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.State.*
-import uk.co.victoriajanedavis.chatapp.presentation.common.ViewModelFactory
 import uk.co.victoriajanedavis.chatapp.presentation.common.ext.*
 import java.lang.ref.WeakReference
-
 
 class FriendRequestsToolbarFragment : DaggerFragment() {
 
     @Inject lateinit var injectingFragmentFactory: InjectingFragmentFactory
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    //@Inject lateinit var pagerAdapter: FriendRequestsToolbarPagerAdapter
     private lateinit var pagerAdapter: FriendRequestsToolbarPagerAdapter
     private lateinit var viewModel: FriendRequestsToolbarViewModel
 

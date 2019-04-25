@@ -53,6 +53,7 @@ dependencies {
     //final MOCKITO_VERSION = '1.10.19'
     final MOCKITO_VERSION = '2.26.0'
     final ESPRESSO_VERSION = '3.2.0-alpha03'
+    final ROBOELECTRIC_VERSION = '4.2'
     final ROOM_VERSION = '2.1.0-alpha06'
     final LIFECYCLE_VERSION = '2.0.0'
     //final NAVIGATION_VERSION = '1.0.0'
@@ -142,12 +143,14 @@ dependencies {
     // Unit tests dependencies
     testImplementation jUnit
     testImplementation mockito
+    // For enabling mocking final classes
+    testImplementation "org.mockito:mockito-inline:$MOCKITO_VERSION"
     testImplementation "org.assertj:assertj-core:3.8.0"
 
     // Robolectric environment
     testImplementation 'androidx.test:core:1.1.0'
     // I added the following because of problems outlined here: https://stackoverflow.com/q/53595837/7648952
-    testImplementation "org.robolectric:robolectric:4.2"
+    testImplementation "org.robolectric:robolectric:$ROBOELECTRIC_VERSION"
 
     //testImplementation 'androidx.test:rules:1.2.0-alpha03'
     //testImplementation 'androidx.test:runner:1.2.0-alpha03'
@@ -155,8 +158,8 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:2.0.1"
     testImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_VERSION"
 
-    // Fragment testing
-    testImplementation "androidx.fragment:fragment-testing:1.1.0-alpha06"
+    // Fragment testing (debugImplementation see: https://issuetracker.google.com/issues/122321150)
+    debugImplementation 'androidx.fragment:fragment-testing:1.1.0-alpha06'
 }
 
 apply plugin: 'com.google.gms.google-services'

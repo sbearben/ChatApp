@@ -58,12 +58,17 @@ object ModelGenerationUtil {
 
     */
 
-    fun createMessageDbModel(text: String): MessageDbModel {
+    @JvmStatic
+    fun createMessageDbModel(
+        chatUuid: UUID = UUID.randomUUID(),
+        text: String = "",
+        created: Date = Date(TimestampProvider.currentTimeMillis())
+    ): MessageDbModel {
         return MessageDbModel(
             uuid = UUID.randomUUID(),
             text = text,
-            created = Date(TimestampProvider.currentTimeMillis()),
-            chatUuid = UUID.randomUUID(),
+            created = created,
+            chatUuid = chatUuid,
             userUuid = UUID.randomUUID(),
             userUsername = "Username",
             isFromCurrentUser = true
@@ -78,23 +83,30 @@ object ModelGenerationUtil {
         friendshipDbModel.chatUuid = chatDbModel.getUuid()
         return friendshipDbModel
     }
+    */
 
+    @JvmStatic
     fun createMessageNwList(chatUuid: UUID, number: Int): List<MessageNwModel> {
-        val messageNwModels = ArrayList<MessageNwModel>(number)
-        for (i in 0 until number) {
-            messageNwModels.add(createMessageNwModel(chatUuid))
-        }
-
-        return messageNwModels
+        return MutableList(number) { createMessageNwModel(chatUuid = chatUuid) }
     }
 
-    fun createMessageNwModel(@Nullable chatUuid: UUID): MessageNwModel {
-        val model = MessageNwModel(UUID.randomUUID())
-        model.setChatUuid(chatUuid)
-        //model.setUser(createUserNwModel(null));
-        return model
+    @JvmStatic
+    fun createMessageNwModel(
+        chatUuid: UUID = UUID.randomUUID(),
+        created: Date = Date(TimestampProvider.currentTimeMillis())
+    ): MessageNwModel {
+        return MessageNwModel(
+            uuid = UUID.randomUUID(),
+            text = "",
+            created = created,
+            chatUuid = chatUuid,
+            userUuid = UUID.randomUUID(),
+            userUsername = "Username",
+            isFromCurrentUser = true
+        )
     }
 
+    /*
     fun createTokenNwModel(): TokenNwModel {
         val model = TokenNwModel()
 

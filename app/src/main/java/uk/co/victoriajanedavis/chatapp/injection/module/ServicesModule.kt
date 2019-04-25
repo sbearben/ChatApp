@@ -1,7 +1,6 @@
 package uk.co.victoriajanedavis.chatapp.injection.module
 
 import android.app.Service
-import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjector
@@ -10,7 +9,6 @@ import dagger.multibindings.IntoMap
 import uk.co.victoriajanedavis.chatapp.injection.component.MyFirebaseServiceSubcomponent
 import uk.co.victoriajanedavis.chatapp.injection.component.ReplyActionServiceSubcomponent
 import uk.co.victoriajanedavis.chatapp.injection.component.SyncServiceSubcomponent
-import uk.co.victoriajanedavis.chatapp.injection.qualifiers.ServiceContext
 import uk.co.victoriajanedavis.chatapp.presentation.fcm.MyFirebaseService
 import uk.co.victoriajanedavis.chatapp.presentation.notifications.message.ReplyActionService
 import uk.co.victoriajanedavis.chatapp.presentation.ui.main.SyncService
