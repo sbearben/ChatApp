@@ -3,8 +3,8 @@ Android realtime messaging app written in Kotlin that features user login/regist
 
 ### Built With
 Written with Clean Architecture in mind and Single Activity Architecture, as well as MVVM for the presentation layer. Main libraries used were:
-* [Tinder/Scarlet](https://github.com/Tinder/Scarlet): A cross-platform messaging solution that lets you reliably deliver messages at no cost
-* [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/): A Retrofit inspired WebSocket client for Kotlin, Java, and Android
+* [Tinder/Scarlet](https://github.com/Tinder/Scarlet): A Retrofit inspired WebSocket client for Kotlin, Java, and Android
+* [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/): A cross-platform messaging solution that lets you reliably deliver messages at no cost
 * [Room Persistence Library](https://developer.android.com/topic/libraries/architecture/room): An abstraction layer over SQLite to allow for more robust database access
 * [Navigation Component](https://developer.android.com/jetpack/androidx/releases/navigation): A framework for navigating between 'destinations' within an Android application
 * [Retrofit](https://square.github.io/retrofit/): A type-safe HTTP client for Android and Java
